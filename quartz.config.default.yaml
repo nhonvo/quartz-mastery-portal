@@ -6,7 +6,7 @@ configuration:
   enablePopovers: true
 
   locale: en-US
-  baseUrl: learning-three-flax.vercel.app
+  baseUrl: nhonvo.github.io/quartz-mastery-portal
   ignorePatterns:
     - templates
     - .obsidian

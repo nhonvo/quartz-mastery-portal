@@ -217,7 +217,18 @@ async function run() {
     const srcPath = path.join(QUARTZ_DIR, file)
     const destPath = path.join(TARGET_DIR, file)
     if (fs.existsSync(srcPath) && !isDryRun) {
-      fs.copyFileSync(srcPath, destPath)
+      if (file === "quartz.config.default.yaml") {
+        let yamlContent = fs.readFileSync(srcPath, "utf-8")
+        // Rewrite baseUrl for GitHub Pages hosting with repository prefix
+        yamlContent = yamlContent.replace(
+          /baseUrl:\s*.*/,
+          "baseUrl: nhonvo.github.io/quartz-mastery-portal"
+        )
+        fs.writeFileSync(destPath, yamlContent, "utf-8")
+        console.log(`  -> Configured baseUrl for GitHub Pages: nhonvo.github.io/quartz-mastery-portal`)
+      } else {
+        fs.copyFileSync(srcPath, destPath)
+      }
     }
   }
 
