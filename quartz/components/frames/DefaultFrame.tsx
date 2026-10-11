@@ -66,6 +66,10 @@ export const DefaultFrame: PageFrame = {
         {footer.map((FooterComponent) => (
           <FooterComponent {...componentData} />
         ))}
+        <FeatureMenu {...componentData} />
+        <MobileFloatBar {...componentData} />
+        <ObsidianGraphDock {...componentData} />
+        <MobileTOC {...componentData} />
         <CodeEnhancer {...componentData} />
       </>
     )

@@ -412,6 +412,8 @@ npx quartz build --serve
         execSync(`git remote add origin https://github.com/nhonvo/quartz-mastery-portal.git`, { cwd: TARGET_DIR, stdio: "inherit" })
       }
 
+      execSync(`git config core.longpaths true`, { cwd: TARGET_DIR, stdio: "inherit" })
+
       if (shouldPush) {
         console.log("  -> Staging files...")
         execSync(`git add .`, { cwd: TARGET_DIR, stdio: "inherit" })

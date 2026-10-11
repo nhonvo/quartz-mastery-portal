@@ -867,7 +867,7 @@ function setupExplorerEnhancements() {
   if (explorerDiv && !explorerDiv.querySelector(".explorer-controls")) {
     const controls = document.createElement("div");
     controls.className = "explorer-controls";
-    controls.style.cssText = "display: flex; gap: 4px; justify-content: flex-start; margin-left: 1rem; margin-bottom: 0.5rem; width: 100%;";
+    controls.style.cssText = "position: sticky; top: 0; z-index: 50; display: flex; gap: 6px; align-items: center; justify-content: flex-start; padding: 6px 10px; margin: 0 0 4px 0; width: 100%; box-sizing: border-box; background: var(--light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--lightgray);";
     
     const createBtn = (title, iconSvg, onClick) => {
       const btn = document.createElement("button");
@@ -892,15 +892,15 @@ function setupExplorerEnhancements() {
       localStorage.setItem("fileTree", JSON.stringify(fileTree));
     };
 
-    // 1. Expand All (Chevrons pointing down / unfold outwards)
+    // 1. Expand All (Unfold Outwards - Maximize/Expand Icon)
     const btnUnfoldAll = createBtn("Expand All Folders", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l5 5 5-5M7 5l5 5 5-5"></path></svg>',
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
         document.querySelectorAll(".folder-outer").forEach(f => f.classList.add("open"));
         saveState();
       });
 
-    // 2. Collapse to Root Level Only
+    // 2. Collapse to Root Level Only (Tree List Outline)
     const btnLevel1 = createBtn("Collapse to Root Folders", 
       '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>',
       () => {
@@ -909,17 +909,17 @@ function setupExplorerEnhancements() {
         saveState();
       });
 
-    // 3. Collapse All (Chevrons pointing up / fold inward)
+    // 3. Collapse All (Fold Inward - Minimize/Fold Inward Icon)
     const btnCollapseAll = createBtn("Collapse All Folders", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 13l-5-5-5 5M17 19l-5-5-5 5"></path></svg>',
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
         document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
         saveState();
       });
 
-    // 4. Reveal & Focus Current File in Tree
+    // 4. Reveal & Focus Current File in Tree (Crosshair / Target)
     const btnLocate = createBtn("Locate Current File", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path></svg>',
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>',
       () => {
         let active = document.querySelector(".explorer-content .active, .explorer-content .is-active");
         if (active) {
