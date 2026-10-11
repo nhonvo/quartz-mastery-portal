@@ -1,0 +1,177 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Deploy a VPC
+
+Parameters: 
+  VPCName: 
+    Type: String
+    Description: Enter Your VPC Name
+
+Mappings:
+
+  AMIRegionMap:
+    ap-northeast-1:
+      AMILinux2: ami-0ce107ae7af2e92b5
+    ap-northeast-2:
+      AMILinux2: ami-03b42693dc6a7dc35
+    ap-south-1:
+      AMILinux2: ami-0e306788ff2473ccb
+    ap-southeast-1:
+      AMILinux2: ami-015a6758451df3cb9
+    ap-southeast-2:
+      AMILinux2: ami-0f96495a064477ffb
+    ca-central-1:
+      AMILinux2: ami-0c2f25c1f66a1ff4d
+    eu-central-1:
+      AMILinux2: ami-00a205cb8e06c3c4e
+    eu-north-1:
+      AMILinux2: ami-0653812935d0743fe
+    eu-west-1:
+      AMILinux2: ami-0bb3fad3c0286ebd5
+    eu-west-2:
+      AMILinux2: ami-0a669382ea0feb73a
+    eu-west-3:
+      AMILinux2: ami-0de12f76efe134f2f
+    sa-east-1:
+      AMILinux2: ami-02898a1921d38a50b
+    us-east-1:
+      AMILinux2: ami-0947d2ba12ee1ff75
+    us-east-2:
+      AMILinux2: ami-03657b56516ab7912
+    us-west-1:
+      AMILinux2: ami-0e4035ae3f70c400f
+    us-west-2:
+      AMILinux2: ami-0528a5175983e7f28
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+      - Key: Name
+        Value: !Ref VPCName
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: Lab Internet Gateway
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select 
+        - '0'
+        - !GetAZs ''
+      Tags:
+        - Key: Name
+          Value: Public Subnet 1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select 
+        - '1'
+        - !GetAZs ''
+      Tags:
+        - Key: Name
+          Value: Public Subnet 2
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: Public Route Table
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+  LabInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap
+        - AMIRegionMap
+        - !Ref 'AWS::Region'
+        - AMILinux2
+      InstanceType: t3.micro
+      Monitoring: 'false'
+      Tags:
+      - Key: Name
+        Value: !Sub ${AWS::StackName}
+      BlockDeviceMappings:
+      - DeviceName: "/dev/xvda"
+        Ebs:
+          VolumeType: gp2
+          VolumeSize: '8'
+          DeleteOnTermination: false
+      NetworkInterfaces:
+      - AssociatePublicIpAddress: true
+        DeleteOnTermination: true
+        Description: Primary network interface
+        DeviceIndex: 0
+        SubnetId: !Ref PublicSubnet1
+        GroupSet:
+        - Ref: WebServerSecurityGroup
+
+Outputs:
+  VPC:
+    Description: VPC
+    Value: !Ref VPC
+
+  PublicSubnet1:
+    Description: PublicSubnet1
+    Value: !Ref PublicSubnet1
+  
+  PublicSubnet2:
+    Description: PublicSubnet2
+    Value: !Ref PublicSubnet2
+
+  WebSecurityGroupID:
+    Description: Security group for Launch configuration
+    Value: !Ref WebServerSecurityGroup

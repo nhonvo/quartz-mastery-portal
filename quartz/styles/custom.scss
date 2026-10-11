@@ -1,0 +1,1104 @@
+@use "./variables.scss" as *;
+
+// ============================================================================
+// Quartz Standard Clean Custom UI Styling
+// ============================================================================
+
+// 1. Cross-Browser Custom Scrollbar Styling (WebKit + Firefox)
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(123, 151, 170, 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 151, 170, 0.35);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 151, 170, 0.65);
+}
+
+// 2. Base Viewport & Default Typography Scale
+html, body {
+  font-size: 15px;
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.center {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--dark);
+
+  h1.article-title {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+  }
+}
+
+// Desktop Search Bar Styling & Mobile Cleanliness
+.page-header .search {
+  max-width: 320px;
+  margin: 0.5rem 0 0.8rem auto;
+
+  & > .search-button {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    height: 2.2rem;
+    background: color-mix(in srgb, var(--light) 92%, transparent);
+    border: 1px solid var(--lightgray);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--darkgray);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+
+    &:hover {
+      border-color: var(--secondary);
+      color: var(--dark);
+      background: var(--highlight);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      min-width: 16px;
+      .search-path {
+        stroke: var(--darkgray);
+      }
+    }
+
+    p {
+      margin: 0;
+      color: var(--gray);
+      font-size: 0.82rem;
+    }
+  }
+
+  @media all and (max-width: 800px) {
+    display: none !important;
+  }
+}
+
+// 3. High-Contrast Text Links & Internal Link Pills (WCAG AAA)
+a {
+  color: var(--secondary) !important;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    color: var(--tertiary) !important;
+    text-decoration-color: var(--tertiary);
+  }
+
+  &.internal {
+    text-decoration: none !important;
+    border-bottom: 1.5px solid color-mix(in srgb, var(--secondary) 50%, transparent);
+    padding: 0.05rem 0.25rem;
+    border-radius: 4px;
+    background-color: var(--highlight);
+    font-weight: 500;
+
+    &:hover {
+      border-bottom-color: var(--tertiary);
+      background-color: color-mix(in srgb, var(--tertiary) 22%, transparent);
+      color: var(--tertiary) !important;
+    }
+  }
+}
+
+// 4. Callout Glassmorphism & Compact Padding
+.callout {
+  border-radius: 6px;
+  border: 1px solid var(--lightgray);
+  border-left: 3.5px solid var(--color) !important;
+  background: color-mix(in srgb, var(--light) 92%, transparent);
+  margin: 0.75rem 0;
+  padding: 0 0.85rem 0.5rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+// 4. Code Block Formatting
+figure[data-rehype-pretty-code-figure] {
+  border-radius: 6px;
+  border: 1px solid var(--lightgray);
+  overflow: hidden;
+  margin: 0.75rem 0;
+  font-size: 0.82rem;
+
+  & > pre {
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0.65rem 0.85rem !important;
+    line-height: 1.45 !important;
+  }
+}
+
+// 5. Responsive Table Styling
+.table-container {
+  border-radius: 6px;
+  border: 1px solid var(--lightgray);
+  overflow-x: auto;
+  margin: 0.85rem 0;
+
+  & > table {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-collapse: collapse !important;
+    font-size: 0.82rem !important;
+
+    th {
+      background: color-mix(in srgb, var(--lightgray) 45%, transparent);
+      font-weight: 600;
+      padding: 0.4rem 0.65rem !important;
+      border-bottom: 2px solid var(--lightgray);
+    }
+
+    td {
+      padding: 0.4rem 0.65rem !important;
+      border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 60%, transparent);
+    }
+  }
+}
+
+// 6. Clean Explorer Tree Alignment, Flexible Text Wrapping & Folded Items Gap Elimination
+.explorer {
+  user-select: none;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+
+  // Root list reset
+  ul, ol {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  // All item wrappers (li, folder-outer, folder-container)
+  li, .folder-outer, .folder-container {
+    margin: 0.05rem 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  // Explicitly hide collapsed folder lists with zero height, margin, padding, or gaps
+  .collapsed,
+  ul.collapsed,
+  .collapsed > ul,
+  .folder-outer.collapsed > ul,
+  li.collapsed > ul,
+  div.collapsed > ul,
+  ul[data-collapsed="true"],
+  div[data-collapsed="true"] {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+
+  // Folded folder items sit tightly together without blank vertical gaps
+  .folder-outer.collapsed,
+  li.collapsed,
+  div.collapsed {
+    margin-bottom: 0.05rem !important;
+    padding-bottom: 0 !important;
+    margin-top: 0.05rem !important;
+  }
+
+  // Expanded Tree Layout: Only apply styling to visible uncollapsed lists
+  ul:not(.collapsed):not([data-collapsed="true"]) {
+    padding-left: 0.65rem !important;
+    margin-left: 0.35rem !important;
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.2rem !important;
+    border-left: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent);
+    list-style: none !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .folder-container,
+  .folder-outer > .folder-container,
+  .folder-button,
+  li > a {
+    display: flex !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.28rem 0.5rem !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    color: var(--dark) !important;
+    overflow-x: hidden !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+
+    &:hover {
+      background: color-mix(in srgb, var(--secondary) 14%, transparent) !important;
+      color: var(--secondary) !important;
+    }
+
+    &.active, &[data-active="true"] {
+      background: color-mix(in srgb, var(--secondary) 20%, transparent) !important;
+      color: var(--secondary) !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  .folder-icon, svg {
+    flex-shrink: 0 !important;
+    margin-right: 6px !important;
+    margin-top: 3px !important;
+    opacity: 0.75;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .folder-container:hover .folder-icon {
+    opacity: 1;
+  }
+
+  a, .folder-title, span.title, span {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    font-size: 0.85rem !important;
+    display: inline-block !important;
+  }
+}
+
+// Clean Left Sidebar Top Header
+.sidebar.left {
+  .toolbar,
+  button.darkmode,
+  .darkmode,
+  .reader-mode,
+  button.reader-mode,
+  a.reader-mode {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .page-title {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+
+// 7. TASK-05 Search Indexing Progress Bar & Non-Blocking Loader
+.search-progress-wrapper {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: color-mix(in srgb, var(--lightgray) 40%, transparent);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0.35rem 0 0.5rem 0;
+  transition: opacity 0.3s ease;
+
+  &.completed {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.search-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--secondary), #10b981);
+  border-radius: 3px;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: var(--bodyFont);
+  color: var(--gray);
+  margin-bottom: 0.25rem;
+
+  .status-spinner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--secondary);
+    animation: pulse-spinner 1.2s infinite ease-in-out;
+  }
+}
+
+@keyframes pulse-spinner {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+// 8. Default Fullscreen Widescreen Layout & Streamlined Header
+.page > #quartz-body {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding-bottom: 5rem !important;
+}
+
+header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.6rem 0 !important;
+  margin-bottom: 1rem !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent);
+}
+
+// 9. Independent Sticky Sidebar Flex Layout & Smooth Internal Scroll
+@media all and (min-width: 801px) {
+  .page > #quartz-body {
+    .sidebar.left {
+      position: sticky !important;
+      top: 0 !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      padding: 1.5rem 1rem 1.5rem 1.5rem !important;
+
+      .page-title {
+        flex-shrink: 0 !important;
+      }
+
+      .explorer {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-right: 0.35rem !important;
+        margin-top: 0.5rem !important;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: color-mix(in srgb, var(--secondary) 30%, transparent);
+          border-radius: 4px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: var(--secondary);
+        }
+      }
+    }
+
+    .sidebar.right {
+      position: sticky !important;
+      top: 0 !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      padding: 1.5rem 1.5rem 1.5rem 1rem !important;
+      gap: 1rem !important;
+
+      .toc, .backlinks {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding-right: 0.35rem !important;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: color-mix(in srgb, var(--secondary) 30%, transparent);
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+// 10. Focus Reading Mode (Full Width)
+body.focus-reading-mode {
+  .sidebar {
+    display: none !important;
+  }
+  .center {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .page > #quartz-body {
+    max-width: 100% !important;
+    padding: 0 2rem !important;
+  }
+}
+
+// 11. Reading Modes with High-Contrast Link Colors (WCAG AAA)
+html[data-reading-mode="paper"] {
+  --light: #f5efe6 !important;
+  --dark: #2d251e !important;
+  --darkgray: #574c43 !important;
+  --lightgray: #e7dec8 !important;
+  --secondary: #854d0e !important; /* Deep Amber Wood (7.1:1 AAA) */
+  --tertiary: #9a3412 !important;  /* Burnt Sienna (7.3:1 AAA) */
+  --highlight: rgba(133, 77, 14, 0.12) !important;
+  body {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+  }
+}
+
+html[data-reading-mode="warm"] {
+  --light: #faf5ee !important;
+  --dark: #2a2421 !important;
+  --darkgray: #5c524c !important;
+  --lightgray: #ece3d4 !important;
+  --secondary: #b45309 !important; /* Warm Amber (7.0:1 AAA) */
+  --tertiary: #c2410c !important;  /* Warm Coral (7.2:1 AAA) */
+  --highlight: rgba(180, 83, 9, 0.12) !important;
+  body {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+  }
+}
+
+
+
+// Mobile & Tablet Sidebar Right Layout & Backlinks Fix
+@media all and (max-width: 1200px) {
+  .page > #quartz-body .sidebar.right {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    padding: 1.5rem 1rem 4rem 1rem !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .page > #quartz-body .sidebar.right > * {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    flex: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  .page > #quartz-body .sidebar.right .backlinks {
+    margin-top: 0.5rem !important;
+    padding-top: 1.25rem !important;
+    border-top: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
+
+    h3 {
+      font-size: 1rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 0.75rem !important;
+      color: var(--secondary) !important;
+    }
+
+    ul {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.5rem !important;
+
+      li {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        a.internal {
+          display: inline-block !important;
+          color: var(--secondary) !important;
+          text-decoration: none !important;
+          font-weight: 500 !important;
+          font-size: 0.9rem !important;
+          line-height: 1.45 !important;
+          overflow-wrap: break-word !important;
+          word-break: break-word !important;
+
+          &:hover {
+            color: var(--tertiary) !important;
+            text-decoration: underline !important;
+          }
+        }
+      }
+    }
+  }
+
+  .page > #quartz-body .sidebar.right .recent-notes {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+// Mobile Sidebar Left (App Bar) & Off-Canvas Drawer
+@media all and (max-width: 800px) {
+  .page > #quartz-body {
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .page > #quartz-body .center {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .page > #quartz-body .sidebar.left {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    padding: 0 1rem !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    background: color-mix(in srgb, var(--light) 95%, transparent) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: none !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 60%, transparent) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    z-index: 100000 !important;
+    overflow: visible !important;
+  }
+
+  /* Left Hamburger Button Wrapper */
+  .page > #quartz-body .sidebar.left .explorer {
+    order: 1 !important;
+    position: relative !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    z-index: 10 !important;
+
+    &:not(.collapsed) {
+      z-index: 200 !important;
+    }
+  }
+
+  .page > #quartz-body .sidebar.left .explorer button.mobile-explorer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    padding: 6px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--dark) !important;
+    cursor: pointer !important;
+    transition: background 0.18s ease, transform 0.12s ease !important;
+    z-index: 10 !important;
+    pointer-events: auto !important;
+
+    &:hover,
+    &:active {
+      background: color-mix(in srgb, var(--secondary) 14%, transparent) !important;
+      color: var(--secondary) !important;
+      transform: scale(1.05) !important;
+    }
+
+    svg {
+      width: 22px !important;
+      height: 22px !important;
+      stroke: currentColor !important;
+      pointer-events: none !important;
+    }
+  }
+
+  /* Center Brand Title */
+  .page > #quartz-body .sidebar.left .page-title {
+    order: 2 !important;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 0.5rem !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    z-index: 10 !important;
+
+    a {
+      color: var(--dark) !important;
+      text-decoration: none !important;
+      pointer-events: auto !important;
+    }
+  }
+
+  /* Right Action / Search Button */
+  .page > #quartz-body .sidebar.left .mobile-only,
+  .page > #quartz-body .sidebar.left .mobile-nav-actions {
+    order: 3 !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .mobile-nav-search-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    padding: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--dark) !important;
+    cursor: pointer !important;
+    transition: background 0.18s ease, transform 0.12s ease !important;
+
+    &:hover,
+    &:active {
+      background: color-mix(in srgb, var(--secondary) 14%, transparent) !important;
+      color: var(--secondary) !important;
+      transform: scale(1.05) !important;
+    }
+
+    svg {
+      width: 20px !important;
+      height: 20px !important;
+      stroke: currentColor !important;
+      pointer-events: none !important;
+    }
+  }
+
+  .page > #quartz-body .sidebar.left .sidebar-resizer {
+    display: none !important;
+  }
+
+  /* ========================================================
+     Off-Canvas Mobile Drawer for Left Sidebar
+     ======================================================== */
+  .page > #quartz-body .sidebar.left .explorer-content {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: min(85vw, 320px) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 1.25rem 1rem 5rem 1rem !important;
+    background: var(--light) !important;
+    color: var(--dark) !important;
+    border: none !important;
+    border-right: 1px solid var(--lightgray) !important;
+    border-radius: 0 !important;
+    box-shadow: 8px 0 36px rgba(0, 0, 0, 0.28) !important;
+    z-index: 250 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    transform: translateX(-105%) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s ease, opacity 0.2s ease !important;
+  }
+
+  /* When drawer is open (:not(.collapsed)) */
+  .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-content {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Drawer Top Header */
+  .mobile-drawer-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+    border-bottom: 1px solid var(--lightgray) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-drawer-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: var(--dark) !important;
+    font-family: var(--headerFont) !important;
+
+    svg {
+      width: 18px !important;
+      height: 18px !important;
+      stroke: var(--secondary) !important;
+    }
+  }
+
+  .mobile-drawer-close {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--darkgray) !important;
+    transition: all 0.2s ease !important;
+
+    &:hover,
+    &:active {
+      background: color-mix(in srgb, var(--secondary) 15%, transparent) !important;
+      color: var(--secondary) !important;
+    }
+  }
+
+  /* Explorer Controls in Mobile Drawer */
+  .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-controls {
+    position: fixed !important;
+    top: 3.5rem !important;
+    left: 1rem !important;
+    width: calc(min(85vw, 320px) - 2rem) !important;
+    z-index: 260 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 1px solid var(--lightgray) !important;
+    margin: 0 !important;
+  }
+
+  .page > #quartz-body .sidebar.left .explorer.collapsed > .explorer-controls {
+    display: none !important;
+  }
+}
+
+/* Global Mobile Sidebar Backdrop */
+.mobile-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.mobile-sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+html.mobile-no-scroll,
+body.mobile-no-scroll {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+@media all and (min-width: 801px) {
+  .mobile-drawer-header,
+  .mobile-sidebar-backdrop,
+  .mobile-nav-search-btn {
+    display: none !important;
+  }
+}
+
+/* ========================================================
+   Mermaid Diagrams & Flowcharts Adaptive Styling
+   Harmonizes across Light, Dark, Paper, and Warm themes
+   ======================================================== */
+.mermaid {
+  background: color-mix(in srgb, var(--lightgray) 18%, var(--light)) !important;
+  border: 1px solid var(--lightgray) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem 1rem !important;
+  margin: 1.75rem 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  overflow-x: auto !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
+
+    /* Base Typography & Contrast */
+    text,
+    .label,
+    tspan {
+      font-family: var(--bodyFont) !important;
+      fill: var(--dark) !important;
+      color: var(--dark) !important;
+    }
+
+    /* Flowcharts & Structural Nodes */
+    .node rect,
+    .node circle,
+    .node polygon,
+    .node path {
+      fill: var(--light) !important;
+      stroke: var(--secondary) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    .edgePath .path,
+    .flowchart-link {
+      stroke: var(--darkgray) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    .edgeLabel {
+      background-color: var(--light) !important;
+      color: var(--dark) !important;
+
+      rect {
+        fill: var(--light) !important;
+        opacity: 0.95 !important;
+      }
+    }
+
+    .marker,
+    #flowchart-pointEnd,
+    #flowchart-circleEnd,
+    #flowchart-crossEnd {
+      fill: var(--secondary) !important;
+      stroke: var(--secondary) !important;
+    }
+
+    /* Sequence Diagrams */
+    .actor {
+      stroke: var(--secondary) !important;
+      fill: var(--light) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    text.actor > tspan {
+      fill: var(--dark) !important;
+      font-weight: 600 !important;
+    }
+
+    .actor-line {
+      stroke: var(--lightgray) !important;
+      stroke-dasharray: 4, 4 !important;
+    }
+
+    .messageLine0,
+    .messageLine1 {
+      stroke: var(--secondary) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    .messageText {
+      fill: var(--dark) !important;
+      font-size: 0.85rem !important;
+    }
+
+    .note {
+      fill: color-mix(in srgb, var(--highlight) 35%, var(--light)) !important;
+      stroke: var(--secondary) !important;
+      stroke-width: 1.2px !important;
+    }
+
+    .noteText,
+    .noteText > tspan {
+      fill: var(--dark) !important;
+      font-size: 0.85rem !important;
+    }
+
+    /* Mindmaps */
+    .mindmap-node .node-bkg {
+      fill: var(--light) !important;
+      stroke: var(--secondary) !important;
+      stroke-width: 2px !important;
+    }
+
+    .mindmap-node.section-root .node-bkg {
+      fill: color-mix(in srgb, var(--secondary) 18%, var(--light)) !important;
+      stroke: var(--secondary) !important;
+      stroke-width: 2.5px !important;
+    }
+
+    .mindmap-node text {
+      fill: var(--dark) !important;
+    }
+
+    .mindmap-node.section-root text {
+      fill: var(--secondary) !important;
+      font-weight: 700 !important;
+    }
+
+    path.node-line--1,
+    path.edge {
+      stroke: var(--secondary) !important;
+      stroke-width: 2px !important;
+    }
+
+    /* Timelines */
+    .timeline-node .node-bkg {
+      fill: var(--light) !important;
+      stroke: var(--secondary) !important;
+      stroke-width: 1.5px !important;
+    }
+
+    .timeline-node text,
+    .taskWrapper text,
+    .eventWrapper text {
+      fill: var(--dark) !important;
+    }
+
+    .lineWrapper line,
+    .taskWrapper line {
+      stroke: var(--secondary) !important;
+    }
+  }
+}
+
+/* Dark Theme Specific Overrides */
+[saved-theme="dark"] .mermaid {
+  background: color-mix(in srgb, var(--lightgray) 28%, var(--light)) !important;
+  border-color: color-mix(in srgb, var(--lightgray) 60%, transparent) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+
+  svg {
+    .actor,
+    .node rect,
+    .node circle,
+    .node polygon,
+    .node path,
+    .timeline-node .node-bkg,
+    .mindmap-node .node-bkg {
+      fill: color-mix(in srgb, var(--light) 85%, #000) !important;
+      stroke: var(--tertiary) !important;
+    }
+
+    text,
+    .label,
+    tspan,
+    .messageText,
+    .noteText,
+    .noteText > tspan {
+      fill: var(--dark) !important;
+      color: var(--dark) !important;
+    }
+
+    .note {
+      fill: color-mix(in srgb, var(--tertiary) 25%, var(--light)) !important;
+      stroke: var(--tertiary) !important;
+    }
+  }
+}
+
+/* Paper Reading Mode Specific Overrides */
+[data-reading-mode="paper"] .mermaid {
+  background: color-mix(in srgb, var(--lightgray) 36%, var(--light)) !important;
+  border-color: var(--lightgray) !important;
+  box-shadow: 0 2px 8px rgba(90, 80, 60, 0.08) !important;
+
+  svg {
+    .actor,
+    .node rect,
+    .node circle,
+    .node polygon,
+    .node path,
+    .timeline-node .node-bkg,
+    .mindmap-node .node-bkg {
+      fill: var(--light) !important;
+      stroke: var(--secondary) !important;
+    }
+  }
+}
+
+

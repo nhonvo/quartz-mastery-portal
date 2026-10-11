@@ -1,0 +1,35 @@
+
+--- TYPE: video (File: 1-Từ vựng-video.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: video_test (File: 10000-10.5_　Vたばかりだ-video_test.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: test (File: 10003-Bài tập ngữ pháp 10B-test.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: exam (File: 10467-Bài 2-exam.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+exam_parts: 1 parts
+
+--- TYPE: docs (File: 10802-Tài liệu Nhập môn Sơ cấp-docs.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE:  (File: 1089-Tài Liệu Ngữ Pháp N2-.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: last_exam (File: 11057-Đề thi thử số 1-last_exam.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+exam_parts: 3 parts
+
+--- TYPE: checkpoint (File: 11270-TEST ĐẦU VÀO TOKUTEI GINO 1-checkpoint.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: flashcard (File: 11280-Flashcards từ vựng Đề N4 (2012)-flashcard.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: guide (File: 11376-Bài 1_ Những ngày trước ngưỡng cửa đại học - 7,5 điểm và giấc mơ dang dở-guide.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']
+
+--- TYPE: docs_test (File: 12460-Bài tập 1-docs_test.json) ---
+Keys: ['id', 'group_id', 'course_id', 'is_examination', 'author_id', 'name', 'name_html', 'avatar_name', 'description', 'price_option', 'feature', 'sort_order', 'show', 'is_secret', 'SEOurl', 'count_view', 'total_marks', 'pass_marks', 'max_duration', 'default_speed', 'schedule_at', 'flashcard_hint', 'type', 'require', 'expect_time', 'updated_at', 'created_at', 'exam_parts', 'exam_result', 'last_exam_result', 'passed_exam_result']

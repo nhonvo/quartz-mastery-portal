@@ -1,0 +1,16 @@
+USE MASTER
+GO
+DROP DATABASE IF EXISTS LECTURE3_CRUD_DATA
+GO
+CREATE DATABASE LECTURE3_CRUD_DATA
+GO
+USE LECTURE3_CRUD_DATA
+GO
+CREATE TABLE Student(
+	ID int PRIMARY KEY,
+	FullName varchar(15) NOT NULL,
+	Email nchar(15) UNIQUE,
+	PhoneNumber varchar(12),
+	DateOfBirth date default '10/25/2000',
+	Math tinyint CHECK (Math >= 0 AND Math <= 10)
+);
