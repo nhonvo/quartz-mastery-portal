@@ -995,10 +995,32 @@ function setupExplorerEnhancements() {
         }
       });
 
+    // 5. Obsidian Global Graph (Globe / Network Icon)
+    const btnGraph = createBtn("Obsidian Global Graph", 
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+      () => {
+        const explorer = document.querySelector(".sidebar.left .explorer");
+        if (explorer && !explorer.classList.contains("collapsed")) {
+          if (typeof window.closeMobileSidebar === "function") {
+            window.closeMobileSidebar();
+          } else {
+            explorer.classList.add("collapsed");
+          }
+        }
+        if (typeof window.triggerGraphLoad === "function") {
+          window.triggerGraphLoad();
+        }
+        const graphOuter = document.querySelector(".graph");
+        if (graphOuter) {
+          graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+
     controls.appendChild(btnUnfoldAll);
     controls.appendChild(btnLevel1);
     controls.appendChild(btnCollapseAll);
     controls.appendChild(btnLocate);
+    controls.appendChild(btnGraph);
       
     const cdiv = explorerDiv.querySelector(".explorer-content");
     if (cdiv) {

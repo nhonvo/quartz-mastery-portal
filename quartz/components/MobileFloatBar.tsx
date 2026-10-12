@@ -25,7 +25,19 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>Focus</span>
       </button>
 
-      {/* 3. Settings / Tools */}
+      {/* 3. Obsidian Global Graph */}
+      <button class="float-btn" id="float-graph-trigger" aria-label="Open Obsidian Graph View">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span>Graph</span>
+      </button>
+
+      {/* 4. Settings / Tools */}
       <button class="float-btn" id="float-tools-trigger" aria-label="Open Reader Settings">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"></circle>
@@ -34,7 +46,7 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>Tools</span>
       </button>
 
-      {/* 4. Scroll To Top */}
+      {/* 5. Scroll To Top */}
       <button class="float-btn" id="float-top-trigger" aria-label="Scroll to Top">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
@@ -147,9 +159,9 @@ body.focus-reading-mode #float-focus-trigger {
     right: auto;
     transform: translateX(-50%);
     gap: 2px;
-    padding: 3px 6px;
+    padding: 3px 5px;
     width: auto;
-    max-width: calc(100vw - 2rem);
+    max-width: calc(100vw - 1rem);
   }
 
   .mobile-float-bar.float-hidden {
@@ -159,12 +171,12 @@ body.focus-reading-mode #float-focus-trigger {
   }
 
   .float-btn {
-    width: 52px;
-    min-width: 52px;
-    max-width: 52px;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
     height: 44px;
-    flex: 0 0 52px;
-    font-size: 0.66rem;
+    flex: 0 0 48px;
+    font-size: 0.64rem;
 
     svg {
       width: 16px;
