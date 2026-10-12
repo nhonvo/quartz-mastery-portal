@@ -797,6 +797,7 @@ function setupSidebarResizer() {
       leftSidebar.style.borderRight = "1px solid var(--lightgray)";
       const savedWidth = localStorage.getItem("quartz-sidebar-left-width");
       if (savedWidth) {
+        document.documentElement.style.setProperty("--sidebar-left-width", savedWidth + "px");
         leftSidebar.style.width = savedWidth + "px";
         leftSidebar.style.flexBasis = savedWidth + "px";
       }
@@ -820,13 +821,15 @@ function setupSidebarResizer() {
       if (window.innerWidth <= 800) return;
       isResizing = true;
       document.body.style.cursor = "col-resize";
+      document.body.style.userSelect = "none";
       resizer.style.backgroundColor = "var(--tertiary)";
     });
     
     document.addEventListener("mousemove", (e) => {
       if (!isResizing || window.innerWidth <= 800) return;
       const newWidth = e.clientX;
-      if (newWidth > 150 && newWidth < 500) {
+      if (newWidth > 180 && newWidth < 600) {
+        document.documentElement.style.setProperty("--sidebar-left-width", newWidth + "px");
         leftSidebar.style.width = newWidth + "px";
         leftSidebar.style.flexBasis = newWidth + "px";
         localStorage.setItem("quartz-sidebar-left-width", newWidth.toString());
@@ -837,6 +840,7 @@ function setupSidebarResizer() {
       if (isResizing) {
         isResizing = false;
         document.body.style.cursor = "";
+        document.body.style.userSelect = "";
         resizer.style.backgroundColor = "transparent";
       }
     });
@@ -847,6 +851,7 @@ function setupSidebarResizer() {
           leftSidebar.style.borderRight = "1px solid var(--lightgray)";
           const savedWidth = localStorage.getItem("quartz-sidebar-left-width");
           if (savedWidth) {
+            document.documentElement.style.setProperty("--sidebar-left-width", savedWidth + "px");
             leftSidebar.style.width = savedWidth + "px";
             leftSidebar.style.flexBasis = savedWidth + "px";
           }
@@ -951,6 +956,22 @@ function setupExplorerEnhancements() {
     }
   }
 
+  // Ensure that if no folders are open at all, expand the active path or root level so tree is never blank
+  const anyOpen = document.querySelector(".explorer-ul .folder-outer.open");
+  if (!anyOpen) {
+    const active = document.querySelector(".explorer-content .active, .explorer-content .is-active");
+    if (active) {
+      let parent = active.closest(".folder-outer");
+      while (parent) {
+        parent.classList.add("open");
+        parent = parent.parentElement?.closest(".folder-outer");
+      }
+      active.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
+    }
+  }
+
   const explorerLinks = document.querySelectorAll(".explorer a, .explorer .folder-title");
   explorerLinks.forEach((el) => {
     const text = el.textContent?.trim();
@@ -959,7 +980,7 @@ function setupExplorerEnhancements() {
     }
   });
 
-  const folderRows = document.querySelectorAll(".explorer .folder-container, .explorer .folder-outer");
+  const folderRows = document.querySelectorAll(".explorer .folder-container");
   folderRows.forEach((row) => {
     row.onclick = (e) => {
       if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === "a") return;

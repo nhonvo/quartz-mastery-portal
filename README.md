@@ -1,19 +1,17 @@
-# Quartz Mastery Portal
+# Quartz v5
 
-Welcome to the public knowledge garden and mastery portal!
+> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
 
-## 🌟 Features
-- **Interactive Knowledge Graph**: D3-powered relationship graph connecting algorithms, system design architectures, and languages.
-- **Dynamic Giscus Comments**: Powered by GitHub Discussions on this repository.
-- **Multi-Theme Engine**: Light, Dark, Paper, and Warm reading modes with WCAG AAA link contrast.
-- **Structured Tracks**:
-  - `01_DSA`: NeetCode 150 & LeetCode algorithmic solutions and deep-dives.
-  - `02_Technical_Skills`: Backend Architecture, Distributed Systems & Database queries.
-  - `03_Languages`: Technical English, Japanese JLPT N5-N4 & Daily Mandarin.
+Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
 
-## 🚀 Local Development
-```bash
-npm install
-npm run prebuild
-npx quartz build --serve
-```
+🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+
+[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+
+## Sponsors
+
+<p align="center">
+  <a href="https://github.com/sponsors/jackyzha0">
+    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
+  </a>
+</p>

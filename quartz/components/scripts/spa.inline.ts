@@ -108,6 +108,24 @@ async function _navigate(url: URL, isBack: boolean = false) {
   html.body.appendChild(announcer)
 
   document.querySelector(".navigation-progress")?.remove()
+
+  // Protect explorer component from micromorph morphing destruction
+  const currentExplorer = document.querySelector(".explorer")
+  const targetExplorer = html.querySelector(".explorer")
+  if (currentExplorer) {
+    currentExplorer.setAttribute("data-persist", "true")
+  }
+  if (targetExplorer) {
+    targetExplorer.setAttribute("data-persist", "true")
+  }
+
+  // Preserve populated explorer tree from current DOM if incoming SSR page has an empty explorer-ul
+  const currentExplorerUl = document.querySelector(".explorer-ul")
+  const targetExplorerUl = html.querySelector(".explorer-ul")
+  if (currentExplorerUl && targetExplorerUl && currentExplorerUl.children.length > 1) {
+    targetExplorerUl.innerHTML = currentExplorerUl.innerHTML
+  }
+
   micromorph(document.body, html.body)
 
   // scroll into place and add history
