@@ -1,18 +1,8 @@
 import { PageFrame, PageFrameProps } from "./types"
 import HeaderConstructor from "../Header"
-import MobileFloatBarConstructor from "../MobileFloatBar"
 import MasteryHUDConstructor from "../MasteryHUD"
-import CodeEnhancerConstructor from "../CodeEnhancer"
-import MobileTOCConstructor from "../MobileTOC"
-import FeatureMenuConstructor from "../FeatureMenu"
-import ObsidianGraphDockConstructor from "../ObsidianGraphDock"
 const Header = HeaderConstructor()
-const MobileFloatBar = MobileFloatBarConstructor()
 const MasteryHUD = MasteryHUDConstructor()
-const CodeEnhancer = CodeEnhancerConstructor()
-const MobileTOC = MobileTOCConstructor()
-const FeatureMenu = FeatureMenuConstructor()
-const ObsidianGraphDock = ObsidianGraphDockConstructor()
 
 /**
  * Enhanced Quartz 5 Page Frame
@@ -66,11 +56,6 @@ export const DefaultFrame: PageFrame = {
         {footer.map((FooterComponent) => (
           <FooterComponent {...componentData} />
         ))}
-        <FeatureMenu {...componentData} />
-        <MobileFloatBar {...componentData} />
-        <ObsidianGraphDock {...componentData} />
-        <MobileTOC {...componentData} />
-        <CodeEnhancer {...componentData} />
       </>
     )
   },

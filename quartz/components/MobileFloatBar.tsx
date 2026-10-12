@@ -3,6 +3,7 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 export const MobileFloatBar: QuartzComponent = () => {
   return (
     <nav class="mobile-float-bar" aria-label="Reader Quick Actions">
+      {/* 1. Table of Contents */}
       <button class="float-btn" id="float-toc-trigger" aria-label="Open Table of Contents">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -15,14 +16,25 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>TOC</span>
       </button>
 
+      {/* 2. Focus Reading Mode */}
+      <button class="float-btn" id="float-focus-trigger" aria-label="Toggle Fullscreen Reading Mode">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+        <span>Focus</span>
+      </button>
+
+      {/* 3. Settings / Tools */}
       <button class="float-btn" id="float-tools-trigger" aria-label="Open Reader Settings">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
         </svg>
-        <span>Settings</span>
+        <span>Tools</span>
       </button>
 
+      {/* 4. Scroll To Top */}
       <button class="float-btn" id="float-top-trigger" aria-label="Scroll to Top">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
@@ -41,21 +53,23 @@ MobileFloatBar.css = `
   z-index: 9998;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.65rem;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 6px;
   background: color-mix(in srgb, var(--light) 92%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--lightgray);
   border-radius: 9999px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  will-change: transform, opacity;
 }
 
 .mobile-float-bar.float-hidden {
-  transform: translateY(140%);
-  opacity: 0;
-  pointer-events: none;
+  transform: translateY(180%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .float-btn {
@@ -66,21 +80,37 @@ MobileFloatBar.css = `
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.35rem 0.75rem;
-  min-width: 54px;
+  padding: 4px 0;
+  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
+  height: 46px;
   border-radius: 999px;
   color: var(--darkgray);
   font-family: var(--bodyFont);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  gap: 0.15rem;
-  transition: all 0.2s ease;
+  line-height: 1;
+  gap: 3px;
+  box-sizing: border-box;
+  text-align: center;
+  flex: 0 0 56px;
+  transition: all 0.18s ease;
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
     stroke: var(--darkgray);
-    transition: transform 0.2s ease, stroke 0.2s ease;
+    transition: transform 0.18s ease, stroke 0.18s ease;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    pointer-events: none;
   }
 
   &:hover,
@@ -94,9 +124,17 @@ MobileFloatBar.css = `
   }
 }
 
+body.focus-reading-mode #float-focus-trigger {
+  color: var(--secondary) !important;
+  background: color-mix(in srgb, var(--secondary) 16%, transparent) !important;
+  svg {
+    stroke: var(--secondary) !important;
+  }
+}
+
 @media all and (min-width: 801px) {
   .mobile-float-bar.float-hidden {
-    transform: translateY(160%) !important;
+    transform: translateY(180%) !important;
     opacity: 0 !important;
     pointer-events: none !important;
   }
@@ -108,14 +146,30 @@ MobileFloatBar.css = `
     left: 50%;
     right: auto;
     transform: translateX(-50%);
-    gap: 0.35rem;
-    padding: 0.35rem 0.65rem;
+    gap: 2px;
+    padding: 3px 6px;
+    width: auto;
+    max-width: calc(100vw - 2rem);
   }
 
   .mobile-float-bar.float-hidden {
-    transform: translate(-50%, 160%) !important;
+    transform: translate(-50%, 180%) !important;
     opacity: 0 !important;
     pointer-events: none !important;
+  }
+
+  .float-btn {
+    width: 52px;
+    min-width: 52px;
+    max-width: 52px;
+    height: 44px;
+    flex: 0 0 52px;
+    font-size: 0.66rem;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 `
@@ -125,32 +179,62 @@ MobileFloatBar.afterDOMLoaded = `
   console.log("[MobileFloatBar] Initializing persistent event delegation & smart scroll hide...");
 
   // Smart Scroll-Hide: Hide floating bar on scroll down, show on scroll up
-  let lastScrollY = window.scrollY;
-  let ticking = false;
+  let lastScrollTop = 0;
+  let accumulatedDelta = 0;
+  let isTicking = false;
+  const HIDE_SCROLL_DOWN_THRESHOLD = 15;
+  const SHOW_SCROLL_UP_THRESHOLD = -15;
+  const TOP_REVEAL_ZONE = 60;
 
-  window.addEventListener("scroll", function() {
-    if (!ticking) {
-      window.requestAnimationFrame(function() {
-        const currentScrollY = window.scrollY;
-        const bar = document.querySelector(".mobile-float-bar");
+  function updateFloatBarVisibility() {
+    const currentScrollTop = Math.max(0, window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+    const bar = document.querySelector(".mobile-float-bar");
 
-        if (bar) {
-          // If scrolled down more than 70px and scrolling downwards -> hide bar
-          if (currentScrollY > 70 && currentScrollY > lastScrollY + 6) {
-            bar.classList.add("float-hidden");
-          } 
-          // If scrolling upwards or near top of page -> reveal bar
-          else if (currentScrollY < lastScrollY - 6 || currentScrollY <= 70) {
-            bar.classList.remove("float-hidden");
-          }
-        }
-
-        lastScrollY = currentScrollY;
-        ticking = false;
-      });
-      ticking = true;
+    if (!bar) {
+      isTicking = false;
+      return;
     }
-  }, { passive: true });
+
+    const delta = currentScrollTop - lastScrollTop;
+
+    if (currentScrollTop <= TOP_REVEAL_ZONE) {
+      bar.classList.remove("float-hidden");
+      accumulatedDelta = 0;
+    } else {
+      if ((delta > 0 && accumulatedDelta < 0) || (delta < 0 && accumulatedDelta > 0)) {
+        accumulatedDelta = 0;
+      }
+      accumulatedDelta += delta;
+
+      if (accumulatedDelta > HIDE_SCROLL_DOWN_THRESHOLD) {
+        bar.classList.add("float-hidden");
+      } else if (accumulatedDelta < SHOW_SCROLL_UP_THRESHOLD) {
+        bar.classList.remove("float-hidden");
+      }
+    }
+
+    lastScrollTop = currentScrollTop;
+    isTicking = false;
+  }
+
+  function handleScroll() {
+    if (!isTicking) {
+      window.requestAnimationFrame(updateFloatBarVisibility);
+      isTicking = true;
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  document.addEventListener("scroll", handleScroll, { passive: true });
+
+  function resetFloatBar() {
+    lastScrollTop = 0;
+    accumulatedDelta = 0;
+    const bar = document.querySelector(".mobile-float-bar");
+    if (bar) bar.classList.remove("float-hidden");
+  }
+  document.addEventListener("nav", resetFloatBar);
+  document.addEventListener("render", resetFloatBar);
 
   function toggleSearchModal() {
     const searchContainer = document.querySelector(".search-container");
@@ -383,7 +467,6 @@ MobileFloatBar.afterDOMLoaded = `
   let touchStartY = 0;
   let touchStartTime = 0;
   let isSwiping = false;
-  const SWIPE_THRESHOLD = 45;
 
   function handleSwipeStart(x, y) {
     touchStartX = x;
@@ -399,34 +482,32 @@ MobileFloatBar.afterDOMLoaded = `
     const diffY = y - touchStartY;
     const elapsed = Date.now() - touchStartTime;
 
-    // Horizontal swipe must be clearly horizontal
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-      if (Math.abs(diffX) > SWIPE_THRESHOLD) {
-        const explorer = document.querySelector(".sidebar.left .explorer");
-        const isSidebarOpen = explorer && !explorer.classList.contains("collapsed");
+    // Horizontal swipe must be clearly horizontal and fast enough (< 700ms)
+    if (Math.abs(diffX) > Math.abs(diffY) * 1.2 && elapsed < 700) {
+      const explorer = document.querySelector(".sidebar.left .explorer");
+      const isSidebarOpen = explorer && !explorer.classList.contains("collapsed");
 
-        // 1. Swipe Right: open left sidebar when starting on left side of viewport (< 160px)
-        if (diffX > 0 && touchStartX < 160) {
-          window.openMobileSidebar();
-          return;
-        }
+      // 1. Swipe Right: open left sidebar when starting near left edge (< 90px)
+      if (diffX > 35 && touchStartX < 90 && !isSidebarOpen) {
+        window.openMobileSidebar();
+        return;
+      }
 
-        // 2. Swipe Left: close left sidebar when currently open
-        if (diffX < 0 && isSidebarOpen) {
-          window.closeMobileSidebar();
-          return;
-        }
+      // 2. Swipe Left: close left sidebar when currently open
+      if (diffX < -35 && isSidebarOpen) {
+        window.closeMobileSidebar();
+        return;
+      }
 
-        // 3. Swipe Left from right edge: open tools / feature menu
-        if (diffX < 0 && touchStartX > window.innerWidth - 60) {
-          if (typeof window.openFeatureMenu === "function") {
-            window.openFeatureMenu();
-          }
+      // 3. Swipe Left from right edge: open tools / feature menu
+      if (diffX < -35 && touchStartX > window.innerWidth - 60) {
+        if (typeof window.openFeatureMenu === "function") {
+          window.openFeatureMenu();
         }
       }
     } else {
       // Vertical swipe down: dismiss modal sheets (TOC, Feature menu)
-      if (diffY > Math.abs(diffX) && diffY > 60) {
+      if (diffY > Math.abs(diffX) * 1.3 && diffY > 50 && elapsed < 700) {
         const tocModal = document.getElementById("mobile-toc-modal");
         const featureModal = document.getElementById("feature-menu-modal");
         if (tocModal && !tocModal.classList.contains("hidden")) {
@@ -453,13 +534,9 @@ MobileFloatBar.afterDOMLoaded = `
     }
   }, { passive: true });
 
-  document.addEventListener("mousedown", function(e) {
-    handleSwipeStart(e.clientX, e.clientY);
-  });
-
-  document.addEventListener("mouseup", function(e) {
-    handleSwipeEnd(e.clientX, e.clientY);
-  });
+  document.addEventListener("touchcancel", function() {
+    isSwiping = false;
+  }, { passive: true });
 
   // Ensure sidebar structure on page load and SPA navigations
   document.addEventListener("nav", ensureMobileSidebar);
