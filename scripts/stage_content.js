@@ -26,6 +26,8 @@ const FAST_FILES = [
   "01_DSA/02_dsa_solutions/neetcode_solutions/01_Arrays_and_Hashing",
   "01_DSA/02_dsa_solutions/neetcode_solutions/02_Two_Pointers",
   "01_DSA/02_dsa_solutions/neetcode_solutions/index.md",
+  "01_DSA/02_dsa_solutions/leetcode_solutions/01_Arrays_and_Hashing",
+  "01_DSA/02_dsa_solutions/leetcode_solutions/index.md",
   "01_DSA/02_dsa_solutions/index.md",
   "01_DSA/03_interview_cake/01.Merging-Meeting-Times",
   "02_Technical_Skills/01_theory_and_concepts/02_backend_developer_master_roadmap_and_guide.md",
