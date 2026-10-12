@@ -443,20 +443,29 @@ header {
       .explorer {
         flex: 1 1 auto !important;
         min-height: 0 !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
         padding-right: 0.35rem !important;
         margin-top: 0.5rem !important;
 
-        &::-webkit-scrollbar {
-          width: 4px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: color-mix(in srgb, var(--secondary) 30%, transparent);
-          border-radius: 4px;
-        }
-        &::-webkit-scrollbar-thumb:hover {
-          background: var(--secondary);
+        .explorer-content {
+          flex: 1 1 auto !important;
+          min-height: 0 !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+          -webkit-overflow-scrolling: touch !important;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: color-mix(in srgb, var(--secondary) 30%, transparent);
+            border-radius: 4px;
+          }
+          &::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+          }
         }
       }
     }
@@ -855,151 +864,8 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
   .page > #quartz-body .sidebar.left .sidebar-resizer {
     display: none !important;
   }
-
-  /* ========================================================
-     Off-Canvas Mobile Drawer for Left Sidebar
-     ======================================================== */
-  .page > #quartz-body .sidebar.left .explorer-content {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: min(85vw, 320px) !important;
-    height: 100dvh !important;
-    max-height: 100dvh !important;
-    margin: 0 !important;
-    padding: 1.25rem 1rem 5rem 1rem !important;
-    background: var(--light) !important;
-    color: var(--dark) !important;
-    border: none !important;
-    border-right: 1px solid var(--lightgray) !important;
-    border-radius: 0 !important;
-    box-shadow: 8px 0 36px rgba(0, 0, 0, 0.28) !important;
-    z-index: 250 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
-    transform: translate3d(-102%, 0, 0) !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-    will-change: transform, visibility !important;
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s ease !important;
-  }
-
-  /* When drawer is open (:not(.collapsed)) */
-  .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-content {
-    transform: translate3d(0, 0, 0) !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-
-  /* Drawer Top Header */
-  .mobile-drawer-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding-bottom: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
-    border-bottom: 1px solid var(--lightgray) !important;
-    flex-shrink: 0 !important;
-  }
-
-  .mobile-drawer-title {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-    color: var(--dark) !important;
-    font-family: var(--headerFont) !important;
-
-    svg {
-      width: 18px !important;
-      height: 18px !important;
-      stroke: var(--secondary) !important;
-    }
-  }
-
-  .mobile-drawer-close {
-    background: transparent !important;
-    border: none !important;
-    cursor: pointer !important;
-    font-size: 1.15rem !important;
-    line-height: 1 !important;
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 6px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: var(--darkgray) !important;
-    transition: all 0.2s ease !important;
-
-    &:hover,
-    &:active {
-      background: color-mix(in srgb, var(--secondary) 15%, transparent) !important;
-      color: var(--secondary) !important;
-    }
-  }
-
-  /* Explorer Controls in Mobile Drawer */
-  .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-controls {
-    position: fixed !important;
-    top: 3.5rem !important;
-    left: 1rem !important;
-    width: calc(min(85vw, 320px) - 2rem) !important;
-    z-index: 260 !important;
-    display: flex !important;
-    justify-content: flex-start !important;
-    gap: 6px !important;
-    padding-bottom: 0.5rem !important;
-    border-bottom: 1px solid var(--lightgray) !important;
-    margin: 0 !important;
-  }
-
-  .page > #quartz-body .sidebar.left .explorer.collapsed > .explorer-controls {
-    display: none !important;
-  }
 }
 
-/* Global Mobile Sidebar Backdrop */
-.mobile-sidebar-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 240 !important;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  will-change: opacity, visibility;
-  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s ease !important;
-}
-
-.mobile-sidebar-backdrop.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-}
-
-html.mobile-no-scroll,
-body.mobile-no-scroll {
-  overflow: hidden !important;
-  touch-action: none;
-}
-
-@media all and (min-width: 801px) {
-  .mobile-drawer-header,
-  .mobile-sidebar-backdrop,
-  .mobile-nav-search-btn {
-    display: none !important;
-  }
-}
 
 /* ========================================================
    Mermaid Diagrams & Flowcharts Adaptive Styling
