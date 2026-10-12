@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the *Imperative* mood and the *Infinitive* form to write clear, professional, and standardized technical documentation (READMEs, API specs, runbooks).
+
 **Engineering Impact**: Poorly written documentation causes friction in developer onboarding and system operations. Knowing whether to use formal imperative (usted), informal (tú), or the impersonal infinitive guarantees consistency and a C1/C2 level of polish in technical writing.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -39,7 +40,9 @@ When writing documentation or UI copy in Spanish, there are three main approache
 
 ### 🎭 Role-Play Dialogue (Reviewing a README)
 **Tech Lead (Sofia)**: El README está un poco informal. En lugar de decir "clona el repo", ¿podemos usar el infinitivo? (The README is a bit informal. Instead of saying "clone the repo", can we use the infinitive? / README hơi thiếu trang trọng. Thay vì nói "clone repo", chúng ta dùng động từ nguyên thể được không?)
+
 **Dev (Luis)**: Ah, claro. Entonces lo cambio a "**Clonar** el repositorio y luego **instalar** las dependencias". (Ah, sure. Then I'll change it to "Clone the repository and then install the dependencies". / À, tất nhiên. Vậy tôi sẽ đổi thành "Clone repository và sau đó install (cài đặt) các dependencies (phụ thuộc)".)
+
 **Tech Lead (Sofia)**: Exacto. Así suena mucho más profesional para los clientes externos. (Exactly. It sounds much more professional for external clients that way. / Chính xác. Nghe chuyên nghiệp hơn nhiều đối với khách hàng bên ngoài.)
 
 ### 📚 Bilingual Technical Vocabulary

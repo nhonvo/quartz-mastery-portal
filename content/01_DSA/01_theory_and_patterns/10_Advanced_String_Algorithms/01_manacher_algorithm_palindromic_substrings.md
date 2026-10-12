@@ -315,12 +315,16 @@ class Manacher:
 
 ### ❌ Anti-Pattern 1: Omission of Unique Boundary Sentinels
 **Incorrect**: Transforming $S$ to `"#a#b#a#"` without boundary characters `^` and `$`.
+
 **Consequence**: The inner expansion loop `T[i + 1 + P[i]] == T[i - 1 - P[i]]` will throw an `IndexOutOfRangeException` or `IndexError` at index 0 or $|T|-1$.
+
 **Fix**: Always wrap with distinct characters that do not appear anywhere in $S$ (e.g., `^` at start, `$` at end).
 
 ### ❌ Anti-Pattern 2: Confusing Mirror Index Formula
 **Incorrect**: `int iMirror = c - i;` or `int iMirror = c - (i - c);`
+
 **Consequence**: Incorrect symmetry index calculation leading to invalid radius bounds and wrong outputs.
+
 **Fix**: The correct midpoint formula is $c - (i - c) = 2c - i$.
 
 ### ❌ Anti-Pattern 3: Index Mapping Off-by-One Errors

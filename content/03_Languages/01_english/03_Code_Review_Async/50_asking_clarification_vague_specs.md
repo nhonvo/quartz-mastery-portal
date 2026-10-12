@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Equip engineers with the linguistic tools to effectively push back or ask for clarification when Product Managers or stakeholders provide vague, incomplete, or ambiguous technical specifications.
+
 **Engineering Impact**: Prevents wasted engineering cycles, reduces architectural rework, and establishes the engineer as a proactive partner rather than an order-taker.
 
 ## 2. 🧊 Warming Up
@@ -37,11 +38,17 @@ When specifications are vague, the goal is to **seek clarity without sounding ac
 **Context**: An engineer is reviewing a new Jira epic for a "One-Click Checkout" feature. The spec simply says "Users should be able to checkout with one click."
 
 **Engineer (Alex)**: "Hey Sarah, I was reviewing the 'One-Click Checkout' epic. I love the concept, but I wanted to make sure we're fully aligned before I start architecture design."
+
 **PM (Sarah)**: "Sure, what's missing?"
+
 **Engineer (Alex)**: "The core flow is clear, but I noticed we haven't defined the behavior for expired credit cards. Should we prompt them for a new card inline, or fail the transaction and send an email?"
+
 **PM (Sarah)**: "Oh, good catch. I'd say prompt them inline so we don't lose the conversion."
+
 **Engineer (Alex)**: "Perfect. Also, regarding the inventory lock—if two people click at the exact same time, we could oversell. I propose we implement a 5-minute optimistic lock on the item. Does that sound reasonable?"
+
 **PM (Sarah)**: "Yes, let's go with the optimistic lock. Can you update the ticket with those details?"
+
 **Engineer (Alex)**: "Will do. Thanks for clarifying!"
 
 ## 6. 💬 Let's talk about the role play
@@ -197,6 +204,7 @@ Address the timeout issue by proposing an asynchronous solution. E.g., "For larg
 
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 **Scenario**: Your tech lead leaves a comment on your PR asking you to "Make the caching layer more robust." This is highly ambiguous. 
+
 **Task**: Write a reply asking for clarification. Propose two specific options (e.g., adding a TTL, or implementing a Redis fallback) to show proactive thinking.
 
 ## 🏆 Section 5: Model C1 & C2 Executive Script Benchmarks

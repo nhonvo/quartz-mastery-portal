@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the distinction between *Ser* and *Estar* when describing software architecture, system states, and service availability.
+
 **Engineering Impact**: Prevents critical misunderstandings during outages (e.g., "The server is dead" vs. "The server is down temporarily"). Correct usage conveys precision in system diagnostics and builds trust with cross-functional stakeholders.
 
 ### ⚙️ Contrastive Analysis & Theory (Ser vs Estar)
@@ -33,7 +34,9 @@ Notice how *estar/đang* reflects a temporary condition rather than an inherent 
 
 ### 🎭 Role-Play Dialogue (LATAM Tech Workplace)
 **Lead (Ana)**: Oye, ¿el clúster de Kubernetes **está** activo en producción? (Hey, is the K8s cluster active in prod? / Này, cụm K8s đang hoạt động trên production phải không?)
+
 **Dev (Carlos)**: No, **está** en modo de mantenimiento. El proceso de despliegue **es** bastante complejo hoy. (No, it's in maintenance mode. The deployment process is quite complex today. / Không, nó đang ở chế độ bảo trì. Quá trình triển khai hôm nay khá phức tạp.)
+
 **Lead (Ana)**: Entendido. Asegúrate de que los logs **estén** limpios antes de reiniciar. (Understood. Make sure the logs are clean before restarting. / Đã hiểu. Hãy đảm bảo các log sạch sẽ trước khi khởi động lại.)
 
 ### 📚 Bilingual Technical Vocabulary

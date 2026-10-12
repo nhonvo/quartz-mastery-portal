@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Learn how to use nominalization (turning verbs and adjectives into nouns) to make status updates, Root Cause Analyses (RCAs), and incident reports sound more objective, formal, and authoritative.
+
 **Engineering Impact**: Nominalization shifts the focus from *who* did the action to *what* happened. This removes unnecessary blame, elevates the formality of your writing, and makes technical documentation concise and C1/C2 level.
 
 ## 2. 🧊 Warming Up
@@ -47,10 +48,15 @@ Use: `[The/A] + [Nominalized Noun] + [Prepositional Phrase / Passive Verb]` ("Th
 **Scenario**: A Tech Lead (Sarah) is giving a status update to a Product Manager (David) regarding a recent system outage.
 
 **David**: Hi Sarah, can you give me a quick update on why the payment gateway went down yesterday?
+
 **Sarah**: Sure. The **disruption** was caused by the **expiration** of our SSL certificates. 
+
 **David**: I thought we had an auto-renew script. Did someone forget to run it?
+
 **Sarah**: The **execution** of the cron job failed due to a **dependency conflict** in the container. We're prioritizing the **resolution** of this conflict today.
+
 **David**: Understood. When can we expect the **restoration** of full services?
+
 **Sarah**: Full **restoration** is expected by EOD, followed by the **publication** of the RCA document tomorrow morning.
 
 ## 6. 💬 Let's talk about the role play
@@ -204,18 +210,23 @@ Conclude with what is being done without saying "We are mitigating." Use: "The m
 *Refactor the following B1/B2 sentences into C1/C2 objective statements using nominalization.*
 
 **1. Original**: We failed to authenticate the user because the token expired.
+
 **Refactored**: ______________________________________________________________
 
 **2. Original**: We are currently investigating why the latency spiked.
+
 **Refactored**: ______________________________________________________________
 
 **3. Original**: We resolved the issue by restarting the worker pods.
+
 **Refactored**: ______________________________________________________________
 
 **4. Original**: The system degraded because we didn't allocate enough memory.
+
 **Refactored**: ______________________________________________________________
 
 **5. Original**: We decided to rollback the release to prevent data corruption.
+
 **Refactored**: ______________________________________________________________
 
 <details>

@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the exact vocabulary and phrasing required to discuss, design, and defend security and authentication systems at a senior/staff engineering level.
+
 **Engineering Impact**: Clear communication regarding security prevents critical vulnerabilities. Misusing terms like "authorization" instead of "authentication", or vaguely describing "token issues", leads to architecture flaws, compliance violations, and confusing technical specs.
 
 ## 2. 🧊 Warming Up
@@ -42,10 +43,15 @@ In modern system design, security terminology must be precise.
 **Scenario**: A Staff Engineer (Sarah) is discussing a proposed microservices security model with the Product Manager (David).
 
 **David (PM)**: "Sarah, for the new B2B portal, can we just use a single API key for each tenant? It seems much faster to build."
+
 **Sarah (Staff Eng)**: "I strongly advise against a static API key approach for this tier of clients. It violates the principle of least privilege and lacks granular auditability. If a key is compromised, the entire tenant is exposed."
+
 **David (PM)**: "What's the alternative that doesn't push our timeline back by weeks?"
+
 **Sarah (Staff Eng)**: "We should federate identity using OAuth 2.0 with their existing Identity Providers (IdPs). We can issue short-lived, scoped JWTs. It decouples authentication from our core services and shifts the credential management liability back to the tenant. We just validate the signature and claims."
+
 **David (PM)**: "Ah, so we don't store their passwords at all. I like the sound of shifting the liability."
+
 **Sarah (Staff Eng)**: "Exactly. It's a zero-trust architecture approach that scales much better as we onboard larger enterprise clients."
 
 ## 6. 💬 Let's talk about the role play

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master relative pronouns (*que*, *quien*, *el cual*, *cuyo*, *lo que*) to connect complex ideas and write sophisticated technical specifications, documentation, and architectural proposals.
+
 **Engineering Impact**: Senior engineers don't write entirely in simple sentences. Instead of saying "The bug is fixed. The bug caused the outage," they write, "The bug *that* caused the outage, *which* was reported yesterday, has been fixed." Mastering relative pronouns elevates your Spanish from basic to C1/C2 professional fluency.
 
 ### ⚙️ Contrastive Analysis & Theory

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the Passive Voice (Ser + Participle) and the Impersonal "Se" to write objective, professional technical documentation, release notes, and bug reports without placing personal blame.
+
 **Engineering Impact**: In LATAM and Spain, professional technical writing (Jira tickets, PR descriptions, official docs) relies heavily on passive and impersonal structures. Saying "Juan rompió la base de datos" (Juan broke the database) is aggressive. Saying "Se rompió la base de datos" (The database was broken/broke) maintains psychological safety and objectivity.
 
 ### ⚙️ Contrastive Analysis & Theory

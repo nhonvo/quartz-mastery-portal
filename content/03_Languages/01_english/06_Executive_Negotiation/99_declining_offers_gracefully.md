@@ -6,6 +6,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 🎯 Executive Summary & Objectives
 **Goal**: Learn how to decline a job offer, promotion, or major technical request with grace, preserving the relationship for future opportunities.
+
 **Engineering Impact**: Maintaining a positive professional network is critical. Declining offers respectfully ensures the door remains open for future roles or collaborations, showcasing senior-level maturity and soft skills.
 
 ## 🧊 Warming Up
@@ -36,11 +37,17 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 **Scenario**: Alex (Senior Engineer) is on a call with Sarah (Hiring Manager) to decline a compelling job offer.
 
 **Sarah**: Hi Alex, great to connect. I hope you've had a chance to review the offer we sent over for the Staff Engineer position.
+
 **Alex**: Hi Sarah, thanks for taking the time to chat. Yes, I received it, and I want to start by saying how much I appreciate the offer and the fantastic conversations we've had throughout the interview process.
+
 **Sarah**: We really enjoyed speaking with you too! We think you'd be a great fit.
+
 **Alex**: That means a lot. However, after a lot of thought, I’ve decided I cannot accept the offer at this time. I've accepted another role that provides an opportunity to lead a data engineering organization from the ground up, which aligns perfectly with my long-term career goals.
+
 **Sarah**: I completely understand, though we're definitely sad to hear that. It sounds like a great opportunity for you.
+
 **Alex**: It was a very difficult decision, as I'm deeply impressed by the engineering culture here. I'd love to stay connected on LinkedIn—I'll definitely be cheering your team on from the sidelines.
+
 **Sarah**: Absolutely, let's definitely keep in touch. Best of luck in the new role, Alex!
 
 ## 💬 Let's talk about the role play
@@ -198,6 +205,7 @@ When giving your reason, focus on what the *other* role offers your career traje
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 
 **Scenario**: You interviewed for a Staff Engineer position at a fintech company. The hiring manager, Rebecca, offers you the job. However, you've decided to stay at your current company because they offered you a promotion to Engineering Manager, which aligns with your goal to move into people management. 
+
 **Task**: Write a short, professional response to Rebecca declining the offer over email. 
 
 ## 🏆 Section 5: Model C1 & C2 Executive Script Benchmarks

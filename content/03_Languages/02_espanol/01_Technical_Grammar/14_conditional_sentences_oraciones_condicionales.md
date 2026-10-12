@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the three types of conditional sentences (Si clauses) to hypothesize about code behavior, system architecture trade-offs, and past incidents (Post-mortems).
+
 **Engineering Impact**: Engineers constantly evaluate "what if" scenarios (e.g., "If we use NoSQL, we will lose ACID compliance", "If we had cached the data, the server wouldn't have crashed"). Conditional mastery is the backbone of System Design interviews and root-cause analysis across Spain and LATAM teams.
 
 ### ⚙️ Contrastive Analysis & Theory

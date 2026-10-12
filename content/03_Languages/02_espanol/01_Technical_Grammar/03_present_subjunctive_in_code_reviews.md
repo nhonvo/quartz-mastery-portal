@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Use the *Present Subjunctive* correctly to suggest changes, express doubts, and soften commands during async Code Reviews (PRs).
+
 **Engineering Impact**: Prevents you from sounding too aggressive or dictatorial in PR comments. The subjunctive demonstrates high emotional intelligence and C1/C2 level diplomacy in technical communication.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -34,7 +35,9 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Async PR Review)
 **Reviewer (Sofia)**: Hola equipo, dudo que esta función **maneje** (subjunctive) bien los casos extremos. (Hi team, I doubt this function handles edge cases well. / Chào nhóm, tôi nghi ngờ hàm này xử lý tốt các edge cases (trường hợp biên).)
+
 **Author (Luis)**: Tienes razón. ¿Prefieres que **agregue** (subjunctive) más pruebas unitarias? (You're right. Do you prefer that I add more unit tests? / Bạn nói đúng. Bạn có muốn tôi thêm nhiều unit test hơn không?)
+
 **Reviewer (Sofia)**: Sí, es crucial que el coverage **llegue** (subjunctive) al 80%. (Yes, it's crucial that the coverage reaches 80%. / Đúng vậy, điều cực kỳ quan trọng là coverage đạt đến 80%.)
 
 ### 📚 Bilingual Technical Vocabulary

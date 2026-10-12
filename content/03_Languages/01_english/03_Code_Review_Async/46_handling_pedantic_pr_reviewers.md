@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Equip engineers with the linguistic tools and behavioral frameworks to handle overly pedantic, nitpicky, or scope-creeping Pull Request (PR) reviewers. 
+
 **Engineering Impact**: Reduces PR cycle times, prevents developer burnout, and maintains a healthy, blameless engineering culture by shifting subjective arguments into objective, standards-driven discussions.
 
 ## 2. 🧊 Warming Up
@@ -38,11 +39,17 @@ When dealing with pedantic reviewers, the key strategy is **De-escalation via Ob
 *Context: Alex (Author) has submitted a PR to migrate a monolithic user authentication service to a microservice. Sam (Reviewer) is requesting an extensive rewrite of a data-mapping utility that was merely moved, not modified.*
 
 **Sam**: I noticed you just copied the `UserMapper` over. Honestly, this whole class uses an outdated builder pattern. You really should refactor this to use the new factory pattern we discussed last month before we merge this.
+
 **Alex**: Thanks for reviewing, Sam. I completely agree that the `UserMapper` is ripe for a refactor to the new factory pattern.
+
 **Sam**: Great, I'll hold off on approving until that's updated.
+
 **Alex**: While I agree with the long-term direction, the primary objective of this PR is strictly the infrastructure migration to the new microservice boundary. Modifying the mapping logic simultaneously would significantly increase our testing surface area and regression risk. 
+
 **Sam**: I see your point, but it feels like a missed opportunity to clean things up while you're in the file.
+
 **Alex**: I hear you. To balance our velocity with code quality, what if I create a dedicated Jira ticket specifically for the `UserMapper` refactor and assign it to our next sprint? That way, we can review the pattern change in isolation.
+
 **Sam**: That sounds like a reasonable compromise. Link the Jira ticket here, and I'll approve the PR.
 
 ## 6. 💬 Let's talk about the role play

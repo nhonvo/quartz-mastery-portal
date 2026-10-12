@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Learn how to effectively articulate your impact as a force multiplier, mentor, and productivity driver using the STAR method.
+
 **Engineering Impact**: Senior engineers are evaluated not just on individual contributions, but on how they elevate the entire team. Mastering C1/C2 vocabulary for mentoring demonstrates leadership, empathy, and organizational leverage.
 
 ## 2. 🧊 Warming Up
@@ -42,9 +43,13 @@ When discussing mentoring and productivity in interviews or performance reviews,
 *Context: A 1:1 between a Senior Engineer (Alex) and an Engineering Manager (Sarah) discussing team velocity.*
 
 **Sarah (EM)**: Alex, I've noticed our sprint velocity has increased over the last month. What do you attribute that to?
+
 **Alex (Senior Eng)**: Honestly, it's the result of upskilling the junior devs. Two months ago, I noticed a bottleneck where PRs were piling up because only a few of us could review the complex authentication logic.
+
 **Sarah (EM)**: Ah, the single point of failure issue. How did you resolve it?
+
 **Alex (Senior Eng)**: I proactively set up weekly pairing sessions to disseminate that domain knowledge. I also documented our auth flow and created a troubleshooting runbook. By empowering the rest of the team, we decentralized the review process. 
+
 **Sarah (EM)**: That’s fantastic. It really shows how you're acting as a force multiplier.
 
 ## 6. 💬 Let's talk about the role play

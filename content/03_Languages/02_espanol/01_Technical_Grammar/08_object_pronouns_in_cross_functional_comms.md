@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master Direct (lo, la, los, las) and Indirect (le, les, se) Object Pronouns for efficient, concise communication across teams.
+
 **Engineering Impact**: Repetitive noun usage ("I sent the report to the manager, the manager read the report") sounds very unnatural. C1/C2 proficiency requires pronoun chaining ("Se lo envié") to keep stand-ups and slack threads concise and fluid.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -38,8 +39,11 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Daily Stand-up)
 **Scrum Master (Diego)**: Carlos, ¿ya actualizaste el pipeline de CI/CD? (Carlos, did you update the CI/CD pipeline yet? / Carlos, bạn đã cập nhật pipeline CI/CD chưa?)
+
 **Dev (Carlos)**: Sí, **lo** actualicé anoche y **les** mandé un mensaje a los QA. (Yes, I updated it last night and sent a message to the QAs. / Vâng, tôi đã cập nhật nó tối qua và gửi tin nhắn cho các bạn QA.)
+
 **Scrum Master (Diego)**: Perfecto. ¿Y el documento de arquitectura? (Perfect. What about the architecture doc? / Hoàn hảo. Còn tài liệu kiến trúc thì sao?)
+
 **Dev (Carlos)**: **Se lo** compartí a la Tech Lead hace una hora. (I shared it with the Tech Lead an hour ago. / Tôi đã chia sẻ nó với Tech Lead cách đây một giờ.)
 
 ### 📚 Bilingual Technical Vocabulary

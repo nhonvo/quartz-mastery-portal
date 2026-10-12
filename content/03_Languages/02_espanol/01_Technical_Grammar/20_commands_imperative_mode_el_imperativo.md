@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the Imperative mode to give direct instructions in README files, CLI outputs, and urgent incident responses without sounding rude or grammatically incorrect.
+
 **Engineering Impact**: Documentation (READMEs, API docs, CLI tools) heavily relies on imperative commands (e.g., "Run this", "Install that"). Using the wrong form can make your open-source docs sound unprofessional or confusing to native Spanish speakers.
 
 ### ⚙️ Contrastive Analysis & Theory

@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the essential vocabulary and phrasing required to discuss distributed system reliability, specifically focusing on **idempotency** (safe API retries) and **backpressure** (data flow control and traffic shaping).
+
 **Engineering Impact**: In modern microservice architectures, knowing how to articulate failure handling, rate limiting, and safe retries separates Junior engineers from Senior/Staff engineers. Using the right terminology ensures precise technical alignment during incident reviews, system design interviews, and RFC drafting.
 
 ## 2. 🧊 Warming Up

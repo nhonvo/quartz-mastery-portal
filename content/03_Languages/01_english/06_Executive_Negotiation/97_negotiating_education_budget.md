@@ -8,6 +8,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 🎯 Executive Summary & Objectives
 **Goal**: Learn how to effectively negotiate a corporate education budget, including stipends for technical certifications, industry conferences, and advanced training.
+
 **Engineering Impact**: Securing an education budget allows engineers to upskill on company time/dime, leading to better architectural decisions, higher retention, and fostering a culture of continuous learning within the engineering organization.
 
 ## 🧊 Warming Up

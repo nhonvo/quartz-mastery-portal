@@ -8,6 +8,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 🎯 1. Executive Summary & Objectives
 **Goal**: To equip engineers with the exact linguistic frameworks and executive phrasing needed to negotiate title and leveling (e.g., L4 to L5, SDE II to Senior) during the offer stage or promotion cycle.
+
 **Engineering Impact**: Successfully negotiating your level fundamentally shifts your compensation band, scope of ownership, and equity grant structure. It is far more powerful to negotiate leveling than to negotiate base salary within the same band.
 
 ## 🧊 2. Warming Up
@@ -38,10 +39,15 @@ When negotiating a title, the focus must shift from **years of experience** to *
 *Context: Alex, a backend engineer, has received an offer for SDE II (L4) but believes their experience aligns with Senior SDE (L5). They are on a call with the internal recruiter, Sarah.*
 
 **Sarah (Recruiter)**: "Hi Alex, we're thrilled to extend this offer for the SDE II position. We believe your technical skills are a great match for the team."
+
 **Alex (Engineer)**: "Hi Sarah, thank you. I'm incredibly excited about the team and the vision. However, after reviewing the offer details, I'd like to discuss the leveling. During the system design rounds, we discussed my architecture for a real-time event streaming platform, which seems more aligned with your L5 expectations. Can you walk me through the leveling decision?"
+
 **Sarah (Recruiter)**: "The interviewers were very impressed, but our calibration committee felt that SDE II was the right entry point given our internal tech stack."
+
 **Alex (Engineer)**: "I appreciate that insight. Given my track record of leading cross-functional engineering initiatives and mentoring junior developers—core competencies of your Senior band—I'm confident I'll be operating at an L5 capacity from day one. Is there flexibility to re-calibrate this to Senior, perhaps by sharing additional documentation of my previous scope?"
+
 **Sarah (Recruiter)**: "I can take this back to the hiring manager and see if we can build a business case for an L5 exception."
+
 **Alex (Engineer)**: "Thank you, Sarah. I’d be happy to provide a brief write-up of my technical leadership impact to support that conversation."
 
 ## 💬 6. Let's talk about the role play

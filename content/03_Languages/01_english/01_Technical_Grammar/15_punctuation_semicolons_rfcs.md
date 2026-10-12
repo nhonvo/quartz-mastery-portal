@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the use of semicolons, colons, and advanced punctuation to structure complex technical ideas, especially when writing Architecture Decision Records (ADRs) or Requests for Comments (RFCs).
+
 **Engineering Impact**: Proper punctuation distinguishes amateur technical writing from C1/C2 executive communication. Semicolons help group related clauses tightly, avoiding choppy sentences or run-on comma splices, which is crucial for articulating system design trade-offs and multi-step workflows concisely.
 
 ## 2. 🧊 Warming Up
@@ -52,10 +53,15 @@ Use semicolons to separate items in a list when the items themselves contain com
 **Context**: A Principal Engineer (Sarah) is reviewing an RFC draft with a Senior Backend Engineer (David) regarding a microservices extraction.
 
 **Sarah**: David, I'm reviewing the "Monolith Extraction" RFC. The technical approach is solid, but the section on data migration is a bit hard to parse. You have several run-on sentences.
+
 **David**: Ah, I was trying to explain the dual-write mechanism and the backfill process in one go so the reader sees how they are connected.
+
 **Sarah**: I understand. Instead of stringing it together with "and" or commas, try using a semicolon. For example: "The application will dual-write to both databases; meanwhile, a background worker will backfill historical data." 
+
 **David**: That is much cleaner. It separates the two concurrent processes while keeping them conceptually linked. What about the list of affected services? I put commas everywhere.
+
 **Sarah**: Since the services have descriptions, use semicolons as super-commas. Like this: "Impacted systems include the billing service, which requires zero downtime; the notification service, which can tolerate slight delays; and the analytics pipeline."
+
 **David**: Got it. Colons for introducing the list, semicolons to separate the complex items. I'll refactor the document now.
 
 ## 6. 💬 Let's talk about the role play

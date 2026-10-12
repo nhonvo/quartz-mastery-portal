@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Formalizing remote work days, hybrid schedules, or Work-From-Anywhere (WFA) benefits in the contract.
+
 **Engineering Impact**: Equips software engineers with the exact DELE-aligned Spanish phrasing to professionally discuss total compensation, highlighting C1/C2 executive engineering depth and LATAM vs Spain lexical differences.
 
 ### ⚙️ Contrastive Analysis & Theory

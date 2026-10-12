@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the critical distinction between gerunds (verb + -ing) and infinitives (to + verb) when describing operational steps, procedures, or system behaviors. 
+
 **Engineering Impact**: Using the wrong form can fundamentally alter the meaning of a technical instruction (e.g., "stop to run the script" vs. "stop running the script"), leading to catastrophic execution errors, misconfigurations, or downtime during incident response.
 
 ## 2. 🧊 Warming Up
@@ -44,10 +45,15 @@ Some verbs completely change their meaning depending on whether they are followe
 **Context**: A DevOps Engineer (Dev) and a Site Reliability Engineer (SRE) are troubleshooting a production outage caused by a runaway cron job.
 
 **SRE**: "Alerts are blowing up. CPU utilization on the worker nodes is at 99%. Did someone **forget to throttle** the batch processor?"
+
 **Dev**: "I **remember setting** the concurrency limit to 5 yesterday, but it looks like the new deployment overwrote the config."
+
 **SRE**: "Alright. First, we need to **stop executing** new jobs. Terminate the current batch."
+
 **Dev**: "Done. Should we **try to rollback** the deployment?"
+
 **SRE**: "Not yet. The rollback might fail due to database schema locks. Let's **try isolating** the worker nodes from the load balancer first to see if the queue drains."
+
 **Dev**: "Got it. I'll isolate them now, then I'll **stop to review** the migration logs."
 
 ## 6. 💬 Let's talk about the role play

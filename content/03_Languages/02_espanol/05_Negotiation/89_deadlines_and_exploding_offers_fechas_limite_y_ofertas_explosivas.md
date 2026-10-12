@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Managing high-pressure tactics, asking for more time to review an offer, or delaying a decision.
+
 **Engineering Impact**: Equips software engineers with the exact DELE-aligned Spanish phrasing to professionally discuss total compensation, highlighting C1/C2 executive engineering depth and LATAM vs Spain lexical differences.
 
 ### ⚙️ Contrastive Analysis & Theory

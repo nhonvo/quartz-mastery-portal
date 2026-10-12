@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Use the *Conditional* tense to provide professional software estimations, discuss hypothetical scenarios, and soften requests.
+
 **Engineering Impact**: Prevents you from making hard commitments that you cannot keep. The conditional tense shifts your language from absolute guarantees ("I will finish it") to professional projections ("It would take", "It could be"), safeguarding your credibility in agile estimations.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -34,7 +35,9 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Backlog Grooming)
 **Product Owner (Laura)**: ¿Cuánto tiempo **tomaría** (conditional) integrar la nueva pasarela de pagos? (How long would it take to integrate the new payment gateway? / Sẽ mất bao lâu để tích hợp cổng thanh toán mới?)
+
 **Lead Dev (Roberto)**: Bueno, si la API de ellos es estable, yo **diría** (conditional) que nos **llevaría** (conditional) un sprint entero. (Well, if their API is stable, I would say it would take us a whole sprint. / Chà, nếu API của họ ổn định, tôi có thể nói rằng chúng ta sẽ mất cả một sprint.)
+
 **Product Owner (Laura)**: Perfecto. ¿**Podrías** (conditional) crear las sub-tareas para mañana? (Perfect. Could you create the sub-tasks for tomorrow? / Hoàn hảo. Bạn có thể tạo các sub-tasks (nhiệm vụ phụ) vào ngày mai không?)
 
 ### 📚 Bilingual Technical Vocabulary

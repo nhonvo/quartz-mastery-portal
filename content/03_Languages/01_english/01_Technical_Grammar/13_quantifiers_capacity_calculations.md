@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the precision of English quantifiers (*much, many, a few, a little, several, numerous, negligible, substantial*) when discussing system design, capacity estimations, and infrastructure bottlenecks.
+
 **Engineering Impact**: In system design interviews and architectural meetings, calculating capacity (QPS, storage, bandwidth) requires precise quantification. Misusing quantifiers can make you sound less authoritative or obscure the actual technical limits of your system.
 
 ## 2. 🧊 Warming Up
@@ -48,10 +49,15 @@ Quantifiers in English describe *how much* or *how many* of something there is. 
 **Context**: A Senior Backend Engineer (Alex) and an Engineering Manager (Sam) are discussing a recent spike in API traffic and the system's capacity limits.
 
 **Sam (Manager)**: Alex, the Black Friday sale is approaching. Do we have *enough* capacity to handle the projected traffic surge?
+
 **Alex (Engineer)**: Based on my back-of-the-envelope calculations, we have *plenty of* read throughput, but *very little* write headroom. 
+
 **Sam**: How *many* concurrent writes are we talking about?
+
 **Alex**: We're anticipating roughly 10,000 QPS. Currently, our database cluster can only handle a *fraction* of that. We'll experience *a great deal of* latency if we don't scale horizontally.
+
 **Sam**: Are there *any* quick wins we can implement?
+
 **Alex**: We could add *a few* read replicas to offload the analytical queries, which would free up *substantial* resources on the primary writer. The cost overhead would be *negligible*.
 
 ## 6. 💬 Let's talk about the role play
@@ -226,6 +232,7 @@ Identify the grammatical errors related to quantifiers and rewrite the sentences
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 
 **Scenario**: A junior engineer states: "The new message broker has many throughputs but uses much CPUs."
+
 **Task**: As a Senior Staff Engineer, politely correct their terminology and rephrase their observation into a professional, C1/C2-level technical statement for an upcoming architectural review document.
 
 **Your Response**:

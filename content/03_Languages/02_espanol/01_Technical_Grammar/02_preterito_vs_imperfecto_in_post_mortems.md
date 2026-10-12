@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the distinction between *Pretérito Indefinido* (completed past) and *Pretérito Imperfecto* (ongoing past/background) for writing incident reports and post-mortems.
+
 **Engineering Impact**: Crucial for establishing accurate timelines in incident reports. Knowing what "was happening" vs. what "happened" helps identify root causes effectively and communicate outages with executive-level clarity.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -34,6 +35,7 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Spain Tech Workplace)
 **SRE (Javier)**: ¿Qué **pasaba** (imperfect) con los pods justo antes de la caída? (What was happening with the pods just before the crash? / Chuyện gì đang xảy ra với các pod ngay trước khi sập?)
+
 **DevOps (Marta)**: El consumo de CPU **aumentaba** (imperfect) constantemente, y de repente, el nodo maestro **reinició** (preterite) todos los servicios. (CPU consumption was increasing steadily, and suddenly, the master node restarted all services. / Mức tiêu thụ CPU đang tăng liên tục, và đột nhiên, node master đã khởi động lại tất cả các dịch vụ.)
 
 ### 📚 Bilingual Technical Vocabulary

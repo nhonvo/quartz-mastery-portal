@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Discuss security vulnerabilities, encryption, authentication, and compliance with data privacy regulations (like GDPR) in Spanish.
+
 **Engineering Impact**: Security incidents must be communicated clearly and formally to mitigate legal and operational risks. Precision is critical.
 
 ### ⚙️ Contrastive Analysis & Theory

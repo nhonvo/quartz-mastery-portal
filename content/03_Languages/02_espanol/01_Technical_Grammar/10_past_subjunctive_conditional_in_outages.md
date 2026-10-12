@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master Type 2 (Unlikely present) and Type 3 (Impossible past) conditionals using the *Past Subjunctive* and *Conditional* tenses for RCA (Root Cause Analysis) and post-mortems.
+
 **Engineering Impact**: When writing a post-mortem, you must analyze alternative realities: "If we had scaled, this wouldn't have happened." This grammatical structure is the hallmark of C1/C2 technical retrospectives, proving deep analytical capabilities.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -36,7 +37,9 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Post-Mortem Meeting)
 **Lead (Ana)**: ¿Por qué no detectamos el memory leak en staging? (Why didn't we catch the memory leak in staging? / Tại sao chúng ta không phát hiện ra rò rỉ bộ nhớ ở staging?)
+
 **QA (Luis)**: Porque la carga era baja. Si **hubiéramos corrido** (past subj) pruebas de estrés, lo **habríamos visto** (cond perfect). (Because the load was low. If we had run stress tests, we would have seen it. / Vì tải thấp. Nếu chúng ta đã chạy kiểm thử chịu tải (stress test), chúng ta đã có thể thấy nó.)
+
 **Lead (Ana)**: Tienes razón. Si **tuviéramos** (past subj) un entorno de staging idéntico a producción, esto **sería** (cond) más fácil. (You're right. If we had a staging environment identical to prod, this would be easier. / Bạn nói đúng. Nếu chúng ta có một môi trường staging giống hệt production, việc này sẽ dễ dàng hơn.)
 
 ### 📚 Bilingual Technical Vocabulary

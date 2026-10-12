@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Engage in high-level system design discussions, detailing monolithic versus microservices architecture, message brokers, and distributed systems.
+
 **Engineering Impact**: Successfully passing System Design interviews in Spanish or defending architectural choices requires a robust, formal vocabulary beyond basic coding terms.
 
 ### ⚙️ Contrastive Analysis & Theory

@@ -251,16 +251,21 @@ def search_pattern(pattern: str, text: str, sentinel: str = "$") -> List[int]:
 
 ### ❌ Anti-Pattern 1: Choosing a Sentinel Present in Text/Pattern
 **Incorrect**: Using `sentinel = 'a'` when matching `"abc"` in `"ababa"`.
+
 **Consequence**: $Z[i]$ values cross the delimiter boundary into the text, producing false pattern matches or incorrect lengths.
+
 **Fix**: Select a non-alphanumeric sentinel guaranteed not to exist in input (e.g. `$`, `#`, `\0`).
 
 ### ❌ Anti-Pattern 2: Off-by-One in Z-box Right Bound
 **Incorrect**: Setting `r = i + z[i];` instead of `r = i + z[i] - 1;`.
+
 **Consequence**: $R$ represents an inclusive right bound ($S[L \dots R]$). Miscalculating $R$ by +1 causes invalid string slicing bounds and logical bugs in `r - i + 1`.
 
 ### ❌ Anti-Pattern 3: Incorrect Match Index Offset
 **Incorrect**: Pattern match starting index in $T$ computed as `i - m`.
+
 **Consequence**: Shifts start index by 1 due to the sentinel character `$`.
+
 **Fix**: Correct index mapping formula:
 $$\text{Text Index} = i - M - 1$$
 

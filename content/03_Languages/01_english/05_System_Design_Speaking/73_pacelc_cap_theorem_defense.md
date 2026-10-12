@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Equip Senior/Staff Engineers with the precise C1/C2 vocabulary, idiomatic expressions, and structural frameworks needed to articulate and defend architectural trade-offs using the CAP and PACELC theorems in a high-stakes System Design interview or Architectural Decision Record (ADR) meeting.
+
 **Engineering Impact**: Prevents "fluffy" architectural justifications. Demonstrates senior-level maturity by acknowledging that no distributed system is perfect, and every choice incurs a specific, quantifiable cost in either latency, consistency, or availability.
 
 ## 2. 🧊 Warming Up
@@ -45,8 +46,11 @@ An extension of CAP: **P**artition -> **A**vailability or **C**onsistency, **E**
 **Scenario**: A Staff Engineer (Alex) is defending their choice of a NoSQL database for a global user session store to a Principal Architect (Sam) in a design review.
 
 **Sam**: I see you've gone with DynamoDB with asynchronous replication for the session store. Aren't you worried about stale reads if a user switches regions?
+
 **Alex**: It's a calculated trade-off. Looking at this through the lens of PACELC, we're operating as a PA/EL system here. During a partition, we prioritize availability. Under normal conditions, we're prioritizing low latency over strong consistency.
+
 **Sam**: But what happens when that eventual consistency window overlaps with a region failover?
+
 **Alex**: Excellent point. In that specific edge case, a user might experience a "zombie session" state for up to 500 milliseconds. However, given our telemetry, region switching happens in less than 0.01% of sessions. To mitigate this, we employ client-side timestamp resolution. The latency cost of enforcing strong consistency across regions via a consensus protocol like Paxos or Raft would decimate our p99 SLA.
 
 ## 6. 💬 Let's talk about the role play
@@ -210,6 +214,7 @@ End with the business impact: *"Therefore, we are deliberately trading [X] for [
 
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 **Scenario**: You are proposing a Redis caching layer in front of a Postgres database. The Lead Engineer asks: *"Doesn't adding a cache introduce a consistency window? How do you justify that risk?"*
+
 **Task**: Write a 3-4 sentence response defending the caching layer, using the concepts of latency optimization and acceptable eventual consistency.
 
 ## 🏆 Section 5: Model C1 & C2 Executive Script Benchmarks

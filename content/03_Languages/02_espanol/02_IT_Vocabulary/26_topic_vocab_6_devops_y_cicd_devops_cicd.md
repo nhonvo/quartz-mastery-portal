@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Discuss pipelines, continuous integration, automation, and containerization in fluent Spanish.
+
 **Engineering Impact**: Aligning release cycles, explaining build failures, and configuring automated deployments safely requires mastery of DevOps vocabulary.
 
 ### ⚙️ Contrastive Analysis & Theory

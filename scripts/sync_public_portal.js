@@ -429,7 +429,7 @@ npx quartz build --serve
         console.log("  -> Staging files...")
         execSync(`git add .`, { cwd: TARGET_DIR, stdio: "inherit" })
         try {
-          execSync(`git commit -m "feat(portal): sync educational tracks from learning vault [skip ci]"`, { cwd: TARGET_DIR, stdio: "inherit" })
+          execSync(`git commit -m "feat(portal): sync educational tracks and configs from learning vault"`, { cwd: TARGET_DIR, stdio: "inherit" })
         } catch {
           console.log("  -> No new changes to commit.")
         }

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Engage effectively in Scrum events: Daily Standup, Sprint Planning, Retrospective, and Backlog Refinement in Spanish.
+
 **Engineering Impact**: Clear participation in Agile ceremonies ensures accurate story point estimation, removes blockers, and fosters team synergy.
 
 ### ⚙️ Contrastive Analysis & Theory

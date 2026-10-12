@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Discuss various testing strategies, QA processes, bug tracking, and code coverage with native Spanish fluency.
+
 **Engineering Impact**: Communicating bug reproduction steps and validating test criteria avoids misunderstandings between QA engineers and developers.
 
 ### ⚙️ Contrastive Analysis & Theory

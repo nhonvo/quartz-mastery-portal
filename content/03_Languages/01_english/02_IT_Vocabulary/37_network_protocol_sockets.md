@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the technical vocabulary required to discuss network protocols, sockets, and real-time communication architectures.
+
 **Engineering Impact**: Communicating clearly about network transport layers (TCP/UDP) and persistent connections (WebSockets) ensures that engineering teams can debate trade-offs involving latency, reliability, and throughput effectively.
 
 ## 2. 🧊 Warming Up
@@ -38,10 +39,15 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 *Context: A Senior Engineer (Alice) is discussing a real-time dashboard performance issue with the Tech Lead (Bob).*
 
 **Alice**: "Bob, I've been analyzing the latency metrics for our real-time analytics dashboard. The current HTTP long-polling implementation is causing significant overhead."
+
 **Bob**: "I saw the CPU spikes. Are we spending too much time establishing new connections?"
+
 **Alice**: "Exactly. The constant TLS handshakes and HTTP header overhead are degrading throughput. I propose we migrate the transport layer to WebSockets."
+
 **Bob**: "That makes sense for full-duplex communication. But what about our load balancers? They'll need to support persistent socket connections."
+
 **Alice**: "Good point. We'll need to reconfigure the ingress controllers to handle long-lived TCP connections and ensure we don't hit port exhaustion on the backend nodes."
+
 **Bob**: "Let's draft an RFC detailing the transition, especially how we handle connection drops and retries."
 
 ## 6. 💬 Let's talk about the role play

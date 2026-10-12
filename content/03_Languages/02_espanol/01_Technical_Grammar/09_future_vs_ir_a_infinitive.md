@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Distinguish between the Simple Future (desplegaré) and the Periphrastic Future (voy a desplegar) to communicate roadmaps, sprint goals, and long-term tech vision.
+
 **Engineering Impact**: "We are going to deploy tomorrow" (concrete sprint task) vs "AI will replace this system in 5 years" (visionary/probabilistic). Using these tenses accurately delineates immediate actionable plans from strategic roadmap projections.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -35,7 +36,9 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Roadmap vs Sprint)
 **Product Manager (Lucía)**: Para el próximo año, **añadiremos** (simple future) soporte para machine learning. ¿Pero qué haremos en este sprint? (For next year, we will add support for ML. But what are we going to do this sprint? / Cho năm tới, chúng ta sẽ thêm hỗ trợ ML. Nhưng chúng ta sẽ làm gì trong sprint này?)
+
 **Lead Dev (Jorge)**: En este sprint **vamos a optimizar** (ir a) las consultas SQL. Yo me **voy a encargar** de los índices. (This sprint we are going to optimize the SQL queries. I am going to handle the indexes. / Trong sprint này, chúng ta sẽ tối ưu hóa các truy vấn SQL. Tôi sẽ phụ trách các index.)
+
 **Product Manager (Lucía)**: Me parece bien. Eso **mejorará** (simple future) mucho la retención de usuarios. (Sounds good. That will greatly improve user retention. / Nghe hay đấy. Điều đó sẽ cải thiện đáng kể khả năng giữ chân người dùng.)
 
 ### 📚 Bilingual Technical Vocabulary

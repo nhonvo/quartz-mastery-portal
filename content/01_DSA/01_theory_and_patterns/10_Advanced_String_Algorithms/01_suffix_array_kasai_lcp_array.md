@@ -314,12 +314,15 @@ class SuffixArray:
 
 ### ❌ Anti-Pattern 1: Confusing Rank and Suffix Array Maps
 **Incorrect**: `int j = sa[i - 1];` inside Kasai LCP iteration.
+
 **Consequence**: `i` is the original string position, NOT the suffix array position.
+
 **Fix**: Obtain SA predecessor via inverse array `Rank`:
 $$j = \text{SA}[\text{Rank}[i] - 1]$$
 
 ### ❌ Anti-Pattern 2: Forgetting to Decrement $h$
 **Incorrect**: Omission of `if (h > 0) h--;`.
+
 **Consequence**: Kasai's algorithm degrades to $O(N^2)$ worst-case time by re-comparing characters from scratch.
 
 ### ❌ Anti-Pattern 3: LCP Indexing Misalignment

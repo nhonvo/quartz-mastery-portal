@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the Future (-é, -ás, -á) and Conditional (-ía, -ías, -ía) tenses to discuss roadmap planning, make technical estimations, and express polite hypothetical requests.
+
 **Engineering Impact**: When planning roadmaps, differentiating between what *will* happen (Future) and what *would* happen under certain conditions (Conditional) is crucial for managing stakeholder expectations across cross-functional teams in Spain and LATAM.
 
 ### ⚙️ Contrastive Analysis & Theory

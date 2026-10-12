@@ -519,7 +519,7 @@ export async function handleBuild(argv) {
         // does /trailing/index.html exist? if so, serve it
         const indexFp = path.posix.join(fp, "index.html")
         if (fs.existsSync(path.posix.join(argv.output, indexFp))) {
-          req.url = fp
+          req.url = indexFp
           return serve()
         }
 

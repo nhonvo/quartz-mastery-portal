@@ -111,6 +111,97 @@ C.gfx.stroke({alpha:C.alpha,width:1.2,color:C.color})`
   return patchedCount
 }
 
-if (process.argv[1]?.endsWith("patch-graph.mjs")) {
+const explorerFiles = [
+  "node_modules/@quartz-community/explorer/dist/index.js",
+  "node_modules/@quartz-community/explorer/dist/components/index.js",
+]
+
+export function patchExplorerFiles() {
+  let patchedCount = 0
+
+  for (const relPath of explorerFiles) {
+    const fullPath = path.resolve(relPath)
+    if (!fs.existsSync(fullPath)) {
+      continue
+    }
+
+    let code = fs.readFileSync(fullPath, "utf8")
+    let modified = false
+
+    // 1. Default folder state to open (instead of default collapsed)
+    const defaultCollapsedPattern = 'let C=r[u.slug]!==void 0?r[u.slug]:!0,c=S(u.slug),f=c&&c===A.slice(0,c.length);'
+    const defaultOpenCode = 'let C=r[u.slug]!==void 0?r[u.slug]:!1,c=S(u.slug),f=c&&c===A.slice(0,c.length);'
+
+    if (code.includes(defaultCollapsedPattern)) {
+      code = code.replace(defaultCollapsedPattern, defaultOpenCode)
+      modified = true
+    }
+
+    // 2. Prevent rebuilding/wiping tree on SPA navigations if already populated
+    const originalTreeBuild = 'let d=t.dataset.dataFns,E=t.dataset.behavior||"collapse";console.log("[Explorer] Starting tree build...");let A=await R(d);if(e===b){if(console.log("[Explorer] Render generation is current, rendering tree"),console.log("[Explorer] Trie result:",A?"success":"null"),A&&A.children&&A.children.length>0){n.innerHTML=\'<li class="overflow-end"></li>\',console.log("[Explorer] Rendering",A.children.length,"children");for(let o of A.children)N(o,n,D,E,r,"");console.log("[Explorer] Render complete, final list length:",n.children.length)}else console.warn("[Explorer] No trie or empty children");let l=sessionStorage.getItem("explorerScrollTop");if(l)n.scrollTop=parseInt(l,10);else{let o=n.querySelector(".active");o&&o.scrollIntoView({behavior:"smooth"})}}else console.log("[Explorer] Stale render generation, skipping tree render");'
+    const preserveTreeCode = 'let d=t.dataset.dataFns,E=t.dataset.behavior||"collapse";if(n.children&&n.children.length>1){n.querySelectorAll("a.active, a.is-active").forEach(a=>a.classList.remove("active","is-active"));let _curSlug=S(D),_activeA=null;if(_curSlug&&_curSlug!=="/"){for(let _a of n.querySelectorAll("a")){let _h=_a.getAttribute("href")||"";if(_h.endsWith(_curSlug)||_h.endsWith(_curSlug+"/")||_h.includes("/"+_curSlug)){_a.classList.add("active","is-active");_activeA=_a;let _p=_a.closest(".folder-outer");while(_p){_p.classList.add("open");_p=_p.parentElement?.closest(".folder-outer");}break;}}}if(!_activeA){n.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f=>f.classList.add("open"));}let l=sessionStorage.getItem("explorerScrollTop");if(l)n.scrollTop=parseInt(l,10);else if(_activeA){_activeA.scrollIntoView({behavior:"smooth",block:"center"});}}else{let A=await R(d);if(e===b){if(A&&A.children&&A.children.length>0){n.innerHTML=\'<li class="overflow-end"></li>\';for(let o of A.children)N(o,n,D,E,r,"");let _activeA=n.querySelector(".active, .is-active");if(_activeA){let _p=_activeA.closest(".folder-outer");while(_p){_p.classList.add("open");_p=_p.parentElement?.closest(".folder-outer");}}else{n.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f=>f.classList.add("open"));}}let l=sessionStorage.getItem("explorerScrollTop");if(l)n.scrollTop=parseInt(l,10);else{let o=n.querySelector(".active");o&&o.scrollIntoView({behavior:"smooth",block:"center"})}}}'
+
+    if (code.includes(originalTreeBuild)) {
+      code = code.replace(originalTreeBuild, preserveTreeCode)
+      modified = true
+    }
+
+    if (modified) {
+      fs.writeFileSync(fullPath, code, "utf8")
+      patchedCount++
+      console.log(`[patch-explorer] Successfully patched ${relPath}`)
+    } else {
+      console.log(`[patch-explorer] Already up-to-date in ${relPath}`)
+    }
+  }
+
+  return patchedCount
+}
+
+const micromorphFiles = [
+  "node_modules/micromorph/dist/index.js",
+]
+
+export function patchMicromorphFiles() {
+  let patchedCount = 0
+
+  for (const relPath of micromorphFiles) {
+    const fullPath = path.resolve(relPath)
+    if (!fs.existsSync(fullPath)) {
+      continue
+    }
+
+    let code = fs.readFileSync(fullPath, "utf8")
+    let modified = false
+
+    // Root cause: micromorph diffs element children even when data-persist is present.
+    // In function p(e, t), if e has data-persist, return undefined (no patch needed, preserve e as-is!)
+    const originalDiff = 'function p(e,t){if(!e)return{type:0,node:c(t)};if(!t)return{type:1};'
+    const safeDiff = 'function p(e,t){if(!e)return{type:0,node:c(t)};if(!t)return{type:1};if(e.nodeType===1&&e.hasAttribute("data-persist"))return;'
+
+    if (code.includes(originalDiff)) {
+      code = code.replace(originalDiff, safeDiff)
+      modified = true
+    }
+
+    if (modified) {
+      fs.writeFileSync(fullPath, code, "utf8")
+      patchedCount++
+      console.log(`[patch-micromorph] Successfully patched ${relPath}`)
+    } else {
+      console.log(`[patch-micromorph] Already up-to-date in ${relPath}`)
+    }
+  }
+
+  return patchedCount
+}
+
+export function patchAll() {
   patchGraphFiles()
+  patchExplorerFiles()
+  patchMicromorphFiles()
+}
+
+if (process.argv[1]?.endsWith("patch-graph.mjs")) {
+  patchAll()
 }

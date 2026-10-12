@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the subjunctive in adverbial clauses to express conditions, purpose, temporal relationships, and contingencies (e.g., "We will deploy *as soon as* the tests pass", "Run this script *in case* the server fails").
+
 **Engineering Impact**: Precise timing and conditions are critical in DevOps, CI/CD pipelines, and incident response. Using the correct mood in Spanish ensures your team knows exactly whether a condition is a future dependency (Subjunctive) or a past/habitual fact (Indicative).
 
 ### ⚙️ Contrastive Analysis & Theory

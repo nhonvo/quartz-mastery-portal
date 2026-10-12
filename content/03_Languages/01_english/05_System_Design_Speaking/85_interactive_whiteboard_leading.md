@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the vocabulary and structural phrasing needed to command an interactive whiteboard (physical or virtual) during a System Design interview or architecture meeting.
+
 **Engineering Impact**: Effectively leading a whiteboard session transforms a static interview into a collaborative design process. It demonstrates senior-level communication, structured thinking, and the ability to visually orchestrate complex distributed systems while maintaining an ongoing dialogue with stakeholders or interviewers.
 
 ## 2. 🧊 Warming Up
@@ -39,10 +40,15 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 **Scenario**: A candidate (Engineer) is leading a whiteboard session for a scalable chat application with an Interviewer.
 
 **Engineer**: "Okay, let's start mapping this out. I'll anchor the mobile clients on the far left. Over here on the right, I'll set up our primary database."
+
 **Interviewer**: "Makes sense. How are you handling the real-time connections?"
+
 **Engineer**: "Good question. Right in the middle, I'm drawing a cluster of WebSocket servers. I'll use a bidirectional arrow here to represent the persistent TCP connections."
+
 **Interviewer**: "What happens if a WebSocket server goes down?"
+
 **Engineer**: "Let me sketch that out. I'll add a load balancer in front of them. If a node fails, the client disconnects and reconnects. To manage the state, I'll add a Redis Pub/Sub instance up here at the top to route messages between the WebSocket servers."
+
 **Interviewer**: "Looks solid. Can we zoom in on the database schema?"
 
 ## 6. 💬 Let's talk about the role play
@@ -200,6 +206,7 @@ End your monologue by validating your design choice with the interviewer. Exampl
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 
 **Scenario**: You are drawing a microservices architecture. You notice you are running out of space on the right side of the whiteboard where the databases should go. 
+
 **Question**: How do you verbally handle the situation while keeping the interview flowing smoothly and professionally?
 
 *(Self-Evaluate: Did you narrate your adjustment? Did you use terms like 'abstract away' or 'reorganize'?)*

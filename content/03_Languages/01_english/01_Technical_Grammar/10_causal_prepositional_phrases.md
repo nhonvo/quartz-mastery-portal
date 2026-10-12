@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the use of formal causal prepositional phrases (e.g., *due to*, *owing to*, *on account of*, *as a result of*, *thanks to*, *given*) to express cause and effect in engineering contexts.
+
 **Engineering Impact**: In system post-mortems, incident reports, and architecture design documents, explaining *why* something happened or *why* a decision was made is critical. Using sophisticated causal phrases elevates your communication from basic (B1/B2 "because of") to executive/staff level (C1/C2), ensuring clarity, objectivity, and professional tone.
 
 ## 2. 🧊 Warming Up
@@ -45,10 +46,15 @@ OR
 **Context**: A post-mortem meeting between an Engineering Manager (Sarah) and a Senior DevOps Engineer (David) discussing a recent outage.
 
 **Sarah (Manager)**: Let's review the root cause of yesterday's downtime. The initial metrics looked stable before the deployment.
+
 **David (DevOps)**: Correct. The cluster was perfectly healthy. However, the outage occurred **as a result of** a configuration drift in the Kubernetes manifests.
+
 **Sarah (Manager)**: I see. Was that missed in the staging environment?
+
 **David (DevOps)**: Yes. **Owing to** an outdated environment variable in staging, the misconfiguration wasn't triggered during testing.
+
 **Sarah (Manager)**: Understood. What are our remediation steps?
+
 **David (DevOps)**: **Given** the impact, we are automating the configuration sync across all environments. Also, **thanks to** the quick response from the on-call team, data loss was completely mitigated.
 
 ## 6. 💬 Let's talk about the role play
@@ -88,6 +94,7 @@ OR
 **Context**: You are a Senior Backend Engineer writing an Incident Report (RCA - Root Cause Analysis) for an API outage. The outage happened because an external payment gateway was down for 45 minutes, causing a backlog of unprocessed transactions. Ultimately, your team resolved it quickly by activating a fallback queue, which prevented data loss.
 
 **Your Task**: Write a brief executive summary for the post-mortem document. Explain why the outage happened, the impact on the system, and the positive outcome of your team's mitigation strategy.
+
 **Constraint**: You must use at least THREE different causal prepositional phrases (e.g., *due to*, *owing to*, *as a result of*, *thanks to*, *given*).
 
 ---
@@ -220,6 +227,7 @@ Identify the grammatical error or stylistic weakness in the sentences below and 
 
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 **Scenario**: You are presenting a technical roadmap to stakeholders. You originally planned to migrate to a new cloud provider this quarter, but you decided to postpone it because the current team is understaffed and busy with a critical compliance audit.
+
 **Task**: Explain this delay to the stakeholders professionally. Use at least two causal prepositional phrases.
 
 *(Draft your response before checking the benchmarks)*

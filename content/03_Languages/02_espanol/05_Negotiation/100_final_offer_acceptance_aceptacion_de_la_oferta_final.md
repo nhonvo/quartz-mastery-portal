@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Formally accepting the offer and outlining next steps with professional grace.
+
 **Engineering Impact**: Equips software engineers with the exact DELE-aligned Spanish phrasing to professionally discuss total compensation, finalize negotiations, and begin a new role with a strong reputational baseline.
 
 ### ⚙️ Contrastive Analysis & Theory

@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the use of mixed conditionals to express hypotheses bridging past actions and present/future consequences, or present states and past consequences. 
+
 **Engineering Impact**: Mixed conditionals are essential in incident retrospectives, post-mortems, and architectural reviews. They allow engineers to articulate hypothetical scenarios concisely: "If we had designed this as a microservice (past action), we wouldn't be dealing with these monolithic deployment bottlenecks today (present result)." This demonstrates senior-level critical thinking and system awareness.
 
 ## 2. 🧊 Warming Up

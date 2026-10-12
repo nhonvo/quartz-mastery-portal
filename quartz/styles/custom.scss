@@ -94,7 +94,29 @@ html, body {
   }
 
   @media all and (max-width: 800px) {
-    display: none !important;
+    & > .search-button {
+      display: none !important;
+    }
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+}
+
+// Dialogue / Speaker Turn Styling (e.g. Roleplay and Interview dialogue lines)
+.markdown-rendered p:has(> strong:first-child) {
+  padding: 0.45rem 0.85rem;
+  margin: 0.4rem 0;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--lightgray) 20%, transparent);
+  border-left: 3px solid var(--secondary);
+  line-height: 1.6;
+
+  & > strong:first-child {
+    color: var(--secondary);
+    font-weight: 700;
   }
 }
 
@@ -394,8 +416,17 @@ header {
 
 // 9. Independent Sticky Sidebar Flex Layout & Smooth Internal Scroll
 @media all and (min-width: 801px) {
+  :root {
+    --sidebar-left-width: 320px;
+  }
+
   .page > #quartz-body {
+    grid-template-columns: var(--sidebar-left-width, 320px) minmax(0, 1fr) var(--sidebar-right-width, 320px) !important;
+
     .sidebar.left {
+      width: var(--sidebar-left-width, 320px) !important;
+      max-width: var(--sidebar-left-width, 320px) !important;
+      flex-basis: var(--sidebar-left-width, 320px) !important;
       position: sticky !important;
       top: 0 !important;
       height: 100vh !important;
@@ -479,7 +510,8 @@ body.focus-reading-mode {
 }
 
 // 11. Reading Modes with High-Contrast Link Colors (WCAG AAA)
-html[data-reading-mode="paper"] {
+// Paper Mode - Light Theme
+html:not([saved-theme="dark"])[data-reading-mode="paper"] {
   --light: #f5efe6 !important;
   --dark: #2d251e !important;
   --darkgray: #574c43 !important;
@@ -493,7 +525,23 @@ html[data-reading-mode="paper"] {
   }
 }
 
-html[data-reading-mode="warm"] {
+// Paper Mode - Dark Theme (Warm espresso / soothing sepia-dark)
+html[saved-theme="dark"][data-reading-mode="paper"] {
+  --light: #1c1917 !important;     /* Stone 900 background */
+  --dark: #f5f5f4 !important;      /* Stone 100 text */
+  --darkgray: #d6d3d1 !important;  /* Stone 300 */
+  --lightgray: #292524 !important; /* Stone 800 */
+  --secondary: #fb923c !important; /* Soft Amber Orange */
+  --tertiary: #fdba74 !important;
+  --highlight: rgba(251, 146, 60, 0.16) !important;
+  body {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+  }
+}
+
+// Warm Mode - Light Theme
+html:not([saved-theme="dark"])[data-reading-mode="warm"] {
   --light: #faf5ee !important;
   --dark: #2a2421 !important;
   --darkgray: #5c524c !important;
@@ -501,6 +549,21 @@ html[data-reading-mode="warm"] {
   --secondary: #b45309 !important; /* Warm Amber (7.0:1 AAA) */
   --tertiary: #c2410c !important;  /* Warm Coral (7.2:1 AAA) */
   --highlight: rgba(180, 83, 9, 0.12) !important;
+  body {
+    background-color: var(--light) !important;
+    color: var(--dark) !important;
+  }
+}
+
+// Warm Mode - Dark Theme (Warm amber dark / night tint)
+html[saved-theme="dark"][data-reading-mode="warm"] {
+  --light: #1a1614 !important;     /* Deep warm dark background */
+  --dark: #fef3c7 !important;      /* Amber 100 warm text */
+  --darkgray: #e2d9cc !important;
+  --lightgray: #2d241e !important; /* Warm deep border */
+  --secondary: #f59e0b !important; /* Amber 500 */
+  --tertiary: #fcd34d !important;
+  --highlight: rgba(245, 158, 11, 0.16) !important;
   body {
     background-color: var(--light) !important;
     color: var(--dark) !important;
@@ -777,16 +840,17 @@ html[data-reading-mode="warm"] {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: contain !important;
-    transform: translateX(-105%) !important;
+    transform: translate3d(-105%, 0, 0) !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s ease, opacity 0.2s ease !important;
+    will-change: transform, opacity, visibility !important;
+    transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.28s ease, opacity 0.22s ease !important;
   }
 
   /* When drawer is open (:not(.collapsed)) */
   .page > #quartz-body .sidebar.left .explorer:not(.collapsed) > .explorer-content {
-    transform: translateX(0) !important;
+    transform: translate3d(0, 0, 0) !important;
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: auto !important;

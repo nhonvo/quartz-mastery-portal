@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Learn how to draft highly professional, value-driven counter-offer emails that maximize Total Compensation (TC) without alienating the recruiter or hiring manager. 
+
 **Engineering Impact**: As engineers progress to Senior, Staff, and Principal levels, a significant portion of compensation shifts to equity (RSUs/options) and performance bonuses. Mastering the written counter-offer ensures you are compensated at top-of-market rates for your architectural and leadership value, leveraging competing offers or market data strategically.
 
 ## 2. 🧊 Warming Up

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the *Pasiva Refleja* (Passive voice with 'Se') to write objective, blame-free error messages and system logs.
+
 **Engineering Impact**: "You broke the server" vs. "An error occurred." The 'se' passive voice depersonalizes technical failures, reducing friction with end-users and providing a C1/C2 professional tone to system logs and UI alerts.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -34,7 +35,9 @@ In Spanish, the true passive (fue destruido) is rarely used in everyday tech UI.
 
 ### 🎭 Role-Play Dialogue (Designing UI Alerts)
 **UX Writer (Elena)**: El mensaje actual dice "Tú escribiste mal la contraseña". Es muy agresivo. (The current message says "You typed the password wrong". It's too aggressive. / Thông báo hiện tại ghi "Bạn gõ sai mật khẩu". Nghe quá công kích.)
+
 **Dev (Marcos)**: Tienes razón. Lo cambiaré a "**Se ingresó** una contraseña incorrecta". (You're right. I'll change it to "An incorrect password was entered". / Bạn nói đúng. Tôi sẽ đổi thành "Một mật khẩu không chính xác đã được nhập".)
+
 **UX Writer (Elena)**: Mucho mejor. Y si la red falla, podemos usar "**Se perdió** la conexión con el servidor". (Much better. And if the network fails, we can use "Connection to the server was lost". / Tốt hơn nhiều. Và nếu mạng lỗi, chúng ta có thể dùng "Kết nối tới máy chủ đã bị mất".)
 
 ### 📚 Bilingual Technical Vocabulary

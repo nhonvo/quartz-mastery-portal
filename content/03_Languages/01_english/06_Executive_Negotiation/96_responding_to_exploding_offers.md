@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Equip engineers with the C1/C2 linguistic tools to gracefully handle "exploding offers" (job offers with tight 24-48 hour deadlines) without burning bridges or succumbing to undue pressure.
+
 **Engineering Impact**: Exploding offers force premature decisions, often costing engineers significant compensation leverage or a better cultural fit. Mastering professional pushback secures the time needed to finalize competing loops, resulting in higher Total Compensation (TC) and better career alignment.
 
 ## 2. 🧊 Warming Up
@@ -39,10 +40,15 @@ Handling an exploding offer requires the **"A.A.R. Framework"** (Appreciation, A
 *Context: An Engineer (Sarah) is on a call with a Recruiter (Dan) who just verbally extended an offer.*
 
 **Dan (Recruiter)**: Sarah, we’re thrilled to offer you the Senior Backend Engineer role. The TC is $220k. Because we have other candidates waiting, this offer is valid for 48 hours. We need an answer by Wednesday.
+
 **Sarah (Engineer)**: Dan, thank you so much. I’m incredibly excited about the prospect of joining the infrastructure team, especially after speaking with the Director about the Kubernetes migration.
+
 **Dan (Recruiter)**: That’s great to hear! Can we expect the signed offer letter tomorrow?
+
 **Sarah (Engineer)**: While I'm very enthusiastic about the offer, 48 hours is a bit too tight for me to make a fully informed decision. I’m wrapping up one final onsite loop this Thursday. I want to be entirely transparent with you and fair to them. I would be in a position to give you a definitive answer by next Monday.
+
 **Dan (Recruiter)**: I see. Our hiring manager is really pushing to close this req.
+
 **Sarah (Engineer)**: I completely understand the urgency. However, choosing my next team is a major commitment, and I want to ensure I'm 100% dialed in when I say yes. Would it be possible to extend the deadline to Monday? 
 
 ## 6. 💬 Let's talk about the role play
@@ -72,6 +78,7 @@ Handling an exploding offer requires the **"A.A.R. Framework"** (Appreciation, A
 
 ## 1. 🏗️ Scenario & Engineering Context
 **The Situation**: You just received a verbal offer from "FinTech Solutions" on Friday at 3:00 PM for a Staff Cloud Architect position. The recruiter, Mike, emails you the contract and states: *"We need a signed response by Monday at 9:00 AM, as we have a backup candidate ready."*
+
 **Your Reality**: You are highly interested, but you have your final onsite loop with "MegaScale Inc." scheduled for next Tuesday. You need an extension until next Friday to complete that loop and compare total compensation packages.
 
 **Your Goal**: Write an email reply to Mike that:

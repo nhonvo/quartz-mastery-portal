@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the critical distinction between "Por" and "Para" in technical contexts to accurately communicate deadlines, purpose, causes, and means of communication.
+
 **Engineering Impact**: Confusing "por" and "para" can lead to massive misunderstandings. "Desarrollé esto *por* ti" means "I developed this *because* of you" (maybe you forced me to). "Desarrollé esto *para* ti" means "I developed this *for* you" (as a feature/gift). Accuracy here defines clarity in sprints, deadlines, and architectural intent.
 
 ### ⚙️ Contrastive Analysis & Theory

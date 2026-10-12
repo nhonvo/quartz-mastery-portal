@@ -8,6 +8,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 🎯 Executive Summary & Objectives
 **Goal**: Equip you with the precise vocabulary and structured phrasing needed to clearly articulate and justify caching strategies (Cache-aside, Write-through, Write-behind, Read-through) in system design interviews and architectural review meetings.
+
 **Engineering Impact**: Communicating trade-offs effectively prevents misunderstandings about data consistency, latency expectations, and infrastructure costs. Senior engineers don't just "add a cache"—they articulate the *why* and the *trade-offs*.
 
 ## 🧊 Warming Up
@@ -40,13 +41,19 @@ When explaining caching strategies, structure your argument using the **PACELC /
 
 ## 🎭 Role-Play Dialogue
 **Context**: An architectural review meeting discussing a new user profile service.
+
 **Participants**: Alex (Senior Engineer), Sarah (Engineering Manager).
 
 **Sarah**: The user profile service is going to face heavy read traffic. Have you considered our caching strategy?
+
 **Alex**: Yes, I’m leaning towards a **cache-aside** pattern with Redis. Since user profiles are read-heavy and updated infrequently, having the application lazily load data into the cache makes the most sense.
+
 **Sarah**: What about staleness? If a user updates their profile, how quickly do those changes propagate?
+
 **Alex**: That’s the primary trade-off. We'd have **eventual consistency**. To mitigate stale reads, I propose a two-pronged approach: setting a reasonable TTL of 15 minutes, and actively invalidating the cache key whenever a write operation occurs on that specific profile.
+
 **Sarah**: Makes sense. Why not just use **write-through** to avoid staleness entirely?
+
 **Alex**: While write-through guarantees strict consistency, it incurs a latency penalty on every write operation since we have to update both the cache and the database synchronously. Given our SLA requires sub-50ms writes, cache-aside with explicit invalidation is a more pragmatic compromise.
 
 ## 💬 Let's talk about the role play

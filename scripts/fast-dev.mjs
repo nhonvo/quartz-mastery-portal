@@ -19,10 +19,10 @@ import { spawn } from "child_process"
 import { existsSync, rmSync, mkdirSync, cpSync, readFileSync, writeFileSync } from "fs"
 import path from "path"
 import os from "os"
-import { patchGraphFiles } from "./patch-graph.mjs"
+import { patchAll } from "./patch-graph.mjs"
 
-// Automatically ensure Obsidian graph patches are active
-patchGraphFiles()
+// Automatically ensure Obsidian graph & Explorer stability patches are active
+patchAll()
 
 const args = process.argv.slice(2)
 const trackIndices = args.flatMap((arg, idx) => arg === "--track" ? [idx + 1] : [])

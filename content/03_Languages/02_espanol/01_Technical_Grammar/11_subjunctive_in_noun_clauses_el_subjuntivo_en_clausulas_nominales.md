@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the use of the subjunctive mood in noun clauses to express doubt, emotion, recommendations, and influence during code reviews and team meetings.
+
 **Engineering Impact**: In software engineering, especially across LATAM and Spain, direct commands can sound abrasive. Using the subjunctive allows for polite suggestions, expressing uncertainties about code stability, and managing team expectations smoothly without damaging psychological safety.
 
 ### ⚙️ Contrastive Analysis & Theory

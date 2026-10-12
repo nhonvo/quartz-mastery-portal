@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master Type 2 (hypothetical present/future) and Type 3 (hypothetical past) conditionals to articulate complex system design tradeoffs, evaluate alternative architectures, and conduct blameless post-mortems. 
+
 **Engineering Impact**: Communicating "what-ifs" gracefully allows senior engineers to navigate technical debt and system constraints without sounding accusatory or overly definitive.
 
 ## 2. 🧊 Warming Up
@@ -38,8 +39,11 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 *Context: A Staff Engineer (Sarah) and a Product Manager (David) are discussing a recent outage and future scaling plans.*
 
 **David**: The checkout service went down for 20 minutes yesterday. What exactly happened?
+
 **Sarah**: The external payment gateway experienced a massive spike in latency. If we **had implemented** a circuit breaker pattern, our system **would have gracefully degraded** instead of exhausting the connection pool.
+
 **David**: I see. Should we build a fallback queue now?
+
 **Sarah**: If we **added** a fallback queue, it **would increase** the system's resilience, but it **might introduce** eventual consistency issues for the users. We need to weigh that trade-off carefully.
 
 ## 6. 💬 Let's talk about the role play

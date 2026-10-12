@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the core English phrasal verbs used by Senior and Staff engineers when discussing software abstraction, modularity, and system design boundaries.
+
 **Engineering Impact**: Effectively communicating abstraction boundaries prevents monolithic design and tight coupling. Using the correct phrasal verbs demonstrates a high-level (C1/C2) understanding of software architecture, enabling clearer discussions on encapsulation, code reuse, and system complexity management.
 
 ## 2. 🧊 Warming Up
@@ -44,10 +45,15 @@ Phrasal verbs related to abstraction often involve spatial metaphors (away, out,
 *Context: A System Design discussion between a Senior Engineer (Sarah) and an Architect (David) about refactoring a monolithic service.*
 
 **Sarah**: David, the payment processing logic is getting tangled with the user profile service. Every time we update the Stripe SDK, it breaks profile updates.
+
 **David**: I agree, the coupling is too tight. We need to **abstract away** the payment gateway integration.
+
 **Sarah**: Exactly. If we **factor out** the Stripe-specific code into a standalone microservice, we can **hide** all that complexity **behind** a unified Payment API.
+
 **David**: That makes sense. And if we ever switch from Stripe to PayPal, we just swap the internal implementation without affecting the rest of the system.
+
 **Sarah**: Right. We can also **wrap** a resilient retry mechanism **around** the new service to handle network flakes.
+
 **David**: Excellent. Let's **strip down** the monolith's responsibilities to just orchestrating the saga, and let the new service handle the actual transactions.
 
 ## 6. 💬 Let's talk about the role play

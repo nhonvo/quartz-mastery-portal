@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master terminology for server-side logic, API endpoints, authentication, and microservices in Spanish.
+
 **Engineering Impact**: Clear communication about endpoints, payloads, HTTP verbs, and security ensures seamless integration between frontend and backend teams.
 
 ### ⚙️ Contrastive Analysis & Theory

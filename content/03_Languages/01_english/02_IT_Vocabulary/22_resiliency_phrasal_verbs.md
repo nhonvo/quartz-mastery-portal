@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master essential phrasal verbs for describing system resiliency, failovers, and disaster recovery to communicate confidently in distributed systems engineering.
+
 **Engineering Impact**: Using the correct phrasal verbs ensures precise, concise communication during high-stakes incidents, post-mortems, and architectural reviews, projecting a C1/C2 Senior Engineer persona.
 
 ## 2. 🧊 Warming Up

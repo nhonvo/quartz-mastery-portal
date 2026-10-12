@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the use of the subjunctive mood in adjective clauses to describe unknown, hypothetical, or non-existent technologies, candidates, or solutions.
+
 **Engineering Impact**: Engineers constantly design systems for future requirements or search for tools that fulfill specific criteria (e.g., "We need a database that *supports* ACID"). Using the subjunctive accurately signals whether you are talking about a specific, existing tool or a hypothetical requirement, crucial for clear technical specifications and architecture planning.
 
 ### ⚙️ Contrastive Analysis & Theory

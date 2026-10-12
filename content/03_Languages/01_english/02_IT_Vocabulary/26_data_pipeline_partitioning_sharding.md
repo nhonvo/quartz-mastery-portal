@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the essential vocabulary and phrasing used when designing, discussing, and troubleshooting data pipelines, database partitioning, and sharding strategies.
+
 **Engineering Impact**: Communicating clearly about data distribution and pipelines ensures that system design decisions regarding horizontal scaling, fault tolerance, and data locality are accurately understood by both technical peers and stakeholders.
 
 ## 2. 🧊 Warming Up
@@ -39,9 +40,13 @@ When discussing data architecture, precision in terminology is crucial.
 **Context**: An architectural review meeting discussing a bottleneck in a rapidly growing analytics platform.
 
 **Lead Engineer (Sarah)**: "We've been seeing significant latency degradation in our data ingestion pipeline over the last sprint. The primary relational store is hitting its IOPS limit."
+
 **Data Architect (David)**: "It sounds like we've outgrown vertical scaling. Have we considered implementing a sharding strategy for the events table?"
+
 **Lead Engineer (Sarah)**: "We have. I propose we use hash-based sharding on the `customer_id`. It should distribute the writes evenly and prevent hotspots, which we'd likely see with range-based sharding on timestamps."
+
 **Data Architect (David)**: "Agreed. However, we need to ensure our downstream ETL pipelines can handle cross-shard aggregations efficiently. We might need a scatter-gather approach for our analytical queries."
+
 **Lead Engineer (Sarah)**: "Good point. I'll draft an RFC detailing the consistent hashing algorithm we plan to use to minimize data migration when we add new nodes."
 
 ## 6. 💬 Let's talk about the role play

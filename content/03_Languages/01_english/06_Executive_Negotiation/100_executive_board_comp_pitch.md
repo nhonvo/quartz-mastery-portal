@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the strategic language and framing required to confidently present a total compensation pitch or executive-level salary negotiation to Board Members, HR Directors, or VPs.
+
 **Engineering Impact**: As engineers reach Staff/Principal/VP levels, compensation shifts from standard base salaries to complex equity, RSU vesting schedules, sign-on bonuses, and performance multipliers. Communicating your value proposition clearly and neutrally (without emotional pleading) ensures you are compensated commensurately with the architectural impact you bring.
 
 ## 2. 🧊 Warming Up
@@ -43,9 +44,13 @@ When negotiating at the executive level, use the **Value-Anchor-Pivot** framewor
 **Scenario**: A Principal Engineer (Alex) is negotiating a final offer with the VP of Engineering (Sarah).
 
 **Sarah (VP)**: Alex, we are thrilled to offer you the Principal role. The package is $180k base, with $100k in RSUs vesting over 4 years. 
+
 **Alex (Principal)**: Thank you, Sarah. I’m incredibly excited about the vision for the data platform. However, regarding the compensation, there is a gap between this offer and my current expectations, particularly given the aggressive timeline for the cloud migration.
+
 **Sarah (VP)**: I understand. We are a bit constrained on base salary bands for this quarter. What number were you targeting?
+
 **Alex (Principal)**: Based on my market research and the specialized distributed systems expertise required here, I am targeting a total compensation closer to $320k. If there is strict rigidity on the base band, would you be open to bridging the gap through a one-time sign-on bonus or front-loading the RSU vest for year one?
+
 **Sarah (VP)**: That’s a creative approach. Let me take the sign-on bonus proposal to the board and see what we can do.
 
 ## 6. 💬 Let's talk about the role play

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Deep dive into SQL/NoSQL terminology, query optimization, and data structures.
+
 **Engineering Impact**: Accurately describing schemas, foreign keys, and indexes prevents catastrophic data anomalies in collaborative database design.
 
 ### ⚙️ Contrastive Analysis & Theory

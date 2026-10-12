@@ -10,10 +10,12 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master word stress patterns and phonetic shifts when technical suffixes (e.g., `-ity`, `-tion`, `-ic`, `-logy`) are appended to root words in engineering vocabulary.
+
 **Engineering Impact**: Clear, predictable pronunciation prevents miscommunication during critical system design interviews, incident post-mortems, and daily stand-ups. Using correct phonetic stress projects C1/C2 senior-level fluency and confidence.
 
 ## 2. 🧊 Warming Up
 **Question**: Have you ever been misunderstood when saying words like *authorize* vs. *authorization*, or *analyze* vs. *analysis*?
+
 **Sample Answer**: Yes, early in my career, placing the stress on the wrong syllable made native speakers pause to parse my sentence, breaking the flow of my technical presentation.
 
 ## 3. ⚙️ Contrastive Analysis & Theory
@@ -40,8 +42,11 @@ English is a stress-timed language. Appending technical suffixes often shifts th
 
 ## 5. 🎭 Role-Play Dialogue
 **Engineer**: "I've completed the preliminary a-NAL-y-sis (analysis) of the microservices architecture."
+
 **Manager**: "Great. What's your take on the system's com-PLEX-i-ty (complexity)?"
+
 **Engineer**: "It's high. To improve our se-CU-ri-ty (security) posture and operational stra-TE-gic (strategic) alignment, we need more auto-MA-tion (automation)."
+
 **Manager**: "Agreed. Let's draft a clear meth-o-DOL-o-gy (methodology) before the next sprint."
 
 ## 6. 💬 Let's talk about the role play
@@ -182,6 +187,7 @@ Ensure that the unstressed syllables are reduced to a quick schwa (/ə/) sound. 
 ## 🗣️ Section 4: Real-World Scenario & Short Answer Roleplay
 
 **Scenario**: A junior engineer is struggling to explain the trade-offs between monolithic and microservices architectures. They frequently mispronounce terms like *complexity*, *scalability*, and *reliability*.
+
 **Task**: Write a short feedback message emphasizing the importance of clear communication, using at least 3 multi-syllabic technical words with correct stress marking.
 
 ## 🏆 Section 5: Model C1 & C2 Executive Script Benchmarks

@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the use of high-impact "Executive Power Verbs" (e.g., *architected*, *spearheaded*, *orchestrated*, *mitigated*) to communicate technical achievements, leadership, and system design impact confidently.
+
 **Engineering Impact**: Power verbs transform passive, task-based statements (e.g., "I made the database faster") into outcome-driven, executive-level achievements (e.g., "Optimized database latency by 40%"). This is critical for performance reviews, architectural proposals, and cross-functional leadership visibility.
 
 ## 2. 🧊 Warming Up

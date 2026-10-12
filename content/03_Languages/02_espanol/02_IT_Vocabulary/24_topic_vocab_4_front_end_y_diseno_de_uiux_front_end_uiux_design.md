@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Communicate fluidly about user interfaces, user experience, layout, state management, and responsive design.
+
 **Engineering Impact**: Ensuring designers and front-end engineers are on the same page regarding margins, components, accessibility, and state.
 
 ### ⚙️ Contrastive Analysis & Theory

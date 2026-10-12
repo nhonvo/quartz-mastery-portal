@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the art of quantifying engineering impact using concrete metrics (latency, throughput, cost savings, retention) and calculating Return on Investment (ROI) during behavioral interviews and performance reviews.
+
 **Engineering Impact**: Translates raw technical work into business value, demonstrating C1/C2 executive-level communication and product-minded engineering.
 
 ## 2. 🧊 Warming Up
@@ -35,8 +36,11 @@ To quantify impact, use the **Metric Delta Framework**:
 
 ## 5. 🎭 Role-Play Dialogue
 **Manager (Sarah)**: "Can you walk me through the impact of the caching layer migration you led last quarter?"
+
 **Engineer (Alex)**: "Certainly. Before the migration, our p99 response time was hovering around 800ms, which was causing API timeouts for downstream clients. By migrating to Redis cluster, we reduced p99 latency to 120ms. This directly decreased our API timeout rate by 95% and lowered database compute costs by roughly $5,000 per month."
+
 **Manager (Sarah)**: "That's fantastic. How did that translate to the business side?"
+
 **Engineer (Alex)**: "The improved latency resulted in a 4% increase in user retention at the checkout funnel, which product estimates is worth about $200k in additional annual revenue."
 
 ## 6. 💬 Let's talk about the role play
@@ -131,6 +135,7 @@ How did processing 50,000 jobs/hour help the business? Mention that the unlocked
 
 ## 🏆 Section 5: Model C1 & C2 Executive Script Benchmarks
 **C1 (Senior Engineer)**: "The 3-week refactoring effort eliminated 4 critical security vulnerabilities identified in the recent audit. Furthermore, by standardizing the auth flow, we've reduced the onboarding time for new microservices from 3 days to under 4 hours, significantly boosting developer velocity."
+
 **C2 (Principal Architect)**: "Investing those 3 weeks yielded a compounding ROI. Not only did we mitigate a P0 security vector, but we decoupled the auth domain, reducing our mean time to recovery (MTTR) by 40%. The resulting architectural simplicity saves an estimated 200 engineering hours per quarter across product teams."
 
 ## 📊 Section 6: CEFR C1/C2 Self-Assessment Evaluation Rubric

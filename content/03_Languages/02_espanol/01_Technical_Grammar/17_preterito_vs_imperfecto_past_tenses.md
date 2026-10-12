@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master the distinction between the Preterite (Pretérito) and the Imperfect (Imperfecto) past tenses to accurately describe system failures, background contexts, and completed actions during incident post-mortems and daily stand-ups.
+
 **Engineering Impact**: When diagnosing a bug, the timeline is crucial. Mixing up "the server *was crashing*" (ongoing context) and "the server *crashed*" (completed event) can mislead debugging efforts.
 
 ### ⚙️ Contrastive Analysis & Theory

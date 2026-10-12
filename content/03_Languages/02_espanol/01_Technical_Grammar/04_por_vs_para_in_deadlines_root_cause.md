@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Differentiate between *Por* (cause, means, duration) and *Para* (purpose, deadlines, destination) in technical communications.
+
 **Engineering Impact**: Misusing *Por/Para* can cause massive schedule misalignments (e.g., confusing "due by Friday" with "takes until Friday"). C1/C2 mastery ensures deadlines and root causes are unambiguously articulated.
 
 ### ⚙️ Contrastive Analysis & Theory
@@ -38,7 +39,9 @@ type: "resource-lesson"
 
 ### 🎭 Role-Play Dialogue (Sprint Planning)
 **Scrum Master (Diego)**: ¿Podemos tener esta feature **para** (deadline) el final del sprint? (Can we have this feature ready by the end of the sprint? / Chúng ta có thể hoàn thành tính năng này vào cuối sprint không?)
+
 **Dev (Carmen)**: Es difícil. Hubo retrasos **por** (cause) la migración de la base de datos. (It's difficult. There were delays because of the DB migration. / Rất khó. Đã có sự chậm trễ do việc di chuyển cơ sở dữ liệu.)
+
 **Scrum Master (Diego)**: Entiendo. Envíame tus estimaciones actualizadas **por** (means) Slack **para** (purpose) revisarlas con producto. (I understand. Send me your updated estimates via Slack to review them with product. / Hiểu rồi. Hãy gửi cho tôi ước tính cập nhật của bạn qua Slack để xem xét với product.)
 
 ### 📚 Bilingual Technical Vocabulary

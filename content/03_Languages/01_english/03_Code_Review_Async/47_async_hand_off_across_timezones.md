@@ -10,6 +10,7 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Master the art of asynchronous task, code review, and incident hand-offs across distributed, multi-timezone engineering teams.
+
 **Engineering Impact**: Effective async hand-offs drastically reduce "communication round-trips" (waiting 24 hours for a simple clarification), accelerate CI/CD pipelines, prevent duplicated efforts during shift changes, and foster a strong culture of psychological safety and deep work without the need for constant real-time synchronization.
 
 ## 2. 🧊 Warming Up
@@ -48,12 +49,19 @@ When communicating across timezones, structure your hand-off to eliminate ambigu
 *Context: Slack channel #team-platform. Alex (US West Coast) is logging off. Binh (Vietnam) is just starting his day.*
 
 **Alex**: Hey Binh, handing off the Redis caching upgrade to you. 
+
 **Binh**: Morning Alex! Sounds good. Where did we leave off?
+
 **Alex**: I’ve successfully deployed the new Redis cluster to staging, but the cache invalidation job is throwing intermittent 500 errors. Here’s the Datadog dashboard link. 
+
 **Binh**: Got it. Have you identified the root cause yet?
+
 **Alex**: Not entirely. I suspect it's a rate-limiting issue on the API side. My explicit ask for your shift is to review the error logs and determine if we need to implement exponential backoff.
+
 **Binh**: Understood. I'll dig into the logs and draft an ADR if backoff is the way to go. Anything else?
+
 **Alex**: That's the main blocker. If you resolve it, feel free to promote to production. Otherwise, just leave a note in the Jira ticket and I'll pick it up tomorrow. Have a great day!
+
 **Binh**: Will do. Have a good evening!
 
 ## 6. 💬 Let's talk about the role play

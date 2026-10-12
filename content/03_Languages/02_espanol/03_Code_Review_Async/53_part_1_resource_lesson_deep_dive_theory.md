@@ -10,6 +10,7 @@ type: "resource-lesson"
 
 ## 🎯 Executive Summary & Objectives
 **Goal**: Master the nuances of asynchronous communication when Revisando Manejo de Errores in a Latin American or Spain engineering context.
+
 **Impact**: Improves technical collaboration, softens criticism, and adheres to DELE C1/C2 standards for professional communication.
 
 ## ⚙️ Contrastive Analysis & Theory
@@ -29,7 +30,9 @@ In Spanish tech culture (both LATAM and Spain), directness can sometimes be perc
 
 ## 🎭 Role-Play Dialogue (LATAM/Spain Tech Workplace)
 **Reviewer (Senior)**: Hola, he revisado tu Pull Request. En general, está muy bien estructurado. Sin embargo, en cuanto a revisando manejo de errores, *Sería ideal que implementáramos un manejo de errores más granular aquí, asegurándonos de que registremos la traza de la pila en el logger sin exponer detalles sensibles al cliente.*
+
 **Author (Junior)**: ¡Hola! Gracias por la revisión detallada. Entiendo perfectamente. ¿Crees que esto nos tome mucho esfuerzo en el sprint actual?
+
 **Reviewer (Senior)**: No necesariamente. Si abstraemos bien los componentes, *podríamos* lograrlo sin comprometer el pase a producción.
 
 ## 📚 Bilingual Technical Vocabulary

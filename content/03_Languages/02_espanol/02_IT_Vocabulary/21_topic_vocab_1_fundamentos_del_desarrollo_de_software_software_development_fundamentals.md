@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Master foundational software development vocabulary in Spanish, bridging the gap between English-centric tech jargon and correct professional Spanish. 
+
 **Engineering Impact**: Effectively discuss code structure, variables, algorithms, and logic with LATAM or Spanish teams without constantly reverting to "Spanglish".
 
 ### ⚙️ Contrastive Analysis & Theory

@@ -12,6 +12,7 @@ type: "resource-lesson"
 
 ### 🎯 Executive Summary & Objectives
 **Goal**: Acquire advanced vocabulary for discussing cloud architecture, servers, and infrastructure scalability.
+
 **Engineering Impact**: Architecting systems on AWS/GCP/Azure with Hispanic teams requires precise terms for load balancing, instances, and availability zones.
 
 ### ⚙️ Contrastive Analysis & Theory

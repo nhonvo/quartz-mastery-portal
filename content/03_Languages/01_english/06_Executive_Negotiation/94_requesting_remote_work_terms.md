@@ -10,10 +10,12 @@ tags: ["english", "technical-communication", "cefr-c1", "languages", "learning-n
 
 ## 1. 🎯 Executive Summary & Objectives
 **Goal**: Learn how to negotiate and request remote work terms (fully remote, hybrid, or async flexible) clearly, professionally, and assertively, while demonstrating value and mitigating management's concerns about productivity or collaboration.
+
 **Engineering Impact**: Securing favorable remote work conditions requires articulating your reliability, operational discipline, and communication standards. A C1/C2 speaker frames remote work not as a personal perk, but as an optimization of their deep work and delivery efficiency.
 
 ## 2. 🧊 Warming Up
 **Question**: How do you convince a hesitant manager that you can be just as productive, if not more, working remotely?
+
 **Sample Answer**: I focus on metrics and output rather than hours logged. By setting clear SLAs for async communication and maintaining highly visible documentation, I ensure the team always knows the status of my deliverables without needing physical proximity.
 
 ## 3. ⚙️ Contrastive Analysis & Theory
@@ -36,9 +38,13 @@ When requesting remote work, the focus must shift from "what I want" to "how thi
 
 ## 5. 🎭 Role-Play Dialogue
 **Manager (Sarah)**: "Nhon, regarding your compensation package, everything looks good. However, your request for fully remote work is tough. Company policy strongly prefers hybrid."
+
 **Engineer (Nhon)**: "I understand the baseline policy, Sarah. Given the scope of this principal role, my highest leverage comes from uninterrupted deep work on the core microservices. I’m proposing a remote-first setup where I commit to being on-site for quarterly roadmap planning and any critical incident retrospectives."
+
 **Manager (Sarah)**: "My main concern is your availability for mentoring the junior devs."
+
 **Engineer (Nhon)**: "That’s a valid concern. To mitigate that, I’ll block out daily 'office hours' specifically for pair programming and PR walkthroughs, and guarantee a 30-minute SLA on blocking questions during our core hours."
+
 **Manager (Sarah)**: "That sounds structured. Let's write that into the offer as a 6-month trial."
 
 ## 6. 💬 Let's talk about the role play
