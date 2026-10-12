@@ -23,9 +23,10 @@ const ALL_TRACKS = [
 
 const FAST_FILES = [
   "01_DSA/01_theory_and_patterns/01_Basics/00_mastering_big_o_notation_algorithmic_complexity_analysis.md",
-  "01_DSA/02_dsa_solutions/neetcode_solutions/01.Duplicate-Integer",
-  "01_DSA/02_dsa_solutions/neetcode_solutions/02.Valid-Anagram",
-  "01_DSA/02_dsa_solutions/neetcode_solutions/03.Two-Sum",
+  "01_DSA/02_dsa_solutions/neetcode_solutions/01_Arrays_and_Hashing",
+  "01_DSA/02_dsa_solutions/neetcode_solutions/02_Two_Pointers",
+  "01_DSA/02_dsa_solutions/neetcode_solutions/index.md",
+  "01_DSA/02_dsa_solutions/index.md",
   "01_DSA/03_interview_cake/01.Merging-Meeting-Times",
   "02_Technical_Skills/01_theory_and_concepts/02_backend_developer_master_roadmap_and_guide.md",
   "02_Technical_Skills/02_system_design_solutions/01.Design-TinyURL-URL-Shortener",
@@ -35,7 +36,7 @@ const FAST_FILES = [
   "03_Languages/04_mandarin/README.md",
 ]
 
-const EXCLUDED_DIRS = new Set(["bin", "obj", ".vs", ".git", "node_modules", "out", "dist", "_archive_extract"])
+const EXCLUDED_DIRS = new Set(["bin", "obj", ".vs", ".git", "node_modules", "out", "dist", "_archive_extract", "src"])
 const EXCLUDED_EXTS = new Set([".dll", ".exe", ".pdb", ".cache", ".user", ".suo"])
 
 function shouldCopy(src) {
@@ -53,58 +54,6 @@ function shouldCopy(src) {
   return true
 }
 
-/**
- * Ensures folder nodes exhibit expandable tree behavior with explicit child notes in Explorer.
- */
-function processFolderIndices(dir) {
-  if (!fs.existsSync(dir)) return
-
-  const entries = fs.readdirSync(dir, { withFileTypes: true })
-  const folderName = path.basename(dir)
-
-  const mdFiles = entries.filter(e => !e.isDirectory() && e.name.endsWith(".md"))
-  const hasIndex = mdFiles.some(e => e.name.toLowerCase() === "index.md" || e.name.toLowerCase() === "readme.md")
-
-  const sameNameMd = mdFiles.find(e => e.name.toLowerCase() === `${folderName.toLowerCase()}.md`)
-
-  if (sameNameMd && !hasIndex) {
-    const originalPath = path.join(dir, sameNameMd.name)
-    const childNoteName = `${sameNameMd.name.replace(/\.md$/i, "")}-Solution.md`
-    const newChildPath = path.join(dir, childNoteName)
-    const indexPath = path.join(dir, "index.md")
-
-    fs.renameSync(originalPath, newChildPath)
-
-    let content = fs.readFileSync(newChildPath, "utf-8")
-    if (!content.includes("aliases:")) {
-      const aliasString = `aliases:\n  - "${folderName}/${sameNameMd.name}"\n  - "${sameNameMd.name.replace(/\.md$/i, "")}"\n`
-      if (content.startsWith("---")) {
-        content = content.replace(/^---/, `---\n${aliasString}`)
-      } else {
-        content = `---\n${aliasString}---\n\n${content}`
-      }
-      fs.writeFileSync(newChildPath, content, "utf-8")
-    }
-
-    const cleanTitle = folderName.replace(/^\d+\./, "").replace(/[-_]/g, " ").trim()
-    const indexContent = `---
-title: "${folderName}"
-tags: [dsa, solution-index]
----
-
-# 📁 ${cleanTitle || folderName}
-
-- 📄 [[${childNoteName}|${cleanTitle} Solution]]
-`
-    fs.writeFileSync(indexPath, indexContent, "utf-8")
-  }
-
-  for (const entry of entries) {
-    if (entry.isDirectory() && !EXCLUDED_DIRS.has(entry.name)) {
-      processFolderIndices(path.join(dir, entry.name))
-    }
-  }
-}
 
 function injectGitDates() {
   console.log(`[StageContent] Fetching Git dates from repository history...`)
@@ -268,14 +217,11 @@ function cleanAndCopy() {
     console.log(`[StageContent] ✅ Incremental sync complete. Copied ${copiedCount} modified files.`)
   }
 
-  // Only run expensive index processing and git date injection if files were actually copied,
-  // or if we are missing the content folder.
+  // Inject git dates if files were actually copied or if content is missing
   if (copiedCount > 0 || !fs.existsSync(path.join(targetDir, "01_DSA"))) {
-    processFolderIndices(targetDir)
-    console.log(`[StageContent] 📂 Folder index processing complete.`)
     injectGitDates()
   } else {
-    console.log(`[StageContent] ⚡ No new files modified. Skipping index processing and Git dates.`)
+    console.log(`[StageContent] ⚡ No new files modified. Skipping Git dates.`)
   }
 }
 

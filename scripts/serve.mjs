@@ -18,12 +18,15 @@ const server = http.createServer(async (req, res) => {
       req.url = urlPath + "index.html"
     }
   } else {
-    // If requesting directory without trailing slash, redirect or check index.html
+    // If requesting directory without trailing slash, redirect to trailing slash if index.html exists
     const indexPath = path.join(publicDir, urlPath, "index.html")
+    const htmlFilePath = path.join(publicDir, urlPath + ".html")
     try {
       if (fs.existsSync(indexPath)) {
         res.writeHead(301, { Location: urlPath + "/" })
         return res.end()
+      } else if (fs.existsSync(htmlFilePath)) {
+        req.url = urlPath + ".html"
       }
     } catch {}
   }
