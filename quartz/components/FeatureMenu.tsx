@@ -653,13 +653,24 @@ body.focus-reading-mode {
 `
 
 FeatureMenu.afterDOMLoaded = `
-document.addEventListener("nav", setupFeatureMenu);
-document.addEventListener("render", setupFeatureMenu);
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", setupFeatureMenu);
-} else {
+window.setupExplorerEnhancements = setupExplorerEnhancements;
+const setupWhenReady = () => {
   setupFeatureMenu();
+  const expUl = document.querySelector(".explorer-ul");
+  if (expUl && !expUl._readyObserver) {
+    expUl._readyObserver = true;
+    new MutationObserver(() => setupFeatureMenu()).observe(expUl, { childList: true });
+  }
+};
+document.addEventListener("nav", setupWhenReady);
+document.addEventListener("render", setupWhenReady);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupWhenReady);
+} else {
+  setupWhenReady();
 }
+setTimeout(setupWhenReady, 200);
+setTimeout(setupWhenReady, 600);
 
 document.addEventListener("click", (e) => {
   if (e.target && e.target.closest && e.target.closest(".mobile-explorer")) {
@@ -928,6 +939,7 @@ function setupSidebarResizer() {
 }
 
 function setupExplorerEnhancements() {
+  window.setupExplorerEnhancements = setupExplorerEnhancements;
   const explorerDiv = document.querySelector(".explorer");
   if (!explorerDiv) return;
 
@@ -939,7 +951,7 @@ function setupExplorerEnhancements() {
   if (!drawerHeader) {
     drawerHeader = document.createElement("div");
     drawerHeader.className = "mobile-drawer-header";
-    drawerHeader.innerHTML = '<div class="mobile-drawer-title"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg><span>Workspace</span></div><button type="button" class="mobile-drawer-close" aria-label="Close Explorer">✕</button>';
+    drawerHeader.innerHTML = '<div class="mobile-drawer-title"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg><span>Explorer</span></div><button type="button" class="mobile-drawer-close" aria-label="Close Explorer">✕</button>';
     cdiv.insertBefore(drawerHeader, cdiv.firstChild);
 
     const closeDrawer = (e) => {
@@ -1152,14 +1164,55 @@ function setupExplorerEnhancements() {
 
   const folderRows = document.querySelectorAll(".explorer .folder-container");
   folderRows.forEach((row) => {
-    row.onclick = (e) => {
-      if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === "a") return;
-      const toggleIcon = row.querySelector(".folder-icon, svg, button");
-      if (toggleIcon && toggleIcon !== e.target) {
-        toggleIcon.click();
-      }
+    const nextOuter = row.nextElementSibling;
+    const updateOpenState = () => {
+      const isOpen = nextOuter && nextOuter.classList.contains("open");
+      row.classList.toggle("is-open", !!isOpen);
     };
+    updateOpenState();
+
+    // Attach folder overview link (↗) if folder has a valid path and not already attached
+    if (!row.querySelector(".folder-link-direct")) {
+      const folderPath = row.dataset.folderpath;
+      if (folderPath) {
+        const directLink = document.createElement("a");
+        directLink.className = "folder-link-direct";
+        let cleanPath = folderPath.endsWith("/index") ? folderPath.slice(0, -6) : folderPath;
+        if (cleanPath.startsWith("/")) cleanPath = cleanPath.slice(1);
+        directLink.href = "/" + cleanPath + (cleanPath.endsWith("/") ? "" : "/");
+        directLink.title = "View folder overview page";
+        directLink.setAttribute("aria-label", "View folder overview page");
+        directLink.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+        directLink.onclick = (e) => {
+          e.stopPropagation();
+        };
+        row.appendChild(directLink);
+      }
+    }
+
+    if (!row._hasToggleAttached) {
+      row._hasToggleAttached = true;
+      row.onclick = (e) => {
+        if (e.target && e.target.closest && e.target.closest(".folder-link-direct")) return;
+        const toggleIcon = row.querySelector(".folder-icon, svg, button");
+        if (toggleIcon && toggleIcon !== e.target) {
+          toggleIcon.click();
+        } else if (nextOuter) {
+          nextOuter.classList.toggle("open");
+        }
+        setTimeout(updateOpenState, 20);
+      };
+    }
   });
+
+  const explorerUl = cdiv.querySelector(".explorer-ul");
+  if (explorerUl && !explorerUl._treeObserver) {
+    explorerUl._treeObserver = true;
+    const treeObserver = new MutationObserver(() => {
+      setupExplorerEnhancements();
+    });
+    treeObserver.observe(explorerUl, { childList: true });
+  }
 }
 
 function setupSearchProgressTracker() {
