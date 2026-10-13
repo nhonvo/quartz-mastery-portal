@@ -653,8 +653,18 @@ body.focus-reading-mode {
 `
 
 FeatureMenu.afterDOMLoaded = `
-document.addEventListener("nav", () => {
+document.addEventListener("nav", setupFeatureMenu);
+document.addEventListener("render", setupFeatureMenu);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupFeatureMenu);
+} else {
   setupFeatureMenu();
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.closest && e.target.closest(".mobile-explorer")) {
+    setTimeout(setupExplorerEnhancements, 10);
+  }
 });
 
 function setupFeatureMenu() {
@@ -918,21 +928,115 @@ function setupSidebarResizer() {
 }
 
 function setupExplorerEnhancements() {
-  
   const explorerDiv = document.querySelector(".explorer");
-  
-  if (explorerDiv && !explorerDiv.querySelector(".explorer-controls")) {
+  if (!explorerDiv) return;
+
+  const cdiv = explorerDiv.querySelector(".explorer-content");
+  if (!cdiv) return;
+
+  // 1. Mobile Drawer Header with Lucide Folder SVG & Close button
+  let drawerHeader = cdiv.querySelector(".mobile-drawer-header");
+  if (!drawerHeader) {
+    drawerHeader = document.createElement("div");
+    drawerHeader.className = "mobile-drawer-header";
+    drawerHeader.innerHTML = '<div class="mobile-drawer-title"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg><span>Workspace</span></div><button type="button" class="mobile-drawer-close" aria-label="Close Explorer">✕</button>';
+    cdiv.insertBefore(drawerHeader, cdiv.firstChild);
+
+    const closeDrawer = (e) => {
+      if (e) e.stopPropagation();
+      explorerDiv.classList.add("collapsed");
+      const bd = document.getElementById("mobile-sidebar-backdrop");
+      if (bd) bd.classList.remove("active");
+    };
+
+    const closeBtn = drawerHeader.querySelector(".mobile-drawer-close");
+    if (closeBtn) {
+      closeBtn.onclick = closeDrawer;
+      closeBtn.addEventListener("touchend", closeDrawer);
+    }
+  }
+
+  // 2. Backdrop overlay for half-left mobile drawer
+  let backdrop = document.getElementById("mobile-sidebar-backdrop");
+  if (!backdrop) {
+    backdrop = document.createElement("div");
+    backdrop.id = "mobile-sidebar-backdrop";
+    backdrop.className = "mobile-sidebar-backdrop";
+    document.body.appendChild(backdrop);
+  }
+
+  const closeDrawer = (e) => {
+    if (e) e.stopPropagation();
+    explorerDiv.classList.add("collapsed");
+    if (backdrop) backdrop.classList.remove("active");
+  };
+
+  backdrop.onclick = closeDrawer;
+  backdrop.addEventListener("touchend", closeDrawer);
+
+  // Auto-close on note link click, plus swipe left to dismiss
+  if (!cdiv._linkListenerAttached) {
+    cdiv._linkListenerAttached = true;
+    cdiv.addEventListener("click", (e) => {
+      if (window.innerWidth <= 800) {
+        const link = e.target && e.target.closest ? e.target.closest("a") : null;
+        if (link) {
+          closeDrawer();
+        }
+      }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    cdiv.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    cdiv.addEventListener("touchend", (e) => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (diffX < -35 && Math.abs(diffX) > Math.abs(diffY)) {
+          closeDrawer();
+        }
+      }
+    }, { passive: true });
+  }
+
+  if (!window._drawerEscapeAttached) {
+    window._drawerEscapeAttached = true;
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !explorerDiv.classList.contains("collapsed")) {
+        closeDrawer();
+      }
+    });
+  }
+
+  if (!explorerDiv._backdropObserver) {
+    explorerDiv._backdropObserver = true;
+    const syncBackdrop = () => {
+      const isCollapsed = explorerDiv.classList.contains("collapsed");
+      if (backdrop) backdrop.classList.toggle("active", !isCollapsed);
+    };
+    const observer = new MutationObserver(syncBackdrop);
+    observer.observe(explorerDiv, { attributes: true, attributeFilter: ["class"] });
+    syncBackdrop();
+  }
+
+  // 3. Explorer Fold / Locate / Graph Controls Toolbar
+  if (!cdiv.querySelector(".explorer-controls")) {
     const controls = document.createElement("div");
     controls.className = "explorer-controls";
-    controls.style.cssText = "position: sticky; top: 0; z-index: 50; display: flex; gap: 6px; align-items: center; justify-content: flex-start; padding: 6px 10px; margin: 0 0 4px 0; width: 100%; box-sizing: border-box; background: var(--light); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--lightgray);";
     
     const createBtn = (title, iconSvg, onClick) => {
       const btn = document.createElement("button");
+      btn.type = "button";
       btn.title = title;
+      btn.setAttribute("aria-label", title);
       btn.innerHTML = iconSvg;
-      btn.style.cssText = "background: transparent; border: none; cursor: pointer; padding: 4px; color: var(--gray); display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.2s, color 0.2s;";
-      btn.onmouseover = () => { btn.style.backgroundColor = "var(--lightgray)"; btn.style.color = "var(--dark)"; };
-      btn.onmouseout = () => { btn.style.backgroundColor = "transparent"; btn.style.color = "var(--gray)"; };
       btn.onclick = (e) => { e.stopPropagation(); onClick(); };
       return btn;
     };
@@ -989,7 +1093,6 @@ function setupExplorerEnhancements() {
           active.scrollIntoView({ behavior: "smooth", block: "center" });
           saveState();
         } else {
-          // If no note is active, expand root level
           document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
           saveState();
         }
@@ -999,14 +1102,8 @@ function setupExplorerEnhancements() {
     const btnGraph = createBtn("Obsidian Global Graph", 
       '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
       () => {
-        const explorer = document.querySelector(".sidebar.left .explorer");
-        if (explorer && !explorer.classList.contains("collapsed")) {
-          if (typeof window.closeMobileSidebar === "function") {
-            window.closeMobileSidebar();
-          } else {
-            explorer.classList.add("collapsed");
-          }
-        }
+        explorerDiv.classList.add("collapsed");
+        if (backdrop) backdrop.classList.remove("active");
         if (typeof window.triggerGraphLoad === "function") {
           window.triggerGraphLoad();
         }
@@ -1021,12 +1118,11 @@ function setupExplorerEnhancements() {
     controls.appendChild(btnCollapseAll);
     controls.appendChild(btnLocate);
     controls.appendChild(btnGraph);
-      
-    const cdiv = explorerDiv.querySelector(".explorer-content");
-    if (cdiv) {
-      explorerDiv.insertBefore(controls, cdiv);
+
+    if (drawerHeader) {
+      cdiv.insertBefore(controls, drawerHeader.nextSibling);
     } else {
-      explorerDiv.appendChild(controls);
+      cdiv.insertBefore(controls, cdiv.firstChild);
     }
   }
 
