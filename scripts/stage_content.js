@@ -19,6 +19,7 @@ const ALL_TRACKS = [
   "01_DSA",
   "02_Technical_Skills",
   "03_Languages",
+  "00_Meta/03_certifications",
 ]
 
 const FAST_FILES = [
