@@ -25,7 +25,19 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>Sidebar</span>
       </button>
 
-      {/* 3. Fullscreen Focus Mode */}
+      {/* 3. Global Knowledge Graph */}
+      <button class="float-btn" id="float-graph-trigger" aria-label="Open Knowledge Graph View">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span>Graph</span>
+      </button>
+
+      {/* 4. Fullscreen Focus Mode */}
       <button class="float-btn" id="float-focus-trigger" aria-label="Toggle Fullscreen Focus Reading Mode">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
@@ -92,21 +104,21 @@ MobileFloatBar.css = `
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px 0;
-  width: 52px;
-  min-width: 52px;
-  max-width: 52px;
-  height: 44px;
+  padding: 3px 0;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  height: 42px;
   border-radius: 999px;
   color: var(--darkgray);
   font-family: var(--bodyFont);
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   font-weight: 600;
   line-height: 1;
-  gap: 3px;
+  gap: 2px;
   box-sizing: border-box;
   text-align: center;
-  flex: 0 0 52px;
+  flex: 0 0 48px;
   transition: all 0.18s ease;
 
   svg {
@@ -171,6 +183,8 @@ body.focus-reading-mode #float-focus-trigger {
 
 MobileFloatBar.afterDOMLoaded = `
 (function() {
+  if (window._mobileFloatBarInitialized) return;
+  window._mobileFloatBarInitialized = true;
   console.log("[MobileFloatBar] Initializing persistent event delegation & smart scroll hide...");
 
   // Smart Scroll-Hide: Hide floating bar on scroll down, show on scroll up
@@ -284,6 +298,7 @@ MobileFloatBar.afterDOMLoaded = `
 
     if (isSearchBtn) {
       e.preventDefault();
+      e.stopPropagation();
       const actualSearchBtn = document.querySelector(".page-header .search-button, .search .search-button");
       if (actualSearchBtn && btn !== actualSearchBtn) {
         actualSearchBtn.click();
@@ -293,6 +308,7 @@ MobileFloatBar.afterDOMLoaded = `
       }
     } else if (id === "float-toc-trigger") {
       e.preventDefault();
+      e.stopPropagation();
       if (typeof window.openMobileTOC === "function") {
         window.openMobileTOC();
       } else {
@@ -308,6 +324,7 @@ MobileFloatBar.afterDOMLoaded = `
       }
     } else if (id === "float-focus-trigger" || id === "exit-focus-btn") {
       e.preventDefault();
+      e.stopPropagation();
       const isFocus = document.body.classList.toggle("focus-reading-mode");
       console.log("[MobileFloatBar] Focus mode toggled:", isFocus);
       const exitFocusBtn = document.getElementById("exit-focus-btn");
@@ -316,6 +333,7 @@ MobileFloatBar.afterDOMLoaded = `
       }
     } else if (id === "float-sidebar-trigger") {
       e.preventDefault();
+      e.stopPropagation();
       if (window.innerWidth <= 800) {
         if (typeof window.openMobileDrawer === "function") {
           window.openMobileDrawer();
@@ -331,16 +349,16 @@ MobileFloatBar.afterDOMLoaded = `
       }
     } else if (id === "float-graph-trigger") {
       e.preventDefault();
-      const globalGraphBtn = document.querySelector(".global-graph-icon");
-      if (globalGraphBtn) {
-        globalGraphBtn.click();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+      if (typeof window.openGlobalGraph === "function") {
+        window.openGlobalGraph();
       } else {
-        window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
-        const graphOuter = document.querySelector(".page > #quartz-body .graph, .graph, #graph-container, .graph-container");
-        if (graphOuter) {
-          graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
-        } else if (typeof window.openFeatureMenu === "function") {
-          window.openFeatureMenu();
+        const globalGraphBtn = document.querySelector(".global-graph-icon");
+        if (globalGraphBtn) {
+          globalGraphBtn.click();
+        } else {
+          window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
         }
       }
     } else if (id === "float-theme-trigger") {

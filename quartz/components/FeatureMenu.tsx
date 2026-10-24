@@ -916,6 +916,9 @@ function setupFeatureMenu() {
 
   // Setup Sidebar Resizer
   setupSidebarResizer();
+
+  // Setup Global Graph Mobile Header & Close Touch Controls
+  setupGlobalGraphEnhancements();
 }
 
 function setupSidebarResizer() {
@@ -1017,19 +1020,6 @@ function setupExplorerEnhancements() {
     drawerHeader.className = "mobile-drawer-header";
     drawerHeader.innerHTML = '<div class="mobile-drawer-title"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg><span>Explorer</span></div><button type="button" class="mobile-drawer-close" aria-label="Close Explorer">✕</button>';
     cdiv.insertBefore(drawerHeader, cdiv.firstChild);
-
-    const closeDrawer = (e) => {
-      if (e) e.stopPropagation();
-      explorerDiv.classList.add("collapsed");
-      const bd = document.getElementById("mobile-sidebar-backdrop");
-      if (bd) bd.classList.remove("active");
-    };
-
-    const closeBtn = drawerHeader.querySelector(".mobile-drawer-close");
-    if (closeBtn) {
-      closeBtn.onclick = closeDrawer;
-      closeBtn.addEventListener("touchend", closeDrawer);
-    }
   }
 
   // 2. Backdrop overlay for half-left mobile drawer
@@ -1042,60 +1032,114 @@ function setupExplorerEnhancements() {
   }
 
   const openDrawer = (e) => {
-    if (e) e.stopPropagation();
+    if (e && typeof e.stopPropagation === "function") e.stopPropagation();
     explorerDiv.classList.remove("collapsed");
+    explorerDiv.setAttribute("aria-expanded", "true");
     if (backdrop) backdrop.classList.add("active");
+    document.documentElement.classList.add("mobile-no-scroll");
   };
 
   const closeDrawer = (e) => {
-    if (e) e.stopPropagation();
+    if (e && typeof e.stopPropagation === "function") e.stopPropagation();
     explorerDiv.classList.add("collapsed");
+    explorerDiv.setAttribute("aria-expanded", "false");
     if (backdrop) backdrop.classList.remove("active");
+    document.documentElement.classList.remove("mobile-no-scroll");
   };
 
   window.openMobileDrawer = openDrawer;
   window.closeMobileDrawer = closeDrawer;
+  window.toggleMobileDrawer = () => {
+    if (explorerDiv.classList.contains("collapsed")) openDrawer();
+    else closeDrawer();
+  };
 
-  backdrop.onclick = closeDrawer;
-  backdrop.addEventListener("touchend", closeDrawer);
+  const closeBtn = drawerHeader?.querySelector(".mobile-drawer-close");
+  if (closeBtn) {
+    closeBtn.onclick = closeDrawer;
+    closeBtn.ontouchend = closeDrawer;
+  }
 
-  // Global Swipe Gestures to Open/Close Mobile Sidebar Drawer
+  // Backdrop Touch & Click handlers to dismiss
+  const handleBackdropDismiss = (e) => {
+    if (e) {
+      if (typeof e.preventDefault === "function") e.preventDefault();
+      if (typeof e.stopPropagation === "function") e.stopPropagation();
+    }
+    closeDrawer();
+  };
+  backdrop.onclick = handleBackdropDismiss;
+  backdrop.ontouchend = handleBackdropDismiss;
+
+  // Intercept hamburger button for synchronous open/close
+  const mobileToggleBtn = explorerDiv.querySelector("button.mobile-explorer");
+  if (mobileToggleBtn && !mobileToggleBtn._customDrawerAttached) {
+    mobileToggleBtn._customDrawerAttached = true;
+    mobileToggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      window.toggleMobileDrawer();
+    });
+  }
+
+  // Global Touch Outside Dismissal
+  if (!window._drawerGlobalDismissAttached) {
+    window._drawerGlobalDismissAttached = true;
+    const handleOutsideTap = (e) => {
+      if (window.innerWidth <= 800) {
+        const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
+        if (!isDrawerOpen) return;
+        const target = e.target;
+        if (!target) return;
+        const inDrawer = target.closest && target.closest(".explorer-content");
+        const isTrigger = target.closest && target.closest(".mobile-explorer, #float-sidebar-trigger, .title-button");
+        if (!inDrawer && !isTrigger) {
+          closeDrawer(e);
+        }
+      }
+    };
+    document.addEventListener("click", handleOutsideTap, true);
+    document.addEventListener("touchend", handleOutsideTap, { passive: false });
+  }
+
+  // Global Natural Swipe Gestures to Open/Close Mobile Sidebar Drawer
   if (!window._drawerSwipeAttached) {
     window._drawerSwipeAttached = true;
     let touchStartX = 0;
     let touchStartY = 0;
     let touchStartTime = 0;
+    let isTrackingSwipe = false;
 
     document.addEventListener("touchstart", (e) => {
       if (window.innerWidth <= 800 && e.touches && e.touches[0]) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
         touchStartTime = Date.now();
+        isTrackingSwipe = true;
       }
     }, { passive: true });
 
     document.addEventListener("touchend", (e) => {
-      if (window.innerWidth <= 800 && e.changedTouches && e.changedTouches[0]) {
-        const diffX = e.changedTouches[0].clientX - touchStartX;
-        const diffY = e.changedTouches[0].clientY - touchStartY;
-        const timeDiff = Date.now() - touchStartTime;
-        const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
+      if (!isTrackingSwipe || window.innerWidth > 800 || !e.changedTouches || !e.changedTouches[0]) return;
+      isTrackingSwipe = false;
+      const diffX = e.changedTouches[0].clientX - touchStartX;
+      const diffY = e.changedTouches[0].clientY - touchStartY;
+      const timeDiff = Date.now() - touchStartTime;
+      const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
 
-        // Horizontal swipe check: |diffX| >= 35, horizontal movement dominant
-        if (timeDiff < 600 && Math.abs(diffX) >= 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
-          if (!isDrawerOpen && touchStartX <= 75 && diffX > 0) {
-            // Swipe right from left edge: OPEN drawer
-            openDrawer();
-          } else if (isDrawerOpen && diffX < 0) {
-            // Swipe left anywhere: CLOSE drawer
-            closeDrawer();
-          }
+      // Horizontal swipe check: |diffX| >= 40, horizontal dominant
+      if (timeDiff < 550 && Math.abs(diffX) >= 40 && Math.abs(diffX) > Math.abs(diffY) * 1.15) {
+        if (!isDrawerOpen && touchStartX <= Math.min(window.innerWidth * 0.45, 160) && diffX > 0) {
+          // Swipe right from anywhere in left 45% of screen (<=160px): OPEN drawer
+          openDrawer();
+        } else if (isDrawerOpen && diffX < -40) {
+          // Swipe left anywhere: CLOSE drawer
+          closeDrawer();
         }
       }
     }, { passive: true });
   }
 
-  // Auto-close on note link click, plus swipe left to dismiss
+  // Auto-close on note link click, plus swipe left inside drawer to dismiss
   if (!cdiv._linkListenerAttached) {
     cdiv._linkListenerAttached = true;
     cdiv.addEventListener("click", (e) => {
@@ -1107,20 +1151,20 @@ function setupExplorerEnhancements() {
       }
     });
 
-    let touchStartX = 0;
-    let touchStartY = 0;
+    let drawerTouchStartX = 0;
+    let drawerTouchStartY = 0;
     cdiv.addEventListener("touchstart", (e) => {
       if (e.touches && e.touches[0]) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
+        drawerTouchStartX = e.touches[0].clientX;
+        drawerTouchStartY = e.touches[0].clientY;
       }
     }, { passive: true });
 
     cdiv.addEventListener("touchend", (e) => {
       if (e.changedTouches && e.changedTouches[0]) {
-        const diffX = e.changedTouches[0].clientX - touchStartX;
-        const diffY = e.changedTouches[0].clientY - touchStartY;
-        if (diffX < -35 && Math.abs(diffX) > Math.abs(diffY)) {
+        const diffX = e.changedTouches[0].clientX - drawerTouchStartX;
+        const diffY = e.changedTouches[0].clientY - drawerTouchStartY;
+        if (diffX < -40 && Math.abs(diffX) > Math.abs(diffY)) {
           closeDrawer();
         }
       }
@@ -1141,6 +1185,11 @@ function setupExplorerEnhancements() {
     const syncBackdrop = () => {
       const isCollapsed = explorerDiv.classList.contains("collapsed");
       if (backdrop) backdrop.classList.toggle("active", !isCollapsed);
+      if (!isCollapsed && window.innerWidth <= 800) {
+        document.documentElement.classList.add("mobile-no-scroll");
+      } else {
+        document.documentElement.classList.remove("mobile-no-scroll");
+      }
     };
     const observer = new MutationObserver(syncBackdrop);
     observer.observe(explorerDiv, { attributes: true, attributeFilter: ["class"] });
@@ -1367,6 +1416,102 @@ function setupExplorerEnhancements() {
     });
     treeObserver.observe(explorerUl, { childList: true });
   }
+}
+
+function setupGlobalGraphEnhancements() {
+  window.setupGlobalGraphEnhancements = setupGlobalGraphEnhancements;
+
+  const isGraphOpen = () => {
+    const outer = document.querySelector(".global-graph-outer");
+    return !!(outer && outer.classList.contains("active"));
+  };
+
+  const closeGlobalGraph = (e) => {
+    if (e && typeof e.stopPropagation === "function") e.stopPropagation();
+    if (isGraphOpen()) {
+      const globalGraphBtn = document.querySelector(".global-graph-icon");
+      if (globalGraphBtn) globalGraphBtn.click();
+      else document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    }
+    document.querySelectorAll(".global-graph-outer").forEach(outer => outer.classList.remove("active"));
+    document.documentElement.classList.remove("mobile-no-scroll");
+  };
+
+  const openGlobalGraph = (e) => {
+    if (e && typeof e.stopPropagation === "function") e.stopPropagation();
+    if (!isGraphOpen()) {
+      const globalGraphBtn = document.querySelector(".global-graph-icon");
+      if (globalGraphBtn) {
+        globalGraphBtn.click();
+      } else {
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
+      }
+    }
+    ensureGraphHeader();
+    if (window.innerWidth <= 800) {
+      document.documentElement.classList.add("mobile-no-scroll");
+    }
+  };
+
+  window.openGlobalGraph = openGlobalGraph;
+  window.closeGlobalGraph = closeGlobalGraph;
+
+  function ensureGraphHeader() {
+    const containers = document.querySelectorAll(".global-graph-container");
+    containers.forEach(container => {
+      let header = container.querySelector(".mobile-graph-header");
+      if (!header) {
+        header = document.createElement("div");
+        header.className = "mobile-graph-header";
+        header.innerHTML = '<div class="mobile-graph-title"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span>Knowledge Graph</span></div><span class="mobile-graph-badge">Interactive</span><button type="button" class="mobile-graph-close" aria-label="Close Knowledge Graph">✕</button>';
+        container.prepend(header);
+
+        const closeBtn = header.querySelector(".mobile-graph-close");
+        if (closeBtn) {
+          closeBtn.onclick = closeGlobalGraph;
+          closeBtn.ontouchend = (ev) => {
+            if (ev.cancelable) ev.preventDefault();
+            closeGlobalGraph(ev);
+          };
+        }
+      }
+    });
+  }
+
+  ensureGraphHeader();
+
+  document.querySelectorAll(".global-graph-outer").forEach(outer => {
+    if (!outer._graphDismissAttached) {
+      outer._graphDismissAttached = true;
+
+      const handleBackdropTap = (e) => {
+        if (e.target === outer) {
+          if (e.cancelable) e.preventDefault();
+          e.stopPropagation();
+          closeGlobalGraph(e);
+        }
+      };
+
+      outer.addEventListener("click", handleBackdropTap);
+      outer.addEventListener("touchend", handleBackdropTap);
+
+      let touchStartY = 0;
+      outer.addEventListener("touchstart", (e) => {
+        if (e.touches && e.touches[0]) {
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      outer.addEventListener("touchend", (e) => {
+        if (e.changedTouches && e.changedTouches[0]) {
+          const diffY = e.changedTouches[0].clientY - touchStartY;
+          if (touchStartY < 120 && diffY > 60) {
+            closeGlobalGraph(e);
+          }
+        }
+      }, { passive: true });
+    }
+  });
 }
 
 function setupSearchProgressTracker() {

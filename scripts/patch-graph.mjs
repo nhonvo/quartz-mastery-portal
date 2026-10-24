@@ -99,6 +99,22 @@ C.gfx.stroke({alpha:C.alpha,width:1.2,color:C.color})`
       modified = true
     }
 
+    // 5. Ensure global graph modal has top-level stacking context (z-index 100030) above mobile app bars
+    const originalZIndexPattern = 'g&&(g.style.zIndex="1")'
+    const enhancedZIndexCode = 'g&&(g.style.zIndex="100030")'
+    if (code.includes(originalZIndexPattern)) {
+      code = code.replace(originalZIndexPattern, enhancedZIndexCode)
+      modified = true
+    }
+
+    // 6. Ensure backdrop click detector ignores mobile floatbar trigger
+    const originalTargetPattern = 'S=g.target.closest(".global-graph-icon")'
+    const enhancedTargetCode = 'S=g.target.closest(".global-graph-icon,#float-graph-trigger,.float-btn")'
+    if (code.includes(originalTargetPattern)) {
+      code = code.replace(originalTargetPattern, enhancedTargetCode)
+      modified = true
+    }
+
     if (modified) {
       fs.writeFileSync(fullPath, code, "utf8")
       patchedCount++
