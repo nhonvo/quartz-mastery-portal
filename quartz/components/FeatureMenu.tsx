@@ -656,12 +656,18 @@ FeatureMenu.afterDOMLoaded = `
 window.setupExplorerEnhancements = setupExplorerEnhancements;
 const setupWhenReady = () => {
   setupFeatureMenu();
+  setupMobileAppBar();
+  setupExplorerEnhancements();
   const expUl = document.querySelector(".explorer-ul");
   if (expUl && !expUl._readyObserver) {
     expUl._readyObserver = true;
     new MutationObserver(() => setupFeatureMenu()).observe(expUl, { childList: true });
   }
 };
+window.addEventListener("resize", () => {
+  setupMobileAppBar();
+  setupSidebarResizer();
+});
 document.addEventListener("nav", setupWhenReady);
 document.addEventListener("render", setupWhenReady);
 if (document.readyState === "loading") {
@@ -677,6 +683,59 @@ document.addEventListener("click", (e) => {
     setTimeout(setupExplorerEnhancements, 10);
   }
 });
+
+function setupMobileAppBar() {
+  if (window.innerWidth > 800) {
+    const existing = document.querySelector(".mobile-appbar-actions");
+    if (existing) existing.remove();
+    return;
+  }
+  const sidebarLeft = document.querySelector(".page > #quartz-body .sidebar.left");
+  if (!sidebarLeft) return;
+
+  let actions = sidebarLeft.querySelector(".mobile-appbar-actions");
+  if (!actions) {
+    actions = document.createElement("div");
+    actions.className = "mobile-appbar-actions";
+    actions.innerHTML = '<button type="button" class="mobile-appbar-btn mobile-search-btn" aria-label="Search" title="Search Notes"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button><button type="button" class="mobile-appbar-btn mobile-theme-btn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg></button>';
+
+    const searchBtn = actions.querySelector(".mobile-search-btn");
+    if (searchBtn) {
+      searchBtn.onclick = (e) => {
+        e.stopPropagation();
+        const actualSearchBtn = document.querySelector(".page-header .search-button, .search .search-button");
+        if (actualSearchBtn) {
+          actualSearchBtn.click();
+        } else {
+          const sc = document.querySelector(".search-container");
+          if (sc) sc.classList.add("active");
+          const si = document.querySelector(".search-bar, input[name='search']");
+          if (si) setTimeout(() => si.focus(), 60);
+          window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+        }
+      };
+    }
+
+    const themeBtn = actions.querySelector(".mobile-theme-btn");
+    if (themeBtn) {
+      themeBtn.onclick = (e) => {
+        e.stopPropagation();
+        const darkBtn = document.querySelector("button.darkmode");
+        if (darkBtn) {
+          darkBtn.click();
+        } else {
+          const current = document.documentElement.getAttribute("saved-theme");
+          const next = current === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("saved-theme", next);
+          localStorage.setItem("theme", next);
+          document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: next } }));
+        }
+      };
+    }
+
+    sidebarLeft.appendChild(actions);
+  }
+}
 
 function setupFeatureMenu() {
   const menuModal = document.getElementById("feature-menu-modal");
@@ -860,6 +919,11 @@ function setupFeatureMenu() {
 }
 
 function setupSidebarResizer() {
+  if (window.innerWidth <= 800) {
+    const existing = document.querySelector(".resizer-left");
+    if (existing) existing.remove();
+    return;
+  }
   const leftSidebar = document.querySelector(".sidebar.left");
   if (leftSidebar && !document.querySelector(".resizer-left")) {
     const resizer = document.createElement("div");
@@ -977,14 +1041,59 @@ function setupExplorerEnhancements() {
     document.body.appendChild(backdrop);
   }
 
+  const openDrawer = (e) => {
+    if (e) e.stopPropagation();
+    explorerDiv.classList.remove("collapsed");
+    if (backdrop) backdrop.classList.add("active");
+  };
+
   const closeDrawer = (e) => {
     if (e) e.stopPropagation();
     explorerDiv.classList.add("collapsed");
     if (backdrop) backdrop.classList.remove("active");
   };
 
+  window.openMobileDrawer = openDrawer;
+  window.closeMobileDrawer = closeDrawer;
+
   backdrop.onclick = closeDrawer;
   backdrop.addEventListener("touchend", closeDrawer);
+
+  // Global Swipe Gestures to Open/Close Mobile Sidebar Drawer
+  if (!window._drawerSwipeAttached) {
+    window._drawerSwipeAttached = true;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    document.addEventListener("touchstart", (e) => {
+      if (window.innerWidth <= 800 && e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+      }
+    }, { passive: true });
+
+    document.addEventListener("touchend", (e) => {
+      if (window.innerWidth <= 800 && e.changedTouches && e.changedTouches[0]) {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        const timeDiff = Date.now() - touchStartTime;
+        const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
+
+        // Horizontal swipe check: |diffX| >= 35, horizontal movement dominant
+        if (timeDiff < 600 && Math.abs(diffX) >= 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
+          if (!isDrawerOpen && touchStartX <= 75 && diffX > 0) {
+            // Swipe right from left edge: OPEN drawer
+            openDrawer();
+          } else if (isDrawerOpen && diffX < 0) {
+            // Swipe left anywhere: CLOSE drawer
+            closeDrawer();
+          }
+        }
+      }
+    }, { passive: true });
+  }
 
   // Auto-close on note link click, plus swipe left to dismiss
   if (!cdiv._linkListenerAttached) {
@@ -1049,7 +1158,26 @@ function setupExplorerEnhancements() {
       btn.title = title;
       btn.setAttribute("aria-label", title);
       btn.innerHTML = iconSvg;
-      btn.onclick = (e) => { e.stopPropagation(); onClick(); };
+
+      let moved = false;
+      btn.addEventListener("touchstart", (e) => {
+        moved = false;
+        e.stopPropagation();
+      }, { passive: true });
+      btn.addEventListener("touchmove", () => {
+        moved = true;
+      }, { passive: true });
+      btn.addEventListener("touchend", (e) => {
+        if (!moved) {
+          e.preventDefault();
+          e.stopPropagation();
+          onClick();
+        }
+      });
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        onClick();
+      };
       return btn;
     };
 
@@ -1067,7 +1195,7 @@ function setupExplorerEnhancements() {
 
     // 1. Expand All (Unfold Outwards - Maximize/Expand Icon)
     const btnUnfoldAll = createBtn("Expand All Folders", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
         document.querySelectorAll(".folder-outer").forEach(f => f.classList.add("open"));
         saveState();
@@ -1075,7 +1203,7 @@ function setupExplorerEnhancements() {
 
     // 2. Collapse to Root Level Only (Tree List Outline)
     const btnLevel1 = createBtn("Collapse to Root Folders", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>',
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>',
       () => {
         document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
         document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
@@ -1084,7 +1212,7 @@ function setupExplorerEnhancements() {
 
     // 3. Collapse All (Fold Inward - Minimize/Fold Inward Icon)
     const btnCollapseAll = createBtn("Collapse All Folders", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
         document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
         saveState();
@@ -1092,9 +1220,24 @@ function setupExplorerEnhancements() {
 
     // 4. Reveal & Focus Current File in Tree (Crosshair / Target)
     const btnLocate = createBtn("Locate Current File", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>',
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>',
       () => {
-        let active = document.querySelector(".explorer-content .active, .explorer-content .is-active");
+        let active = document.querySelector(".explorer-content a.active, .explorer-content a.is-active");
+        if (!active) {
+          const rawCurrent = window.location.pathname;
+          const currentPath = rawCurrent.endsWith("/") ? rawCurrent.slice(0, -1) : rawCurrent;
+          const allLinks = document.querySelectorAll(".explorer-content a");
+          for (let a of allLinks) {
+            const rawHrefPath = new URL(a.href, window.location.origin).pathname;
+            const aPath = rawHrefPath.endsWith("/") ? rawHrefPath.slice(0, -1) : rawHrefPath;
+            if (aPath && (aPath === currentPath || currentPath.endsWith(aPath))) {
+              active = a;
+              active.classList.add("active", "is-active");
+              break;
+            }
+          }
+        }
+
         if (active) {
           document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
           let parent = active.closest(".folder-outer");
@@ -1103,6 +1246,12 @@ function setupExplorerEnhancements() {
             parent = parent.parentElement?.closest(".folder-outer");
           }
           active.scrollIntoView({ behavior: "smooth", block: "center" });
+          active.style.transition = "outline 0.25s, background-color 0.25s";
+          active.style.outline = "2px solid var(--secondary)";
+          active.style.borderRadius = "4px";
+          setTimeout(() => {
+            active.style.outline = "";
+          }, 1800);
           saveState();
         } else {
           document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
@@ -1112,16 +1261,21 @@ function setupExplorerEnhancements() {
 
     // 5. Obsidian Global Graph (Globe / Network Icon)
     const btnGraph = createBtn("Obsidian Global Graph", 
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
       () => {
         explorerDiv.classList.add("collapsed");
         if (backdrop) backdrop.classList.remove("active");
-        if (typeof window.triggerGraphLoad === "function") {
-          window.triggerGraphLoad();
-        }
-        const graphOuter = document.querySelector(".graph");
-        if (graphOuter) {
-          graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
+        const globalGraphBtn = document.querySelector(".global-graph-icon");
+        if (globalGraphBtn) {
+          globalGraphBtn.click();
+        } else {
+          window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
+          const graphOuter = document.querySelector(".graph");
+          if (graphOuter) {
+            graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else if (typeof window.openFeatureMenu === "function") {
+            window.openFeatureMenu();
+          }
         }
       });
 

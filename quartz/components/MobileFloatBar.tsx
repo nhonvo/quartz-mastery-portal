@@ -16,25 +16,22 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>TOC</span>
       </button>
 
-      {/* 2. Focus Reading Mode */}
-      <button class="float-btn" id="float-focus-trigger" aria-label="Toggle Fullscreen Reading Mode">
+      {/* 2. Navigation Sidebar / Files Drawer */}
+      <button class="float-btn" id="float-sidebar-trigger" aria-label="Open Navigation Explorer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+          <line x1="9" x2="9" y1="3" y2="21"></line>
+        </svg>
+        <span>Sidebar</span>
+      </button>
+
+      {/* 3. Fullscreen Focus Mode */}
+      <button class="float-btn" id="float-focus-trigger" aria-label="Toggle Fullscreen Focus Reading Mode">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
           <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
         </svg>
         <span>Focus</span>
-      </button>
-
-      {/* 3. Obsidian Global Graph */}
-      <button class="float-btn" id="float-graph-trigger" aria-label="Open Obsidian Graph View">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="5" r="3"></circle>
-          <circle cx="6" cy="12" r="3"></circle>
-          <circle cx="18" cy="19" r="3"></circle>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-        <span>Graph</span>
       </button>
 
       {/* 4. Settings / Tools */}
@@ -46,7 +43,7 @@ export const MobileFloatBar: QuartzComponent = () => {
         <span>Tools</span>
       </button>
 
-      {/* 5. Scroll To Top */}
+      {/* 4. Scroll To Top */}
       <button class="float-btn" id="float-top-trigger" aria-label="Scroll to Top">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
@@ -60,14 +57,16 @@ export const MobileFloatBar: QuartzComponent = () => {
 MobileFloatBar.css = `
 .mobile-float-bar {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  bottom: 1.25rem;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
   z-index: 9998;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 4px 6px;
+  gap: 3px;
+  padding: 3px 6px;
   background: color-mix(in srgb, var(--light) 92%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -76,10 +75,11 @@ MobileFloatBar.css = `
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
   will-change: transform, opacity;
+  max-width: calc(100vw - 1.5rem);
 }
 
 .mobile-float-bar.float-hidden {
-  transform: translateY(180%) !important;
+  transform: translate(-50%, 180%) !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
@@ -93,25 +93,25 @@ MobileFloatBar.css = `
   border: none;
   cursor: pointer;
   padding: 4px 0;
-  width: 56px;
-  min-width: 56px;
-  max-width: 56px;
-  height: 46px;
+  width: 52px;
+  min-width: 52px;
+  max-width: 52px;
+  height: 44px;
   border-radius: 999px;
   color: var(--darkgray);
   font-family: var(--bodyFont);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 600;
   line-height: 1;
   gap: 3px;
   box-sizing: border-box;
   text-align: center;
-  flex: 0 0 56px;
+  flex: 0 0 52px;
   transition: all 0.18s ease;
 
   svg {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
     stroke: var(--darkgray);
     transition: transform 0.18s ease, stroke 0.18s ease;
@@ -138,49 +138,32 @@ MobileFloatBar.css = `
 
 body.focus-reading-mode #float-focus-trigger {
   color: var(--secondary) !important;
-  background: color-mix(in srgb, var(--secondary) 16%, transparent) !important;
+  background: color-mix(in srgb, var(--secondary) 18%, transparent) !important;
+  border-radius: 999px;
   svg {
     stroke: var(--secondary) !important;
   }
 }
 
-@media all and (min-width: 801px) {
-  .mobile-float-bar.float-hidden {
-    transform: translateY(180%) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
-
-@media all and (max-width: 800px) {
+/* Float bar active in Normal Mode (Desktop), Tablet Mode, and Mobile Mode */
+@media all and (min-width: 1200px) {
   .mobile-float-bar {
-    bottom: 1.25rem;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    gap: 2px;
-    padding: 3px 5px;
-    width: auto;
-    max-width: calc(100vw - 1rem);
-  }
-
-  .mobile-float-bar.float-hidden {
-    transform: translate(-50%, 180%) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+    bottom: 1.5rem;
+    gap: 4px;
+    padding: 4px 8px;
   }
 
   .float-btn {
-    width: 48px;
-    min-width: 48px;
-    max-width: 48px;
-    height: 44px;
-    flex: 0 0 48px;
-    font-size: 0.64rem;
+    width: 56px;
+    min-width: 56px;
+    max-width: 56px;
+    height: 46px;
+    flex: 0 0 56px;
+    font-size: 0.68rem;
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
     }
   }
 }
@@ -207,9 +190,16 @@ MobileFloatBar.afterDOMLoaded = `
       return;
     }
 
+    const windowHeight = window.innerHeight;
+    const documentHeight = Math.max(
+      document.body.scrollHeight || 0,
+      document.documentElement.scrollHeight || 0
+    );
+    const isNearBottom = currentScrollTop + windowHeight >= documentHeight - 80;
+
     const delta = currentScrollTop - lastScrollTop;
 
-    if (currentScrollTop <= TOP_REVEAL_ZONE) {
+    if (currentScrollTop <= TOP_REVEAL_ZONE || isNearBottom) {
       bar.classList.remove("float-hidden");
       accumulatedDelta = 0;
     } else {
@@ -247,6 +237,13 @@ MobileFloatBar.afterDOMLoaded = `
   }
   document.addEventListener("nav", resetFloatBar);
   document.addEventListener("render", resetFloatBar);
+
+  document.addEventListener("mousemove", function(e) {
+    if (e.clientY >= window.innerHeight - 70) {
+      const bar = document.querySelector(".mobile-float-bar");
+      if (bar) bar.classList.remove("float-hidden");
+    }
+  }, { passive: true });
 
   function toggleSearchModal() {
     const searchContainer = document.querySelector(".search-container");
@@ -287,8 +284,13 @@ MobileFloatBar.afterDOMLoaded = `
 
     if (isSearchBtn) {
       e.preventDefault();
-      toggleSearchModal();
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+      const actualSearchBtn = document.querySelector(".page-header .search-button, .search .search-button");
+      if (actualSearchBtn && btn !== actualSearchBtn) {
+        actualSearchBtn.click();
+      } else {
+        toggleSearchModal();
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
+      }
     } else if (id === "float-toc-trigger") {
       e.preventDefault();
       if (typeof window.openMobileTOC === "function") {
@@ -312,16 +314,34 @@ MobileFloatBar.afterDOMLoaded = `
       if (exitFocusBtn) {
         exitFocusBtn.classList.toggle("hidden", !isFocus);
       }
+    } else if (id === "float-sidebar-trigger") {
+      e.preventDefault();
+      if (window.innerWidth <= 800) {
+        if (typeof window.openMobileDrawer === "function") {
+          window.openMobileDrawer();
+        } else {
+          const explorer = document.querySelector(".explorer");
+          if (explorer) explorer.classList.toggle("collapsed");
+          const backdrop = document.getElementById("mobile-sidebar-backdrop");
+          if (backdrop) backdrop.classList.toggle("active");
+        }
+      } else {
+        const explorer = document.querySelector(".sidebar.left");
+        if (explorer) explorer.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     } else if (id === "float-graph-trigger") {
       e.preventDefault();
-      if (typeof window.triggerGraphLoad === "function") {
-        window.triggerGraphLoad();
-      }
-      const graphOuter = document.querySelector(".graph, #graph-container, .graph-container, #obsidian-graph-dock");
-      if (graphOuter) {
-        graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else if (typeof window.openFeatureMenu === "function") {
-        window.openFeatureMenu();
+      const globalGraphBtn = document.querySelector(".global-graph-icon");
+      if (globalGraphBtn) {
+        globalGraphBtn.click();
+      } else {
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
+        const graphOuter = document.querySelector(".page > #quartz-body .graph, .graph, #graph-container, .graph-container");
+        if (graphOuter) {
+          graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else if (typeof window.openFeatureMenu === "function") {
+          window.openFeatureMenu();
+        }
       }
     } else if (id === "float-theme-trigger") {
       e.preventDefault();

@@ -258,6 +258,21 @@ function setupMobileTOC() {
   if (backdrop) backdrop.onclick = closeModal;
   if (closeBtn) closeBtn.onclick = closeModal;
 
+  let tocTouchStartY = 0;
+  const sheet = modal.querySelector(".mobile-toc-sheet");
+  if (sheet && !sheet._swipeAttached) {
+    sheet._swipeAttached = true;
+    sheet.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches[0]) tocTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    sheet.addEventListener("touchend", (e) => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        const diffY = e.changedTouches[0].clientY - tocTouchStartY;
+        if (diffY > 60) closeModal();
+      }
+    }, { passive: true });
+  }
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) {
       closeModal();

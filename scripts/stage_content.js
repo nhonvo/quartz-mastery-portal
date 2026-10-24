@@ -24,6 +24,7 @@ const ALL_TRACKS = [
 
 const FAST_FILES = [
   "01_DSA/01_theory_and_patterns/01_Basics/00_mastering_big_o_notation_algorithmic_complexity_analysis.md",
+  "01_DSA/01_theory_and_patterns/06_Advanced_Dynamic_Programming/01_advanced_dsa_pattern_tree_dynamic_programming_rerooting_technique.md",
   "01_DSA/02_dsa_solutions/neetcode_solutions/01_Arrays_and_Hashing",
   "01_DSA/02_dsa_solutions/neetcode_solutions/02_Two_Pointers",
   "01_DSA/02_dsa_solutions/neetcode_solutions/index.md",

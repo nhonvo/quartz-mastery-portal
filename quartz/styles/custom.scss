@@ -398,11 +398,28 @@ figure[data-rehype-pretty-code-figure] {
   50% { transform: scale(1.2); opacity: 1; }
 }
 
-// 8. Default Fullscreen Widescreen Layout & Streamlined Header
+// 8. Full-Width Responsive Portal Layout (No Dead Black Voids or Constrained Margins)
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: clip !important;
+}
+
+.page {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
 .page > #quartz-body {
-  max-width: 1400px !important;
-  margin: 0 auto !important;
-  padding-bottom: 5rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
 header {
@@ -414,19 +431,37 @@ header {
   border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent);
 }
 
-// 9. Independent Sticky Sidebar Flex Layout & Smooth Internal Scroll
-@media all and (min-width: 801px) {
+// 9A. Desktop Widescreen Layout (>= 1200px) — 3 Full Sticky Columns, Expansive Center
+@media all and (min-width: 1200px) {
   :root {
-    --sidebar-left-width: 320px;
+    --sidebar-left-width: 280px;
+    --sidebar-right-width: 320px;
   }
 
   .page > #quartz-body {
-    grid-template-columns: var(--sidebar-left-width, 320px) minmax(0, 1fr) var(--sidebar-right-width, 320px) !important;
+    display: grid !important;
+    grid-template-columns: var(--sidebar-left-width, 280px) minmax(0, 1fr) var(--sidebar-right-width, 320px) !important;
+    grid-template-areas:
+      "grid-sidebar-left grid-header grid-sidebar-right"
+      "grid-sidebar-left grid-center grid-sidebar-right"
+      "grid-sidebar-left grid-footer grid-sidebar-right" !important;
+    column-gap: 1.5rem !important;
+    padding: 0 1.5rem 5rem 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+
+    .center {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
 
     .sidebar.left {
-      width: var(--sidebar-left-width, 320px) !important;
-      max-width: var(--sidebar-left-width, 320px) !important;
-      flex-basis: var(--sidebar-left-width, 320px) !important;
+      width: var(--sidebar-left-width, 280px) !important;
+      max-width: var(--sidebar-left-width, 280px) !important;
+      flex-basis: var(--sidebar-left-width, 280px) !important;
       position: sticky !important;
       top: 0 !important;
       height: 100vh !important;
@@ -434,7 +469,8 @@ header {
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      padding: 1.5rem 1rem 1.5rem 1.5rem !important;
+      padding: 1.5rem 0.75rem 1.5rem 1rem !important;
+      border-right: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
 
       .page-title {
         flex-shrink: 0 !important;
@@ -471,6 +507,8 @@ header {
     }
 
     .sidebar.right {
+      width: var(--sidebar-right-width, 320px) !important;
+      max-width: var(--sidebar-right-width, 320px) !important;
       position: sticky !important;
       top: 0 !important;
       height: 100vh !important;
@@ -478,8 +516,9 @@ header {
       display: flex !important;
       flex-direction: column !important;
       overflow: hidden !important;
-      padding: 1.5rem 1.5rem 1.5rem 1rem !important;
+      padding: 1.5rem 1rem 1.5rem 0.75rem !important;
       gap: 1rem !important;
+      border-left: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
 
       .toc, .backlinks {
         flex: 1 1 auto !important;
@@ -496,6 +535,94 @@ header {
           border-radius: 4px;
         }
       }
+    }
+  }
+}
+
+// 9B. Tablet Layout (801px to 1199px) — 2 Columns (Explorer + Full-Width Reading), Floating Reader Dock Active
+@media all and (min-width: 801px) and (max-width: 1199.98px) {
+  :root {
+    --sidebar-left-width: 250px;
+  }
+
+  .page > #quartz-body {
+    display: grid !important;
+    grid-template-columns: var(--sidebar-left-width, 250px) minmax(0, 1fr) !important;
+    grid-template-areas:
+      "grid-sidebar-left grid-header"
+      "grid-sidebar-left grid-center"
+      "grid-sidebar-left grid-sidebar-right"
+      "grid-sidebar-left grid-footer" !important;
+    column-gap: 1.25rem !important;
+    padding: 0 1.25rem 7.5rem 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+
+    .center {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding-bottom: 3rem !important;
+      box-sizing: border-box !important;
+    }
+
+    .sidebar.left {
+      width: var(--sidebar-left-width, 250px) !important;
+      max-width: var(--sidebar-left-width, 250px) !important;
+      flex-basis: var(--sidebar-left-width, 250px) !important;
+      position: sticky !important;
+      top: 0 !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      padding: 1.25rem 0.5rem 1.25rem 0.75rem !important;
+      border-right: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
+
+      .page-title {
+        flex-shrink: 0 !important;
+      }
+
+      .explorer {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        padding-right: 0.25rem !important;
+        margin-top: 0.5rem !important;
+
+        .explorer-content {
+          flex: 1 1 auto !important;
+          min-height: 0 !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+          -webkit-overflow-scrolling: touch !important;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: color-mix(in srgb, var(--secondary) 30%, transparent);
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+
+    .sidebar.right {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      height: auto !important;
+      max-height: none !important;
+      position: static !important;
+      padding: 2.5rem 0 4rem 0 !important;
+      border-left: none !important;
+      border-top: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
+      gap: 2rem !important;
     }
   }
 }
@@ -898,21 +1025,108 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
   }
 }
 
+/* Mobile Appbar Actions: strictly hidden on desktop */
+.mobile-appbar-actions {
+  display: none !important;
+}
+
+/* Suppress duplicate H1 in markdown content if page-header already renders article-title */
+.page:has(.article-title) article .markdown-preview-view > h1:first-child,
+.page:has(.article-title) article .markdown-rendered > h1:first-child,
+.page:has(.article-title) article > h1:first-child,
+.center:has(.article-title) article h1:first-child {
+  display: none !important;
+}
+
 // Mobile Sidebar Left (App Bar) & Off-Canvas Drawer
 @media all and (max-width: 800px) {
   .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    overflow-x: clip !important;
     padding-top: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    padding-bottom: 8.5rem !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
 
   .page > #quartz-body .center {
+    min-width: 0 !important;
+    max-width: 100% !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+    padding-bottom: 5.5rem !important;
     width: 100% !important;
     box-sizing: border-box !important;
+  }
+
+  /* Ensure sidebar resizer never renders on mobile */
+  .sidebar-resizer,
+  .resizer-left {
+    display: none !important;
+  }
+
+  /* Single-line horizontal scroll for mobile breadcrumbs */
+  nav.breadcrumb-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 4px !important;
+    margin-bottom: 0.5rem !important;
+
+    &::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .breadcrumb-element {
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+  }
+
+  /* Mobile Top App Bar Action Buttons (Search & Theme) */
+  .mobile-appbar-actions {
+    order: 3 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-left: auto !important;
+    z-index: 10 !important;
+  }
+
+  .mobile-appbar-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: var(--dark) !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    transition: background 0.15s ease, transform 0.12s ease !important;
+
+    &:hover,
+    &:active {
+      background: color-mix(in srgb, var(--secondary) 14%, transparent) !important;
+      color: var(--secondary) !important;
+      transform: scale(1.05) !important;
+    }
+
+    svg {
+      width: 20px !important;
+      height: 20px !important;
+      stroke: currentColor !important;
+      pointer-events: none !important;
+    }
   }
 
   .page > #quartz-body .sidebar.left {
@@ -1062,12 +1276,13 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
     background-color: var(--light) !important;
     display: flex !important;
     align-items: center !important;
-    gap: 3px !important;
-    padding: 4px 0.75rem !important;
+    justify-content: space-around !important;
+    gap: 6px !important;
+    padding: 6px 0.75rem !important;
     margin: 0 !important;
     border: none !important;
-    border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 35%, transparent) !important;
-    box-shadow: none !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     box-sizing: border-box !important;
     width: 100% !important;
     flex-shrink: 0 !important;
@@ -1076,28 +1291,33 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      width: 28px !important;
-      height: 28px !important;
-      border-radius: 5px !important;
-      border: none !important;
-      background: transparent !important;
-      color: var(--gray) !important;
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      min-height: 38px !important;
+      border-radius: 8px !important;
+      border: 1px solid color-mix(in srgb, var(--lightgray) 60%, transparent) !important;
+      background: color-mix(in srgb, var(--lightgray) 20%, transparent) !important;
+      color: var(--darkgray) !important;
       cursor: pointer !important;
       padding: 0 !important;
       touch-action: manipulation !important;
-      transition: background 0.15s ease, color 0.15s ease !important;
+      -webkit-tap-highlight-color: transparent !important;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
 
       svg {
-        width: 15px !important;
-        height: 15px !important;
+        width: 18px !important;
+        height: 18px !important;
         stroke: currentColor !important;
         fill: none !important;
+        pointer-events: none !important;
       }
 
       &:hover,
       &:active {
-        background: color-mix(in srgb, var(--secondary) 15%, transparent) !important;
+        background: color-mix(in srgb, var(--secondary) 20%, transparent) !important;
         color: var(--secondary) !important;
+        transform: scale(0.94) !important;
       }
     }
   }
@@ -1122,8 +1342,8 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    width: 75vw !important;
-    max-width: 280px !important;
+    width: 85vw !important;
+    max-width: 340px !important;
     height: 100% !important;
     height: 100dvh !important;
     max-height: 100% !important;
