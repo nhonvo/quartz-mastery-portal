@@ -1013,6 +1013,24 @@ function setupExplorerEnhancements() {
   const cdiv = explorerDiv.querySelector(".explorer-content");
   if (!cdiv) return;
 
+  const mobileToggleBtn = explorerDiv.querySelector("button.mobile-explorer");
+  if (mobileToggleBtn) {
+    mobileToggleBtn.classList.remove("hide-until-loaded");
+  }
+
+  if (!explorerDiv._initViewportSync) {
+    explorerDiv._initViewportSync = true;
+    explorerDiv._lastIsMobile = window.innerWidth <= 800;
+    if (explorerDiv._lastIsMobile) {
+      explorerDiv.classList.add("collapsed");
+      explorerDiv.setAttribute("aria-expanded", "false");
+      document.documentElement.classList.remove("mobile-no-scroll");
+    } else {
+      explorerDiv.classList.remove("collapsed");
+      explorerDiv.setAttribute("aria-expanded", "true");
+    }
+  }
+
   // 1. Mobile Drawer Header with Lucide Folder SVG & Close button
   let drawerHeader = cdiv.querySelector(".mobile-drawer-header");
   if (!drawerHeader) {
@@ -1033,16 +1051,20 @@ function setupExplorerEnhancements() {
 
   const openDrawer = (e) => {
     if (e && typeof e.stopPropagation === "function") e.stopPropagation();
-    explorerDiv.classList.remove("collapsed");
-    explorerDiv.setAttribute("aria-expanded", "true");
-    if (backdrop) backdrop.classList.add("active");
-    document.documentElement.classList.add("mobile-no-scroll");
+    const exp = document.querySelector(".explorer") || explorerDiv;
+    exp.classList.remove("collapsed");
+    exp.setAttribute("aria-expanded", "true");
+    if (window.innerWidth <= 800) {
+      if (backdrop) backdrop.classList.add("active");
+      document.documentElement.classList.add("mobile-no-scroll");
+    }
   };
 
   const closeDrawer = (e) => {
     if (e && typeof e.stopPropagation === "function") e.stopPropagation();
-    explorerDiv.classList.add("collapsed");
-    explorerDiv.setAttribute("aria-expanded", "false");
+    const exp = document.querySelector(".explorer") || explorerDiv;
+    exp.classList.add("collapsed");
+    exp.setAttribute("aria-expanded", "false");
     if (backdrop) backdrop.classList.remove("active");
     document.documentElement.classList.remove("mobile-no-scroll");
   };
@@ -1050,9 +1072,32 @@ function setupExplorerEnhancements() {
   window.openMobileDrawer = openDrawer;
   window.closeMobileDrawer = closeDrawer;
   window.toggleMobileDrawer = () => {
-    if (explorerDiv.classList.contains("collapsed")) openDrawer();
+    const exp = document.querySelector(".explorer") || explorerDiv;
+    if (exp.classList.contains("collapsed")) openDrawer();
     else closeDrawer();
   };
+
+  if (!window._explorerResizeSyncAttached) {
+    window._explorerResizeSyncAttached = true;
+    window.addEventListener("resize", () => {
+      const exp = document.querySelector(".explorer");
+      if (!exp) return;
+      const isNowMobile = window.innerWidth <= 800;
+      if (exp._lastIsMobile !== isNowMobile) {
+        exp._lastIsMobile = isNowMobile;
+        if (isNowMobile) {
+          exp.classList.add("collapsed");
+          exp.setAttribute("aria-expanded", "false");
+        } else {
+          exp.classList.remove("collapsed");
+          exp.setAttribute("aria-expanded", "true");
+        }
+        const bd = document.getElementById("mobile-sidebar-backdrop");
+        if (bd) bd.classList.remove("active");
+        document.documentElement.classList.remove("mobile-no-scroll");
+      }
+    });
+  }
 
   const closeBtn = drawerHeader?.querySelector(".mobile-drawer-close");
   if (closeBtn) {
@@ -1071,14 +1116,15 @@ function setupExplorerEnhancements() {
   backdrop.onclick = handleBackdropDismiss;
   backdrop.ontouchend = handleBackdropDismiss;
 
-  // Intercept hamburger button for synchronous open/close
-  const mobileToggleBtn = explorerDiv.querySelector("button.mobile-explorer");
+  // Intercept hamburger button for synchronous open/close without double-toggling
   if (mobileToggleBtn && !mobileToggleBtn._customDrawerAttached) {
     mobileToggleBtn._customDrawerAttached = true;
     mobileToggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
       window.toggleMobileDrawer();
-    });
+    }, true);
   }
 
   // Global Touch Outside Dismissal
@@ -1086,7 +1132,8 @@ function setupExplorerEnhancements() {
     window._drawerGlobalDismissAttached = true;
     const handleOutsideTap = (e) => {
       if (window.innerWidth <= 800) {
-        const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
+        const exp = document.querySelector(".explorer");
+        const isDrawerOpen = exp && !exp.classList.contains("collapsed");
         if (!isDrawerOpen) return;
         const target = e.target;
         if (!target) return;
@@ -1124,15 +1171,14 @@ function setupExplorerEnhancements() {
       const diffX = e.changedTouches[0].clientX - touchStartX;
       const diffY = e.changedTouches[0].clientY - touchStartY;
       const timeDiff = Date.now() - touchStartTime;
-      const isDrawerOpen = explorerDiv && !explorerDiv.classList.contains("collapsed");
+      const exp = document.querySelector(".explorer");
+      const isDrawerOpen = exp && !exp.classList.contains("collapsed");
 
       // Horizontal swipe check: |diffX| >= 40, horizontal dominant
       if (timeDiff < 550 && Math.abs(diffX) >= 40 && Math.abs(diffX) > Math.abs(diffY) * 1.15) {
         if (!isDrawerOpen && touchStartX <= Math.min(window.innerWidth * 0.45, 160) && diffX > 0) {
-          // Swipe right from anywhere in left 45% of screen (<=160px): OPEN drawer
           openDrawer();
         } else if (isDrawerOpen && diffX < -40) {
-          // Swipe left anywhere: CLOSE drawer
           closeDrawer();
         }
       }
@@ -1174,7 +1220,8 @@ function setupExplorerEnhancements() {
   if (!window._drawerEscapeAttached) {
     window._drawerEscapeAttached = true;
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !explorerDiv.classList.contains("collapsed")) {
+      const exp = document.querySelector(".explorer");
+      if (e.key === "Escape" && window.innerWidth <= 800 && exp && !exp.classList.contains("collapsed")) {
         closeDrawer();
       }
     });
@@ -1183,9 +1230,10 @@ function setupExplorerEnhancements() {
   if (!explorerDiv._backdropObserver) {
     explorerDiv._backdropObserver = true;
     const syncBackdrop = () => {
+      const isMobile = window.innerWidth <= 800;
       const isCollapsed = explorerDiv.classList.contains("collapsed");
-      if (backdrop) backdrop.classList.toggle("active", !isCollapsed);
-      if (!isCollapsed && window.innerWidth <= 800) {
+      if (backdrop) backdrop.classList.toggle("active", isMobile && !isCollapsed);
+      if (isMobile && !isCollapsed) {
         document.documentElement.classList.add("mobile-no-scroll");
       } else {
         document.documentElement.classList.remove("mobile-no-scroll");
@@ -1232,21 +1280,27 @@ function setupExplorerEnhancements() {
 
     const saveState = () => {
       const fileTree = [];
-      document.querySelectorAll(".folder-container").forEach(c => {
+      document.querySelectorAll(".explorer .folder-container").forEach(c => {
         const p = c.dataset.folderpath;
         const next = c.nextElementSibling;
-        if (p && next) {
-          fileTree.push({ path: p, collapsed: !next.classList.contains("open") });
+        if (next) {
+          const isOpen = next.classList.contains("open");
+          c.classList.toggle("is-open", isOpen);
+          if (p) {
+            fileTree.push({ path: p, collapsed: !isOpen });
+          }
         }
       });
-      localStorage.setItem("fileTree", JSON.stringify(fileTree));
+      try {
+        localStorage.setItem("fileTree", JSON.stringify(fileTree));
+      } catch (_) {}
     };
 
     // 1. Expand All (Unfold Outwards - Maximize/Expand Icon)
     const btnUnfoldAll = createBtn("Expand All Folders", 
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
-        document.querySelectorAll(".folder-outer").forEach(f => f.classList.add("open"));
+        document.querySelectorAll(".explorer .folder-outer").forEach(f => f.classList.add("open"));
         saveState();
       });
 
@@ -1254,7 +1308,7 @@ function setupExplorerEnhancements() {
     const btnLevel1 = createBtn("Collapse to Root Folders", 
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"></path></svg>',
       () => {
-        document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
+        document.querySelectorAll(".explorer .folder-outer").forEach(f => f.classList.remove("open"));
         document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
         saveState();
       });
@@ -1263,7 +1317,7 @@ function setupExplorerEnhancements() {
     const btnCollapseAll = createBtn("Collapse All Folders", 
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
       () => {
-        document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
+        document.querySelectorAll(".explorer .folder-outer").forEach(f => f.classList.remove("open"));
         saveState();
       });
 
@@ -1275,7 +1329,7 @@ function setupExplorerEnhancements() {
         if (!active) {
           const rawCurrent = window.location.pathname;
           const currentPath = rawCurrent.endsWith("/") ? rawCurrent.slice(0, -1) : rawCurrent;
-          const allLinks = document.querySelectorAll(".explorer-content a");
+          const allLinks = document.querySelectorAll(".explorer-content a.nav-file-title");
           for (let a of allLinks) {
             const rawHrefPath = new URL(a.href, window.location.origin).pathname;
             const aPath = rawHrefPath.endsWith("/") ? rawHrefPath.slice(0, -1) : rawHrefPath;
@@ -1288,7 +1342,7 @@ function setupExplorerEnhancements() {
         }
 
         if (active) {
-          document.querySelectorAll(".folder-outer").forEach(f => f.classList.remove("open"));
+          document.querySelectorAll(".explorer .folder-outer").forEach(f => f.classList.remove("open"));
           let parent = active.closest(".folder-outer");
           while (parent) {
             parent.classList.add("open");
@@ -1312,18 +1366,17 @@ function setupExplorerEnhancements() {
     const btnGraph = createBtn("Obsidian Global Graph", 
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
       () => {
-        explorerDiv.classList.add("collapsed");
-        if (backdrop) backdrop.classList.remove("active");
-        const globalGraphBtn = document.querySelector(".global-graph-icon");
-        if (globalGraphBtn) {
-          globalGraphBtn.click();
+        if (window.innerWidth <= 800) {
+          closeDrawer();
+        }
+        if (typeof window.openGlobalGraph === "function") {
+          window.openGlobalGraph();
         } else {
-          window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
-          const graphOuter = document.querySelector(".graph");
-          if (graphOuter) {
-            graphOuter.scrollIntoView({ behavior: "smooth", block: "center" });
-          } else if (typeof window.openFeatureMenu === "function") {
-            window.openFeatureMenu();
+          const globalGraphBtn = document.querySelector(".global-graph-icon");
+          if (globalGraphBtn) {
+            globalGraphBtn.click();
+          } else {
+            window.dispatchEvent(new KeyboardEvent("keydown", { key: "g", ctrlKey: true, bubbles: true }));
           }
         }
       });
@@ -1341,23 +1394,26 @@ function setupExplorerEnhancements() {
     }
   }
 
-  // Ensure that if no folders are open at all, expand the active path or root level so tree is never blank
-  const anyOpen = document.querySelector(".explorer-ul .folder-outer.open");
-  if (!anyOpen) {
-    const active = document.querySelector(".explorer-content .active, .explorer-content .is-active");
-    if (active) {
-      let parent = active.closest(".folder-outer");
-      while (parent) {
-        parent.classList.add("open");
-        parent = parent.parentElement?.closest(".folder-outer");
+  // Ensure that on initial tree population, if no folders are open at all, expand the active path or root level
+  if (!explorerDiv._initialOpenDone && explorerDiv.querySelector(".explorer-ul .folder-outer")) {
+    explorerDiv._initialOpenDone = true;
+    const anyOpen = document.querySelector(".explorer-ul .folder-outer.open");
+    if (!anyOpen) {
+      const active = document.querySelector(".explorer-content .active, .explorer-content .is-active");
+      if (active) {
+        let parent = active.closest(".folder-outer");
+        while (parent) {
+          parent.classList.add("open");
+          parent = parent.parentElement?.closest(".folder-outer");
+        }
+        active.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
       }
-      active.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      document.querySelectorAll(".explorer-ul > li > .folder-outer").forEach(f => f.classList.add("open"));
     }
   }
 
-  const explorerLinks = document.querySelectorAll(".explorer a, .explorer .folder-title");
+  const explorerLinks = document.querySelectorAll(".explorer a.nav-file-title, .explorer .folder-title");
   explorerLinks.forEach((el) => {
     const text = el.textContent?.trim();
     if (text && !el.hasAttribute("title")) {
@@ -1395,16 +1451,23 @@ function setupExplorerEnhancements() {
 
     if (!row._hasToggleAttached) {
       row._hasToggleAttached = true;
-      row.onclick = (e) => {
+      row.addEventListener("click", (e) => {
         if (e.target && e.target.closest && e.target.closest(".folder-link-direct")) return;
-        const toggleIcon = row.querySelector(".folder-icon, svg, button");
-        if (toggleIcon && toggleIcon !== e.target) {
-          toggleIcon.click();
-        } else if (nextOuter) {
-          nextOuter.classList.toggle("open");
+        if (nextOuter) {
+          const isOpen = nextOuter.classList.toggle("open");
+          row.classList.toggle("is-open", isOpen);
+          try {
+            const p = row.dataset.folderpath;
+            if (p) {
+              const h = JSON.parse(localStorage.getItem("fileTree") || "[]");
+              const g = h.findIndex(x => x.path === p);
+              if (g >= 0) h[g].collapsed = !isOpen;
+              else h.push({ path: p, collapsed: !isOpen });
+              localStorage.setItem("fileTree", JSON.stringify(h));
+            }
+          } catch (_) {}
         }
-        setTimeout(updateOpenState, 20);
-      };
+      });
     }
   });
 

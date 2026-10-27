@@ -335,7 +335,9 @@ MobileFloatBar.afterDOMLoaded = `
       e.preventDefault();
       e.stopPropagation();
       if (window.innerWidth <= 800) {
-        if (typeof window.openMobileDrawer === "function") {
+        if (typeof window.toggleMobileDrawer === "function") {
+          window.toggleMobileDrawer();
+        } else if (typeof window.openMobileDrawer === "function") {
           window.openMobileDrawer();
         } else {
           const explorer = document.querySelector(".explorer");
@@ -344,8 +346,7 @@ MobileFloatBar.afterDOMLoaded = `
           if (backdrop) backdrop.classList.toggle("active");
         }
       } else {
-        const explorer = document.querySelector(".sidebar.left");
-        if (explorer) explorer.scrollIntoView({ behavior: "smooth", block: "start" });
+        document.body.classList.toggle("sidebar-left-collapsed");
       }
     } else if (id === "float-graph-trigger") {
       e.preventDefault();

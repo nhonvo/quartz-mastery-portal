@@ -39,6 +39,7 @@ const FAST_FILES = [
   "03_Languages/01_english/README.md",
   "03_Languages/03_japanese/README.md",
   "03_Languages/04_mandarin/README.md",
+  "00_Meta/03_certifications/anthropic/CCAO-F_Claude_Certified_Associate_Foundational/01_domain_notes",
 ]
 
 const EXCLUDED_DIRS = new Set(["bin", "obj", ".vs", ".git", "node_modules", "out", "dist", "_archive_extract", "src"])

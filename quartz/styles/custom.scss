@@ -206,6 +206,15 @@ figure[data-rehype-pretty-code-figure] {
 }
 
 // 6. Clean Explorer Tree Alignment, Flexible Text Wrapping & Folded Items Gap Elimination
+#stacked-pages-container {
+  display: none !important;
+}
+
+.toc:has(button.toc-header.collapsed) ul.toc-content,
+button.toc-header.collapsed ~ ul.toc-content {
+  display: none !important;
+}
+
 .explorer {
   user-select: none;
   overflow-x: hidden !important;
@@ -231,13 +240,10 @@ figure[data-rehype-pretty-code-figure] {
     overflow-x: hidden !important;
   }
 
-  // Explicitly hide collapsed folder lists with zero height, margin, padding, or gaps
-  .collapsed,
+  // Explicitly hide collapsed folder containers (.folder-outer without .open) with zero height/gap
+  .folder-outer:not(.open),
   ul.collapsed,
-  .collapsed > ul,
-  .folder-outer.collapsed > ul,
-  li.collapsed > ul,
-  div.collapsed > ul,
+  .folder-outer.collapsed,
   ul[data-collapsed="true"],
   div[data-collapsed="true"] {
     display: none !important;
@@ -252,79 +258,28 @@ figure[data-rehype-pretty-code-figure] {
     pointer-events: none !important;
   }
 
-  // Folded folder items sit tightly together without blank vertical gaps
-  .folder-outer.collapsed,
-  li.collapsed,
-  div.collapsed {
-    margin-bottom: 0.05rem !important;
-    padding-bottom: 0 !important;
-    margin-top: 0.05rem !important;
-  }
-
-  // Expanded Tree Layout: Only apply styling to visible uncollapsed lists
-  ul:not(.collapsed):not([data-collapsed="true"]) {
+  // Expanded Tree Layout: Only apply indentation and left guide line to open child folder lists (never root .explorer-ul)
+  .folder-outer.open > ul {
     padding-left: 0.65rem !important;
-    margin-left: 0.35rem !important;
+    margin-left: 0.4rem !important;
     margin-top: 0.1rem !important;
-    margin-bottom: 0.2rem !important;
-    border-left: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent);
+    margin-bottom: 0.15rem !important;
+    border-left: 1px solid color-mix(in srgb, var(--lightgray) 50%, transparent) !important;
     list-style: none !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
   }
 
-  .folder-container,
-  .folder-outer > .folder-container,
-  .folder-button,
-  li > a {
-    display: flex !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 0.28rem 0.5rem !important;
-    border-radius: 6px !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
-    color: var(--dark) !important;
-    overflow-x: hidden !important;
-    transition: background 0.15s ease, color 0.15s ease !important;
-
-    &:hover {
-      background: color-mix(in srgb, var(--secondary) 14%, transparent) !important;
-      color: var(--secondary) !important;
-    }
-
-    &.active, &[data-active="true"] {
-      background: color-mix(in srgb, var(--secondary) 20%, transparent) !important;
-      color: var(--secondary) !important;
-      font-weight: 600 !important;
-    }
-  }
-
-  .folder-icon, svg {
+  .folder-icon {
     flex-shrink: 0 !important;
-    margin-right: 6px !important;
-    margin-top: 3px !important;
+    margin: 0 !important;
     opacity: 0.75;
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
   .folder-container:hover .folder-icon {
     opacity: 1;
-  }
-
-  a, .folder-title, span.title, span {
-    overflow-wrap: anywhere !important;
-    word-break: break-word !important;
-    white-space: normal !important;
-    line-height: 1.35 !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    flex: 1 1 auto !important;
-    font-size: 0.85rem !important;
-    display: inline-block !important;
   }
 }
 
@@ -438,6 +393,18 @@ header {
     --sidebar-right-width: 320px;
   }
 
+  body.sidebar-left-collapsed .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr) var(--sidebar-right-width, 320px) !important;
+    grid-template-areas:
+      "grid-header grid-sidebar-right"
+      "grid-center grid-sidebar-right"
+      "grid-footer grid-sidebar-right" !important;
+
+    .sidebar.left {
+      display: none !important;
+    }
+  }
+
   .page > #quartz-body {
     display: grid !important;
     grid-template-columns: var(--sidebar-left-width, 280px) minmax(0, 1fr) var(--sidebar-right-width, 320px) !important;
@@ -485,6 +452,14 @@ header {
         padding-right: 0.35rem !important;
         margin-top: 0.5rem !important;
 
+        &.collapsed {
+          flex: 0 0 auto !important;
+
+          & > .explorer-content {
+            display: none !important;
+          }
+        }
+
         .explorer-content {
           flex: 1 1 auto !important;
           min-height: 0 !important;
@@ -515,25 +490,33 @@ header {
       max-height: 100vh !important;
       display: flex !important;
       flex-direction: column !important;
-      overflow: hidden !important;
-      padding: 1.5rem 1rem 1.5rem 0.75rem !important;
-      gap: 1rem !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding: 1.5rem 1rem 5rem 0.75rem !important;
+      gap: 1.25rem !important;
       border-left: 1px solid color-mix(in srgb, var(--lightgray) 45%, transparent) !important;
 
-      .toc, .backlinks {
-        flex: 1 1 auto !important;
-        min-height: 0 !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        padding-right: 0.35rem !important;
+      & > * {
+        flex-shrink: 0 !important;
+      }
 
-        &::-webkit-scrollbar {
-          width: 4px;
+      .toc, .backlinks {
+        flex: 0 0 auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding-right: 0.25rem !important;
+
+        ul.overflow, ul.toc-content {
+          max-height: 300px !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
         }
-        &::-webkit-scrollbar-thumb {
-          background: color-mix(in srgb, var(--secondary) 30%, transparent);
-          border-radius: 4px;
-        }
+      }
+
+      .recent-notes {
+        flex: 0 0 auto !important;
+        overflow: visible !important;
       }
     }
   }
@@ -543,6 +526,19 @@ header {
 @media all and (min-width: 801px) and (max-width: 1199.98px) {
   :root {
     --sidebar-left-width: 250px;
+  }
+
+  body.sidebar-left-collapsed .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "grid-header"
+      "grid-center"
+      "grid-sidebar-right"
+      "grid-footer" !important;
+
+    .sidebar.left {
+      display: none !important;
+    }
   }
 
   .page > #quartz-body {
@@ -593,6 +589,14 @@ header {
         overflow: hidden !important;
         padding-right: 0.25rem !important;
         margin-top: 0.5rem !important;
+
+        &.collapsed {
+          flex: 0 0 auto !important;
+
+          & > .explorer-content {
+            display: none !important;
+          }
+        }
 
         .explorer-content {
           flex: 1 1 auto !important;
@@ -879,18 +883,29 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
     display: flex !important;
     align-items: center !important;
     gap: 0.35rem !important;
-    padding: 0.22rem 0.35rem !important;
+    padding: 0.24rem 0.4rem !important;
     border-radius: 6px !important;
     cursor: pointer !important;
     user-select: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
     transition: background-color 0.15s ease !important;
 
     &:hover {
-      background-color: color-mix(in srgb, var(--secondary) 10%, transparent) !important;
+      background-color: color-mix(in srgb, var(--secondary) 12%, transparent) !important;
+    }
+
+    & > div {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      display: flex !important;
+      align-items: center !important;
     }
 
     .folder-icon {
       flex-shrink: 0 !important;
+      margin: 0 !important;
       color: var(--gray) !important;
       transform: rotate(-90deg) !important;
       transition: transform 0.18s ease, color 0.15s ease !important;
@@ -903,20 +918,28 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
       margin: 0 !important;
       cursor: pointer !important;
       text-align: left !important;
-      display: inline-flex !important;
+      display: flex !important;
       align-items: center !important;
+      width: 100% !important;
+      min-width: 0 !important;
       color: inherit !important;
       font-family: inherit !important;
     }
 
     .folder-title {
       font-weight: 600 !important;
-      font-size: 0.88rem !important;
+      font-size: 0.86rem !important;
+      line-height: 1.35 !important;
       color: var(--dark) !important;
       display: inline-flex !important;
       align-items: center !important;
       gap: 0.35rem !important;
       letter-spacing: -0.005em !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+      white-space: normal !important;
 
       /* Lucide Closed Folder SVG */
       &::before {
@@ -935,16 +958,25 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
     /* Subtle direct link ↗ to open folder overview page */
     .folder-link-direct {
       display: none !important;
+      flex: 0 0 auto !important;
+      width: 20px !important;
+      height: 20px !important;
       align-items: center !important;
       justify-content: center !important;
       margin-left: auto !important;
-      padding: 2px 4px !important;
+      padding: 0 !important;
       border-radius: 4px !important;
       color: var(--gray) !important;
       font-size: 0.75rem !important;
       text-decoration: none !important;
-      opacity: 0.55 !important;
+      opacity: 0.65 !important;
       transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease !important;
+
+      svg {
+        margin: 0 !important;
+        width: 12px !important;
+        height: 12px !important;
+      }
 
       &:hover {
         opacity: 1 !important;
@@ -959,8 +991,7 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
   }
 
   /* When folder is open */
-  .folder-container:has(+ .folder-outer.open),
-  .folder-container.is-open {
+  .folder-container:has(+ .folder-outer.open) {
     .folder-icon {
       transform: rotate(0deg) !important;
       color: var(--secondary) !important;
@@ -976,18 +1007,23 @@ html[saved-theme="dark"][data-reading-mode="warm"] {
 
   /* Markdown File Link (Document with lines icon) */
   li > a.nav-file-title {
-    display: inline-flex !important;
+    display: flex !important;
     align-items: center !important;
     gap: 0.35rem !important;
-    padding: 0.22rem 0.45rem !important;
+    padding: 0.24rem 0.45rem !important;
     border-radius: 6px !important;
     color: var(--darkgray) !important;
-    font-size: 0.88rem !important;
+    font-size: 0.85rem !important;
     font-weight: 400 !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
     text-decoration: none !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    white-space: normal !important;
     transition: background-color 0.15s ease, color 0.15s ease !important;
 
     /* Lucide FileText SVG */
