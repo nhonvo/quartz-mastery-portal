@@ -19,7 +19,7 @@ const ALL_TRACKS = [
   "01_DSA",
   "02_Technical_Skills",
   "03_Languages",
-  "00_Meta/03_certifications",
+  "00_Meta/03_certifications/anthropic",
 ]
 
 const FAST_FILES = [
@@ -42,8 +42,8 @@ const FAST_FILES = [
   "00_Meta/03_certifications/anthropic/CCAO-F_Claude_Certified_Associate_Foundational/01_domain_notes",
 ]
 
-const EXCLUDED_DIRS = new Set(["bin", "obj", ".vs", ".git", "node_modules", "out", "dist", "_archive_extract", "src"])
-const EXCLUDED_EXTS = new Set([".dll", ".exe", ".pdb", ".cache", ".user", ".suo"])
+const EXCLUDED_DIRS = new Set(["bin", "obj", ".vs", ".git", "node_modules", "out", "dist", "_archive_extract", "src", "scripts", "__pycache__"])
+const EXCLUDED_EXTS = new Set([".dll", ".exe", ".pdb", ".cache", ".user", ".suo", ".pid", ".log"])
 
 function shouldCopy(src) {
   const base = path.basename(src)
@@ -221,6 +221,24 @@ function cleanAndCopy() {
       }
     }
     console.log(`[StageContent] ✅ Incremental sync complete. Copied ${copiedCount} modified files.`)
+
+    // Clean up any non-anthropic directories and files from 00_Meta
+    const metaDir = path.join(targetDir, "00_Meta")
+    if (fs.existsSync(metaDir)) {
+      for (const entry of fs.readdirSync(metaDir, { withFileTypes: true })) {
+        if (entry.name !== "03_certifications") {
+          fs.rmSync(path.join(metaDir, entry.name), { recursive: true, force: true })
+        }
+      }
+      const certDir = path.join(metaDir, "03_certifications")
+      if (fs.existsSync(certDir)) {
+        for (const entry of fs.readdirSync(certDir, { withFileTypes: true })) {
+          if (entry.name !== "anthropic") {
+            fs.rmSync(path.join(certDir, entry.name), { recursive: true, force: true })
+          }
+        }
+      }
+    }
   }
 
   // Inject git dates if files were actually copied or if content is missing

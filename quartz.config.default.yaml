@@ -32,6 +32,12 @@ configuration:
     - "**/00_Meta/04_templates/**"
     - "**/00_Meta/02_daily/**"
     - "**/00_Meta/05_folder_nodes/**"
+    - "**/00_Meta/03_certifications/aws/**"
+    - "**/00_Meta/03_certifications/azure/**"
+    - "**/00_Meta/03_certifications/gcp/**"
+    - "**/00_Meta/03_certifications/scrum/**"
+    - "**/00_Meta/03_certifications/07_Certification_Mastery_Guides/**"
+    - "**/00_Meta/03_certifications/*.md"
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
