@@ -17,7 +17,13 @@ export const MobileFloatBar: QuartzComponent = () => {
       </button>
 
       {/* 2. Navigation Sidebar / Files Drawer */}
-      <button class="float-btn" id="float-sidebar-trigger" aria-label="Open Navigation Explorer">
+      <button 
+        type="button"
+        class="float-btn" 
+        id="float-sidebar-trigger" 
+        title="Toggle Sidebar Navigation" 
+        aria-label="Toggle Sidebar Navigation"
+      >
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
           <line x1="9" x2="9" y1="3" y2="21"></line>
@@ -119,6 +125,10 @@ MobileFloatBar.css = `
   box-sizing: border-box;
   text-align: center;
   flex: 0 0 48px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
   transition: all 0.18s ease;
 
   svg {
@@ -126,6 +136,7 @@ MobileFloatBar.css = `
     height: 16px;
     flex-shrink: 0;
     stroke: var(--darkgray);
+    pointer-events: none !important;
     transition: transform 0.18s ease, stroke 0.18s ease;
   }
 
@@ -134,7 +145,7 @@ MobileFloatBar.css = `
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    pointer-events: none;
+    pointer-events: none !important;
   }
 
   &:hover,
@@ -288,17 +299,14 @@ MobileFloatBar.afterDOMLoaded = `
     }
   });
 
-  document.addEventListener("click", function(e) {
-    const btn = e.target && e.target.closest ? e.target.closest(".float-btn, .exit-focus-btn, .search-button") : null;
+  function handleButtonAction(btn, e) {
     if (!btn) return;
-
     const id = btn.id;
     const isSearchBtn = btn.classList.contains("search-button") || id === "float-search-trigger";
-    console.log("[MobileFloatBar] Clicked element:", id || btn.className);
+    console.log("[MobileFloatBar] Action triggered for:", id || btn.className);
 
     if (isSearchBtn) {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       const actualSearchBtn = document.querySelector(".page-header .search-button, .search .search-button");
       if (actualSearchBtn && btn !== actualSearchBtn) {
         actualSearchBtn.click();
@@ -307,8 +315,7 @@ MobileFloatBar.afterDOMLoaded = `
         window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true }));
       }
     } else if (id === "float-toc-trigger") {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       if (typeof window.openMobileTOC === "function") {
         window.openMobileTOC();
       } else {
@@ -323,8 +330,7 @@ MobileFloatBar.afterDOMLoaded = `
         }
       }
     } else if (id === "float-focus-trigger" || id === "exit-focus-btn") {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       const isFocus = document.body.classList.toggle("focus-reading-mode");
       console.log("[MobileFloatBar] Focus mode toggled:", isFocus);
       const exitFocusBtn = document.getElementById("exit-focus-btn");
@@ -332,26 +338,36 @@ MobileFloatBar.afterDOMLoaded = `
         exitFocusBtn.classList.toggle("hidden", !isFocus);
       }
     } else if (id === "float-sidebar-trigger") {
-      e.preventDefault();
-      e.stopPropagation();
-      if (window.innerWidth <= 800) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const isMobileOrTablet = window.innerWidth <= 1024 ||
+        window.matchMedia("(max-width: 1024px)").matches ||
+        document.querySelector("button.mobile-explorer")?.offsetParent !== null;
+
+      if (isMobileOrTablet || typeof window.toggleMobileDrawer === "function") {
         if (typeof window.toggleMobileDrawer === "function") {
           window.toggleMobileDrawer();
-        } else if (typeof window.openMobileDrawer === "function") {
-          window.openMobileDrawer();
         } else {
           const explorer = document.querySelector(".explorer");
           if (explorer) explorer.classList.toggle("collapsed");
-          const backdrop = document.getElementById("mobile-sidebar-backdrop");
-          if (backdrop) backdrop.classList.toggle("active");
+          let backdrop = document.getElementById("mobile-sidebar-backdrop");
+          if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "mobile-sidebar-backdrop";
+            backdrop.className = "mobile-sidebar-backdrop";
+            document.body.appendChild(backdrop);
+          }
+          backdrop.classList.toggle("active");
+          document.documentElement.classList.toggle("mobile-no-scroll");
         }
       } else {
         document.body.classList.toggle("sidebar-left-collapsed");
       }
     } else if (id === "float-graph-trigger") {
-      e.preventDefault();
-      e.stopPropagation();
-      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+      }
       if (typeof window.openGlobalGraph === "function") {
         window.openGlobalGraph();
       } else {
@@ -363,11 +379,11 @@ MobileFloatBar.afterDOMLoaded = `
         }
       }
     } else if (id === "float-theme-trigger") {
-      e.preventDefault();
+      if (e) e.preventDefault();
       const darkmodeBtn = document.querySelector("button.darkmode");
       if (darkmodeBtn) darkmodeBtn.click();
     } else if (id === "float-tools-trigger") {
-      e.preventDefault();
+      if (e) e.preventDefault();
       if (typeof window.openFeatureMenu === "function") {
         window.openFeatureMenu();
       } else {
@@ -375,12 +391,53 @@ MobileFloatBar.afterDOMLoaded = `
         if (modal) {
           modal.classList.remove("hidden");
           modal.setAttribute("aria-hidden", "false");
+          document.documentElement.classList.add("mobile-no-scroll");
         }
       }
     } else if (id === "float-top-trigger") {
-      e.preventDefault();
+      if (e) e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  }
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+  let lastTouchTime = 0;
+
+  document.addEventListener("touchstart", function(e) {
+    const btn = e.target && e.target.closest ? e.target.closest(".float-btn, .exit-focus-btn, .search-button") : null;
+    if (btn && e.touches && e.touches[0]) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchMoved = false;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchmove", function(e) {
+    if (e.touches && e.touches[0]) {
+      if (Math.abs(e.touches[0].clientX - touchStartX) > 12 || Math.abs(e.touches[0].clientY - touchStartY) > 12) {
+        touchMoved = true;
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", function(e) {
+    if (touchMoved) return;
+    const btn = e.target && e.target.closest ? e.target.closest(".float-btn, .exit-focus-btn, .search-button") : null;
+    if (!btn) return;
+    lastTouchTime = Date.now();
+    handleButtonAction(btn, e);
+  }, { passive: false });
+
+  document.addEventListener("click", function(e) {
+    if (Date.now() - lastTouchTime < 450) {
+      // Ignore synthesized ghost click following touch
+      return;
+    }
+    const btn = e.target && e.target.closest ? e.target.closest(".float-btn, .exit-focus-btn, .search-button") : null;
+    if (!btn) return;
+    handleButtonAction(btn, e);
   });
 
 })();

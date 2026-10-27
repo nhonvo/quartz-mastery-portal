@@ -1049,23 +1049,27 @@ function setupExplorerEnhancements() {
     document.body.appendChild(backdrop);
   }
 
+  const getBackdrop = () => document.getElementById("mobile-sidebar-backdrop") || backdrop;
+
   const openDrawer = (e) => {
     if (e && typeof e.stopPropagation === "function") e.stopPropagation();
     const exp = document.querySelector(".explorer") || explorerDiv;
+    if (!exp) return;
     exp.classList.remove("collapsed");
     exp.setAttribute("aria-expanded", "true");
-    if (window.innerWidth <= 800) {
-      if (backdrop) backdrop.classList.add("active");
-      document.documentElement.classList.add("mobile-no-scroll");
-    }
+    const bd = getBackdrop();
+    if (bd) bd.classList.add("active");
+    document.documentElement.classList.add("mobile-no-scroll");
   };
 
   const closeDrawer = (e) => {
     if (e && typeof e.stopPropagation === "function") e.stopPropagation();
     const exp = document.querySelector(".explorer") || explorerDiv;
+    if (!exp) return;
     exp.classList.add("collapsed");
     exp.setAttribute("aria-expanded", "false");
-    if (backdrop) backdrop.classList.remove("active");
+    const bd = getBackdrop();
+    if (bd) bd.classList.remove("active");
     document.documentElement.classList.remove("mobile-no-scroll");
   };
 
@@ -1073,6 +1077,7 @@ function setupExplorerEnhancements() {
   window.closeMobileDrawer = closeDrawer;
   window.toggleMobileDrawer = () => {
     const exp = document.querySelector(".explorer") || explorerDiv;
+    if (!exp) return;
     if (exp.classList.contains("collapsed")) openDrawer();
     else closeDrawer();
   };
@@ -1092,7 +1097,7 @@ function setupExplorerEnhancements() {
           exp.classList.remove("collapsed");
           exp.setAttribute("aria-expanded", "true");
         }
-        const bd = document.getElementById("mobile-sidebar-backdrop");
+        const bd = getBackdrop();
         if (bd) bd.classList.remove("active");
         document.documentElement.classList.remove("mobile-no-scroll");
       }
@@ -1113,35 +1118,37 @@ function setupExplorerEnhancements() {
     }
     closeDrawer();
   };
-  backdrop.onclick = handleBackdropDismiss;
-  backdrop.ontouchend = handleBackdropDismiss;
+  if (backdrop) {
+    backdrop.onclick = handleBackdropDismiss;
+    backdrop.ontouchend = handleBackdropDismiss;
+  }
 
   // Intercept hamburger button for synchronous open/close without double-toggling
   if (mobileToggleBtn && !mobileToggleBtn._customDrawerAttached) {
     mobileToggleBtn._customDrawerAttached = true;
-    mobileToggleBtn.addEventListener("click", (e) => {
+    const triggerToggle = (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
       window.toggleMobileDrawer();
-    }, true);
+    };
+    mobileToggleBtn.addEventListener("click", triggerToggle, true);
+    mobileToggleBtn.addEventListener("touchend", triggerToggle, { passive: false });
   }
 
   // Global Touch Outside Dismissal
   if (!window._drawerGlobalDismissAttached) {
     window._drawerGlobalDismissAttached = true;
     const handleOutsideTap = (e) => {
-      if (window.innerWidth <= 800) {
-        const exp = document.querySelector(".explorer");
-        const isDrawerOpen = exp && !exp.classList.contains("collapsed");
-        if (!isDrawerOpen) return;
-        const target = e.target;
-        if (!target) return;
-        const inDrawer = target.closest && target.closest(".explorer-content");
-        const isTrigger = target.closest && target.closest(".mobile-explorer, #float-sidebar-trigger, .title-button");
-        if (!inDrawer && !isTrigger) {
-          closeDrawer(e);
-        }
+      const exp = document.querySelector(".explorer");
+      const isDrawerOpen = exp && !exp.classList.contains("collapsed");
+      if (!isDrawerOpen) return;
+      const target = e.target;
+      if (!target) return;
+      const inDrawer = target.closest && target.closest(".explorer-content");
+      const isTrigger = target.closest && target.closest(".mobile-explorer, #float-sidebar-trigger, .float-btn, .title-button");
+      if (!inDrawer && !isTrigger) {
+        closeDrawer(e);
       }
     };
     document.addEventListener("click", handleOutsideTap, true);
